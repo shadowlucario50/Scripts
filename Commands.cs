@@ -110,6 +110,18 @@ namespace Script
 
                 switch (command[0])
                 {
+                    case "/pullscripts": 
+                        {
+                            if (Ranks.IsAllowed(client, Enums.Rank.Scripter))
+                            {
+                                Messenger.PlayerMsg(client, "Pulling scripts...", Text.BrightGreen);
+                                Server.Scripting.ScriptRepoHelper.PullChanges();
+                                Messenger.PlayerMsg(client, "Reloading scripts...", Text.BrightGreen);
+                                Server.Scripting.ScriptManager.Reload();
+                                Messenger.PlayerMsg(client, "Scripts updated!", Text.BrightGreen);
+                            }
+                        }
+                        break;
                     case "/finishevent":
                         {
                             if (Ranks.IsAllowed(client, Enums.Rank.Scripter))
