@@ -347,7 +347,7 @@ namespace Script
                         {
                             if (Ranks.IsAllowed(client, Enums.Rank.Monitor))
                             {
-                                Server.Globals.ServerStatus = joinedArgs;
+                                Server.Globals.ServerStatus = "[Server] " + joinedArgs;
                                 Server.Logging.ChatLogger.AppendToChatLog("Staff", "[Server Status] " + client.Player.Name + " changed the server status to: '" + joinedArgs + "'");
                             }
                         }
