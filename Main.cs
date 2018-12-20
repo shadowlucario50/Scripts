@@ -1300,818 +1300,818 @@ namespace Script
 
                 }
 
-                switch (spawnedNpc.Num)
-                {
-                    case 33:
-                    case 230:
-                    case 244:
-                    case 245:
-                        {//friendly npcs
-                            AddExtraStatus(spawnedNpc, map, "Immobilize", 0, null, "", hitlist, false);
-                        }
-                        break;
-                    case 32:
-                        {//kecleon
-
-                            map.Npc.Remove(npc);
-                        }
-                        break;
-                    case 1233:
-                        {//hitmonchan
-
-                            map.Npc.Remove(npc);
-                            spawnedNpc.DefenseBuff = 3;
-                            spawnedNpc.SpDefBuff = 3;
-                            spawnedNpc.MaxHPBonus = 300;
-                            spawnedNpc.AttackBuff = 1;
-                            spawnedNpc.SpeedBuff = 8;
-                            spawnedNpc.HP = spawnedNpc.MaxHP;
-
-                        }
-                        break;
-                    case 1234:
-                        {//hitmonlee
-
-                            map.Npc.Remove(npc);
-                            spawnedNpc.DefenseBuff = 1;
-                            spawnedNpc.SpDefBuff = 1;
-                            spawnedNpc.MaxHPBonus = 340;
-                            spawnedNpc.AttackBuff = 3;
-                            spawnedNpc.SpeedBuff = 8;
-                            spawnedNpc.HP = spawnedNpc.MaxHP;
-
-                        }
-                        break;
-                    case 1235:
-                        {//hitmontop
-
-                            map.Npc.Remove(npc);
-                            spawnedNpc.DefenseBuff = 3;
-                            spawnedNpc.SpDefBuff = 3;
-                            spawnedNpc.MaxHPBonus = 480;
-                            spawnedNpc.AttackBuff = 3;
-                            spawnedNpc.SpeedBuff = 10;
-                            spawnedNpc.HP = spawnedNpc.MaxHP;
-
-                        }
-                        break;
-                    case 306:
-                        {//regice
-                            foreach (Client n in map.GetClients())
-                            {
-                                StoryManager.PlayStory(n, 259);
-                            }
-                            map.Npc.Remove(npc);
-                            spawnedNpc.DefenseBuff = 10;
-                            spawnedNpc.SpDefBuff = 10;
-                            spawnedNpc.MaxHPBonus = 550;
-                            spawnedNpc.SpAtkBuff = 5;
-                            spawnedNpc.SpeedBuff = 10;
-                            spawnedNpc.HP = spawnedNpc.MaxHP;
-
-                        }
-                        break;
-                    case 1401:
-                        {//Vespiquen (Boss Rush)
-
-                            map.Npc.Remove(npc);
-                            spawnedNpc.DefenseBuff = 1;
-                            spawnedNpc.SpDefBuff = 1;
-                            spawnedNpc.MaxHPBonus = 150;
-                            spawnedNpc.HP = spawnedNpc.MaxHP;
-
-                        }
-                        break;
-                    case 1402:
-                        {//Roselia (Boss Rush)
-
-                            map.Npc.Remove(npc);
-                            spawnedNpc.DefenseBuff = 1;
-                            spawnedNpc.SpDefBuff = 1;
-                            spawnedNpc.MaxHPBonus = 100;
-                            spawnedNpc.HP = spawnedNpc.MaxHP;
-
-                        }
-                        break;
-                    case 1403:
-                        {//Vileplume (Boss Rush)
-
-                            map.Npc.Remove(npc);
-                            spawnedNpc.DefenseBuff = 1;
-                            spawnedNpc.SpDefBuff = 1;
-                            spawnedNpc.MaxHPBonus = 100;
-                            spawnedNpc.HP = spawnedNpc.MaxHP;
-
-                        }
-                        break;
-                    case 1404:
-                        {//Rhyperior (Boss Rush)
-
-                            map.Npc.Remove(npc);
-                            spawnedNpc.DefenseBuff = 2;
-                            spawnedNpc.SpDefBuff = 2;
-                            spawnedNpc.MaxHPBonus = 195;
-                            spawnedNpc.AttackBuff = 1;
-                            spawnedNpc.HP = spawnedNpc.MaxHP;
-
-                        }
-                        break;
-                    case 1405:
-                        {//Golem (Boss Rush)
-
-                            map.Npc.Remove(npc);
-                            spawnedNpc.DefenseBuff = 2;
-                            spawnedNpc.SpDefBuff = 2;
-                            spawnedNpc.MaxHPBonus = 165;
-                            spawnedNpc.HP = spawnedNpc.MaxHP;
-
-                        }
-                        break;
-                    case 1406:
-                        {//Rhydon (Boss Rush)
-
-                            map.Npc.Remove(npc);
-                            spawnedNpc.DefenseBuff = 2;
-                            spawnedNpc.SpDefBuff = 2;
-                            spawnedNpc.MaxHPBonus = 165;
-                            spawnedNpc.HP = spawnedNpc.MaxHP;
-
-                        }
-                        break;
-                    case 1407:
-                        {//Lapras (Boss Rush)
-
-                            map.Npc.Remove(npc);
-                            spawnedNpc.DefenseBuff = 2;
-                            spawnedNpc.SpDefBuff = 3;
-                            spawnedNpc.MaxHPBonus = 335;
-                            spawnedNpc.HP = spawnedNpc.MaxHP;
-
-                        }
-                        break;
-                    case 1408:
-                        {//Gorebyss (Boss Rush)
-
-                            map.Npc.Remove(npc);
-                            spawnedNpc.DefenseBuff = 2;
-                            spawnedNpc.SpDefBuff = 2;
-                            spawnedNpc.MaxHPBonus = 235;
-                            spawnedNpc.HP = spawnedNpc.MaxHP;
-
-                        }
-                        break;
-                    case 1409:
-                        {//Huntail (Boss Rush)
-
-                            map.Npc.Remove(npc);
-                            spawnedNpc.DefenseBuff = 2;
-                            spawnedNpc.SpDefBuff = 2;
-                            spawnedNpc.MaxHPBonus = 215;
-                            spawnedNpc.AttackBuff = 1;
-                            spawnedNpc.HP = spawnedNpc.MaxHP;
-
-                        }
-                        break;
-                    case 1410:
-                        {//Regice (Boss Rush)
-
-                            map.Npc.Remove(npc);
-                            spawnedNpc.DefenseBuff = 2;
-                            spawnedNpc.SpDefBuff = 1;
-                            spawnedNpc.MaxHPBonus = 150;
-                            spawnedNpc.HP = spawnedNpc.MaxHP;
-
-                        }
-                        break;
-                    case 1411:
-                        {//Froslass (Boss Rush)
-
-                            map.Npc.Remove(npc);
-                            spawnedNpc.DefenseBuff = 1;
-                            spawnedNpc.SpDefBuff = 1;
-                            spawnedNpc.EvasionBuff = 1;
-                            spawnedNpc.MaxHPBonus = 100;
-                            spawnedNpc.HP = spawnedNpc.MaxHP;
-
-                        }
-                        break;
-                    case 1412:
-                        {//Beartic (Boss Rush)
-
-                            map.Npc.Remove(npc);
-                            spawnedNpc.DefenseBuff = 2;
-                            spawnedNpc.SpDefBuff = 2;
-                            spawnedNpc.AttackBuff = 2;
-                            spawnedNpc.MaxHPBonus = 200;
-                            spawnedNpc.HP = spawnedNpc.MaxHP;
-
-                        }
-                        break;
-                    case 1413:
-                        {//Umbreon (Boss Rush)
-
-                            map.Npc.Remove(npc);
-                            spawnedNpc.DefenseBuff = 1;
-                            spawnedNpc.SpDefBuff = 2;
-                            spawnedNpc.MaxHPBonus = 200;
-                            spawnedNpc.HP = spawnedNpc.MaxHP;
-
-                        }
-                        break;
-                    case 1414:
-                        {//Mogok (Boss Rush)
-
-                            map.Npc.Remove(npc);
-                            spawnedNpc.DefenseBuff = 4;
-                            spawnedNpc.SpDefBuff = 4;
-                            spawnedNpc.AttackBuff = 5;
-                            spawnedNpc.SpeedBuff = 10;
-                            spawnedNpc.MaxHPBonus = 450;
-                            spawnedNpc.HP = spawnedNpc.MaxHP;
-
-                        }
-                        break;
-                    case 1415:
-                        {//Silvan (Boss Rush)
-
-                            map.Npc.Remove(npc);
-                            spawnedNpc.DefenseBuff = 3;
-                            spawnedNpc.SpDefBuff = 5;
-                            spawnedNpc.AttackBuff = 6;
-                            spawnedNpc.SpAtkBuff = 5;
-                            spawnedNpc.SpeedBuff = 10;
-                            spawnedNpc.MaxHPBonus = 400;
-                            spawnedNpc.HP = spawnedNpc.MaxHP;
-
-                        }
-                        break;
-                    case 1416:
-                        {//Erkenwald (Boss Rush)
-
-                            map.Npc.Remove(npc);
-                            spawnedNpc.DefenseBuff = 2;
-                            spawnedNpc.SpDefBuff = 2;
-                            spawnedNpc.AttackBuff = 3;
-                            spawnedNpc.SpAtkBuff = 3;
-                            spawnedNpc.SpeedBuff = 10;
-                            spawnedNpc.MaxHPBonus = 400;
-                            spawnedNpc.HP = spawnedNpc.MaxHP;
-
-                        }
-                        break;
-                    case 1417:
-                        {//Alistar (Boss Rush)
-
-                            map.Npc.Remove(npc);
-                            spawnedNpc.DefenseBuff = 3;
-                            spawnedNpc.SpDefBuff = 3;
-                            spawnedNpc.MaxHPBonus = 300;
-                            spawnedNpc.SpAtkBuff = 3;
-                            spawnedNpc.HP = spawnedNpc.MaxHP;
-
-                        }
-                        break;
-                    case 1397:
-                        {//Vespiquen
-
-                            map.Npc.Remove(npc);
-                            spawnedNpc.DefenseBuff = 1;
-                            spawnedNpc.SpDefBuff = 1;
-                            spawnedNpc.MaxHPBonus = 325;
-                            spawnedNpc.AttackBuff = 2;
-                            spawnedNpc.SpeedBuff = 10;
-                            spawnedNpc.HP = spawnedNpc.MaxHP;
-
-                        }
-                        break;
-                    case 177:
-                        {//Luxray
-
-                            map.Npc.Remove(npc);
-                            spawnedNpc.DefenseBuff = 2;
-                            spawnedNpc.SpDefBuff = 1;
-                            spawnedNpc.MaxHPBonus = 200;
-                            spawnedNpc.SpAtkBuff = 1;
-                            spawnedNpc.AttackBuff = 2;
-                            spawnedNpc.EvasionBuff = 2;
-                            spawnedNpc.SpeedBuff = 10;
-                            spawnedNpc.HP = spawnedNpc.MaxHP;
-
-                        }
-                        break;
-                    case 1192:
-                        {//Entei
-                            foreach (Client n in map.GetClients())
-                            {
-                                StoryManager.PlayStory(n, 381);
-                            }
-                            map.Npc.Remove(npc);
-                            spawnedNpc.DefenseBuff = 3;
-                            spawnedNpc.SpDefBuff = 3;
-                            spawnedNpc.MaxHPBonus = 300;
-                            spawnedNpc.SpAtkBuff = 3;
-                            spawnedNpc.AttackBuff = 3;
-                            spawnedNpc.HP = spawnedNpc.MaxHP;
-
-                        }
-                        break;
-                    case 1194:
-                        {//Suicune
-                            foreach (Client n in map.GetClients())
-                            {
-                                StoryManager.PlayStory(n, 382);
-                            }
-                            map.Npc.Remove(npc);
-                            spawnedNpc.DefenseBuff = 3;
-                            spawnedNpc.SpDefBuff = 3;
-                            spawnedNpc.MaxHPBonus = 300;
-                            spawnedNpc.SpAtkBuff = 3;
-                            spawnedNpc.AttackBuff = 3;
-                            spawnedNpc.HP = spawnedNpc.MaxHP;
-
-                        }
-                        break;
-                    case 1193:
-                        {//Raikou
-                            foreach (Client n in map.GetClients())
-                            {
-                                StoryManager.PlayStory(n, 380);
-                            }
-                            map.Npc.Remove(npc);
-                            spawnedNpc.DefenseBuff = 3;
-                            spawnedNpc.SpDefBuff = 3;
-                            spawnedNpc.MaxHPBonus = 300;
-                            spawnedNpc.SpAtkBuff = 3;
-                            spawnedNpc.AttackBuff = 3;
-                            spawnedNpc.HP = spawnedNpc.MaxHP;
-
-                        }
-                        break;
-                    case 1195:
-                        {//Flareon
-
-                            map.Npc.Remove(npc);
-                            spawnedNpc.DefenseBuff = 2;
-                            spawnedNpc.SpDefBuff = 4;
-                            spawnedNpc.MaxHPBonus = 350;
-                            spawnedNpc.AttackBuff = 3;
-                            spawnedNpc.SpeedBuff = 8;
-                            spawnedNpc.SpAtkBuff = 1;
-                            spawnedNpc.HP = spawnedNpc.MaxHP;
-
-                        }
-                        break;
-                    case 1196:
-                        {//Leafeon
-
-                            map.Npc.Remove(npc);
-                            spawnedNpc.DefenseBuff = 3;
-                            spawnedNpc.SpDefBuff = 3;
-                            spawnedNpc.MaxHPBonus = 385;
-                            spawnedNpc.AttackBuff = 3;
-                            spawnedNpc.SpeedBuff = 7;
-                            spawnedNpc.HP = spawnedNpc.MaxHP;
-
-                        }
-                        break;
-                    case 1197:
-                        {//Vaporeon
-
-                            map.Npc.Remove(npc);
-                            spawnedNpc.DefenseBuff = 3;
-                            spawnedNpc.SpDefBuff = 5;
-                            spawnedNpc.MaxHPBonus = 425;
-                            spawnedNpc.SpAtkBuff = 2;
-                            spawnedNpc.SpeedBuff = 9;
-                            spawnedNpc.HP = spawnedNpc.MaxHP;
-
-                        }
-                        break;
-                    case 1198:
-                        {//Glaceon
-
-                            map.Npc.Remove(npc);
-                            spawnedNpc.DefenseBuff = 1;
-                            spawnedNpc.SpDefBuff = 2;
-                            spawnedNpc.MaxHPBonus = 350;
-                            spawnedNpc.SpAtkBuff = 4;
-                            spawnedNpc.EvasionBuff = 2;
-                            spawnedNpc.AccuracyBuff = 3;
-                            spawnedNpc.SpeedBuff = 6;
-                            spawnedNpc.HP = spawnedNpc.MaxHP;
-
-                        }
-                        break;
-                    case 1199:
-                        {//Jolteon
-
-                            map.Npc.Remove(npc);
-                            spawnedNpc.DefenseBuff = 1;
-                            spawnedNpc.SpDefBuff = 1;
-                            spawnedNpc.MaxHPBonus = 300;
-                            spawnedNpc.SpAtkBuff = 4;
-                            spawnedNpc.SpeedBuff = 9;
-                            spawnedNpc.EvasionBuff = 2;
-                            spawnedNpc.HP = spawnedNpc.MaxHP;
-
-                        }
-                        break;
-                    case 1200:
-                        {//Umbreon
-
-                            map.Npc.Remove(npc);
-                            spawnedNpc.DefenseBuff = 3;
-                            spawnedNpc.SpDefBuff = 2;
-                            spawnedNpc.MaxHPBonus = 500;
-                            spawnedNpc.AttackBuff = 2;
-                            spawnedNpc.SpeedBuff = 4;
-                            spawnedNpc.HP = spawnedNpc.MaxHP;
-
-                        }
-                        break;
-                    case 1201:
-                        {//Espeon
-
-                            map.Npc.Remove(npc);
-                            spawnedNpc.DefenseBuff = 2;
-                            spawnedNpc.SpDefBuff = 2;
-                            spawnedNpc.MaxHPBonus = 350;
-                            spawnedNpc.SpAtkBuff = 2;
-                            spawnedNpc.SpeedBuff = 8;
-                            spawnedNpc.EvasionBuff = 1;
-                            spawnedNpc.HP = spawnedNpc.MaxHP;
-
-                        }
-                        break;
-                    case 1202:
-                        {//Ho-Oh
-
-                            map.Npc.Remove(npc);
-                            spawnedNpc.DefenseBuff = 3;
-                            spawnedNpc.SpDefBuff = 4;
-                            spawnedNpc.MaxHPBonus = 850;
-                            spawnedNpc.AttackBuff = 3;
-                            spawnedNpc.SpeedBuff = 10;
-                            spawnedNpc.HP = spawnedNpc.MaxHP;
-
-                        }
-                        break;
-                    case 806:
-                        {//rotom
-
-                            spawnedNpc.MaxHPBonus = 200;
-                            spawnedNpc.AttackBuff = 1;
-                            spawnedNpc.SpAtkBuff = 1;
-                            spawnedNpc.HP = spawnedNpc.MaxHP;
-                        }
-                        break;
-                    case 807:
-                        {//rotom
-
-                            spawnedNpc.MaxHPBonus = 200;
-                            spawnedNpc.AttackBuff = 1;
-                            spawnedNpc.SpAtkBuff = 1;
-                            spawnedNpc.HP = spawnedNpc.MaxHP;
-                        }
-                        break;
-                    case 434:
-                        {//rotom
-
-                            spawnedNpc.MaxHPBonus = 200;
-                            spawnedNpc.AttackBuff = 1;
-                            spawnedNpc.SpAtkBuff = 1;
-                            spawnedNpc.HP = spawnedNpc.MaxHP;
-                        }
-                        break;
-                    case 422:
-                        {//rotom
-
-                            spawnedNpc.MaxHPBonus = 200;
-                            spawnedNpc.AttackBuff = 1;
-                            spawnedNpc.SpAtkBuff = 1;
-                            spawnedNpc.HP = spawnedNpc.MaxHP;
-                        }
-                        break;
-                    case 886:
-                        {//lapras
-
-                            spawnedNpc.MaxHPBonus = 550;
-                            spawnedNpc.SpeedBuff = 3;
-                            spawnedNpc.SpDefBuff = 3;
-                            spawnedNpc.DefenseBuff = 3;
-                            spawnedNpc.SpAtkBuff = 3;
-                            spawnedNpc.HP = spawnedNpc.MaxHP;
-                        }
-                        break;
-                    case 397:
-                        {//golem
-
-                            spawnedNpc.DefenseBuff = 1;
-                            spawnedNpc.SpeedBuff = 8;
-                            spawnedNpc.SpDefBuff = 1;
-                            spawnedNpc.AttackBuff = 3;
-                            spawnedNpc.MaxHPBonus = 250;
-                            spawnedNpc.HP = spawnedNpc.MaxHP;
-                        }
-                        break;
-                    case 578:
-                        {//froslass
-
-                            spawnedNpc.MaxHPBonus = 350;
-                            spawnedNpc.SpeedBuff = 7;
-                            spawnedNpc.SpAtkBuff = 3;
-                            spawnedNpc.EvasionBuff = 3;
-                            spawnedNpc.HP = spawnedNpc.MaxHP;
-                        }
-                        break;
-                    case 1527:
-                        {//Nidoking
-
-                            spawnedNpc.MaxHPBonus = 350;
-                            spawnedNpc.SpeedBuff = 10;
-                            spawnedNpc.SpAtkBuff = 3;
-                            spawnedNpc.DefenseBuff = 2;
-                            spawnedNpc.SpDefBuff = 2;
-                            spawnedNpc.HP = spawnedNpc.MaxHP;
-                        }
-                        break;
-                    case 1528:
-                        {//Nidoking
-
-                            spawnedNpc.MaxHPBonus = 400;
-                            spawnedNpc.SpeedBuff = 10;
-                            spawnedNpc.SpAtkBuff = 1;
-                            spawnedNpc.DefenseBuff = 3;
-                            spawnedNpc.SpDefBuff = 3;
-                            spawnedNpc.HP = spawnedNpc.MaxHP;
-                        }
-                        break;
-                    case 1529:
-                        {//Regirock
-
-                            spawnedNpc.MaxHPBonus = 850;
-                            spawnedNpc.SpeedBuff = 10;
-                            spawnedNpc.AttackBuff = 3;
-                            spawnedNpc.DefenseBuff = 2;
-                            spawnedNpc.SpDefBuff = 4;
-                            spawnedNpc.HP = spawnedNpc.MaxHP;
-                        }
-                        break;
-                    case 1521:
-                        {//Steelix
-
-                            spawnedNpc.MaxHPBonus = 255;
-                            spawnedNpc.SpDefBuff = 4;
-                            spawnedNpc.AttackBuff = 1;
-                            spawnedNpc.DefenseBuff = 2;
-                            spawnedNpc.HP = spawnedNpc.MaxHP;
-                        }
-                        break;
-                    case 1523:
-                        {//Aggron
-
-                            spawnedNpc.MaxHPBonus = 155;
-                            spawnedNpc.SpDefBuff = 3;
-                            spawnedNpc.AttackBuff = 1;
-                            spawnedNpc.DefenseBuff = 2;
-                            spawnedNpc.HP = spawnedNpc.MaxHP;
-                        }
-                        break;
-                    case 1522:
-                        {//Golem
-
-                            spawnedNpc.MaxHPBonus = 125;
-                            spawnedNpc.SpDefBuff = 2;
-                            spawnedNpc.AttackBuff = 1;
-                            spawnedNpc.DefenseBuff = 2;
-                            spawnedNpc.HP = spawnedNpc.MaxHP;
-                        }
-                        break;
-                    case 1520:
-                        {//Crobat
-
-                            spawnedNpc.MaxHPBonus = 100;
-                            spawnedNpc.SpDefBuff = 2;
-                            spawnedNpc.AttackBuff = 3;
-                            spawnedNpc.DefenseBuff = 1;
-                            spawnedNpc.HP = spawnedNpc.MaxHP;
-                        }
-                        break;
-                    case 389:
-                        {//rhyperior
-
-                            spawnedNpc.MaxHPBonus = 400;
-                            spawnedNpc.AttackBuff = 2;
-                            spawnedNpc.SpeedBuff = 8;
-                            spawnedNpc.DefenseBuff = 2;
-                            spawnedNpc.SpDefBuff = 2;
-                            spawnedNpc.HP = spawnedNpc.MaxHP;
-                        }
-                        break;
-                    case 145:
-                        {//mamoswine
-
-                            spawnedNpc.MaxHPBonus = 400;
-                            spawnedNpc.AttackBuff = 2;
-                            spawnedNpc.SpeedBuff = 6;
-                            spawnedNpc.DefenseBuff = 2;
-                            spawnedNpc.SpDefBuff = 2;
-                            spawnedNpc.HP = spawnedNpc.MaxHP;
-                        }
-                        break;
-                    case 381:
-                        {//rhydon
-
-                            spawnedNpc.MaxHPBonus = 250;
-                            spawnedNpc.SpeedBuff = 6;
-                            spawnedNpc.AttackBuff = 1;
-                            spawnedNpc.SpDefBuff = 1;
-                            spawnedNpc.HP = spawnedNpc.MaxHP;
-                        }
-                        break;
-                    case 640:
-                        {//huntail
-
-                            spawnedNpc.MaxHPBonus = 200;
-                            spawnedNpc.SpAtkBuff = 3;
-                            spawnedNpc.HP = spawnedNpc.MaxHP;
-                        }
-                        break;
-                    case 641:
-                        {//gorebyss
-
-                            spawnedNpc.MaxHPBonus = 250;
-                            spawnedNpc.SpDefBuff = 2;
-                            spawnedNpc.HP = spawnedNpc.MaxHP;
-                        }
-                        break;
-                    case 579:
-                        {//xatu
-
-                            spawnedNpc.MaxHPBonus = 200;
-                            spawnedNpc.SpAtkBuff = 4;
-                            spawnedNpc.HP = spawnedNpc.MaxHP;
-                        }
-                        break;
-                    case 481:
-                        {//weepinbell
-
-                            spawnedNpc.MaxHPBonus = 125;
-                            spawnedNpc.AttackBuff = 1;
-                            spawnedNpc.DefenseBuff = 1;
-                            spawnedNpc.SpeedBuff = 3;
-                            spawnedNpc.HP = spawnedNpc.MaxHP;
-                        }
-                        break;
-                    case 1220:
-                        {//Groundon
-
-                            spawnedNpc.MaxHPBonus = 775;
-                            spawnedNpc.SpeedBuff = 10;
-                            spawnedNpc.SpDefBuff = 6;
-                            spawnedNpc.DefenseBuff = 6;
-                            spawnedNpc.AttackBuff = 5;
-                            spawnedNpc.SpAtkBuff = 5;
-                            spawnedNpc.HP = spawnedNpc.MaxHP;
-                        }
-                        break;
-                    case 1060:
-                        {//Abomsnow
-
-                            spawnedNpc.MaxHPBonus = 400;
-                            spawnedNpc.SpeedBuff = 1;
-                            spawnedNpc.SpDefBuff = 2;
-                            spawnedNpc.DefenseBuff = 2;
-                            spawnedNpc.HP = spawnedNpc.MaxHP;
-                        }
-                        break;
-                    case 480:
-                        {//vileplume
-
-                            spawnedNpc.MaxHPBonus = 200;
-                            spawnedNpc.SpAtkBuff = 2;
-                            spawnedNpc.DefenseBuff = 1;
-                            spawnedNpc.SpDefBuff = 1;
-                            spawnedNpc.SpeedBuff = 6;
-                            spawnedNpc.HP = spawnedNpc.MaxHP;
-                        }
-                        break;
-                    case 1046:
-                        {//beartic
-                            spawnedNpc.MaxHPBonus = 450;
-                            spawnedNpc.HP = spawnedNpc.MaxHP;
-                            spawnedNpc.DefenseBuff = 2;
-                            spawnedNpc.SpDefBuff = 2;
-                            spawnedNpc.EvasionBuff = 1;
-                            spawnedNpc.AttackBuff = 2;
-                            spawnedNpc.SpeedBuff = 4;
-                        }
-                        break;
-                    case 1047:
-                        {//umbreon
-                            spawnedNpc.MaxHPBonus = 450;
-                            spawnedNpc.HP = spawnedNpc.MaxHP;
-                            spawnedNpc.DefenseBuff = 4;
-                            spawnedNpc.SpDefBuff = 4;
-                            spawnedNpc.AttackBuff = 2;
-                            spawnedNpc.SpeedBuff = 6;
-                        }
-                        break;
-                    case 1048:
-                        {//hitmonlee
-                            spawnedNpc.MaxHPBonus = 300;
-                            spawnedNpc.HP = spawnedNpc.MaxHP;
-                            spawnedNpc.AttackBuff = 5;
-                            spawnedNpc.DefenseBuff = 2;
-                            spawnedNpc.SpDefBuff = 2;
-                            spawnedNpc.SpeedBuff = 8;
-                        }
-                        break;
-                    case 1049:
-                        {//grumpig
-                            spawnedNpc.MaxHPBonus = 250;
-                            spawnedNpc.HP = spawnedNpc.MaxHP;
-                            spawnedNpc.SpAtkBuff = 5;
-                            spawnedNpc.DefenseBuff = 2;
-                            spawnedNpc.SpDefBuff = 2;
-                            spawnedNpc.SpeedBuff = 6;
-                        }
-                        break;
-                    case 1050:
-                        {//clefable
-                            spawnedNpc.MaxHPBonus = 250;
-                            spawnedNpc.HP = spawnedNpc.MaxHP;
-                            spawnedNpc.EvasionBuff = 3;
-                            spawnedNpc.SpDefBuff = 2;
-                            spawnedNpc.DefenseBuff = 2;
-                            spawnedNpc.SpeedBuff = 8;
-                        }
-                        break;
-                    case 800:
-                        {//mew
-                            map.Npc.Remove(npc);
-                            spawnedNpc.MaxHPBonus = 50;
-                            spawnedNpc.HP = spawnedNpc.MaxHP;
-                            spawnedNpc.AttackBuff = 1;
-                            spawnedNpc.DefenseBuff = 1;
-                            spawnedNpc.SpAtkBuff = 1;
-                            spawnedNpc.SpDefBuff = 1;
-                            spawnedNpc.AccuracyBuff = 1;
-                            spawnedNpc.EvasionBuff = 1;
-                            AddExtraStatus(spawnedNpc, null, map, "Invisible", 1000, null, "", hitlist, false);
-                            TargetCollection targets = MoveProcessor.GetTargetsInRange(Enums.MoveRange.Floor, 0, map, null, spawnedNpc.X, spawnedNpc.Y, Enums.Direction.Up, true, true, true);
-                            for (int i = 0; i < targets.Count; i++)
-                            {
-                                if (targets[i].CharacterType == Enums.CharacterType.Recruit)
-                                {
-                                    Messenger.PlayMusic(((Recruit)targets[i]).Owner, "PMDB) Friend Area ~ Final Island.ogg");
-                                }
-                            }
-                        }
-                        break;
-                    case 846:
-                        {//zorua
-
-                            map.Npc.Remove(npc);
-                        }
-                        break;
-                    case 1394:
-                        {//Scyther
-
-                            map.Npc.Remove(npc);
-                        }
-                        break;
-                    case 1395:
-                        {//Pinsir
-
-                            map.Npc.Remove(npc);
-                        }
-                        break;
-                    case 936:
-                        {//vanilluxe
-                            //foreach (Client n in map.GetClients()) {
-                            //    StoryManager.PlayStory(n, 187);
-                            //}
-                            map.Npc.Remove(npc);
-                            spawnedNpc.MaxHPBonus = 200;
-                            spawnedNpc.HP = spawnedNpc.MaxHP;
-                        }
-                        break;
-                    case 1061:
-                        {//ARTICUNO
-                            //map.Npc.Remove(npc);
-                            spawnedNpc.MaxHPBonus = 300;
-                            spawnedNpc.HP = spawnedNpc.MaxHP;
-                            if (map.PlayersOnMap.Count == 1)
-                            {
-                                InventoryItem item = new InventoryItem();
-                                item.Num = 156;
-                                item.Tag = "144";
-                                spawnedNpc.GiveItem(item);
-                            }
-                        }
-                        break;
-                }
+                // switch (spawnedNpc.Num)
+                // {
+                //     case 33:
+                //     case 230:
+                //     case 244:
+                //     case 245:
+                //         {//friendly npcs
+                //             AddExtraStatus(spawnedNpc, map, "Immobilize", 0, null, "", hitlist, false);
+                //         }
+                //         break;
+                //     case 32:
+                //         {//kecleon
+
+                //             map.Npc.Remove(npc);
+                //         }
+                //         break;
+                //     case 1233:
+                //         {//hitmonchan
+
+                //             map.Npc.Remove(npc);
+                //             spawnedNpc.DefenseBuff = 3;
+                //             spawnedNpc.SpDefBuff = 3;
+                //             spawnedNpc.MaxHPBonus = 300;
+                //             spawnedNpc.AttackBuff = 1;
+                //             spawnedNpc.SpeedBuff = 8;
+                //             spawnedNpc.HP = spawnedNpc.MaxHP;
+
+                //         }
+                //         break;
+                //     case 1234:
+                //         {//hitmonlee
+
+                //             map.Npc.Remove(npc);
+                //             spawnedNpc.DefenseBuff = 1;
+                //             spawnedNpc.SpDefBuff = 1;
+                //             spawnedNpc.MaxHPBonus = 340;
+                //             spawnedNpc.AttackBuff = 3;
+                //             spawnedNpc.SpeedBuff = 8;
+                //             spawnedNpc.HP = spawnedNpc.MaxHP;
+
+                //         }
+                //         break;
+                //     case 1235:
+                //         {//hitmontop
+
+                //             map.Npc.Remove(npc);
+                //             spawnedNpc.DefenseBuff = 3;
+                //             spawnedNpc.SpDefBuff = 3;
+                //             spawnedNpc.MaxHPBonus = 480;
+                //             spawnedNpc.AttackBuff = 3;
+                //             spawnedNpc.SpeedBuff = 10;
+                //             spawnedNpc.HP = spawnedNpc.MaxHP;
+
+                //         }
+                //         break;
+                //     case 306:
+                //         {//regice
+                //             foreach (Client n in map.GetClients())
+                //             {
+                //                 StoryManager.PlayStory(n, 259);
+                //             }
+                //             map.Npc.Remove(npc);
+                //             spawnedNpc.DefenseBuff = 10;
+                //             spawnedNpc.SpDefBuff = 10;
+                //             spawnedNpc.MaxHPBonus = 550;
+                //             spawnedNpc.SpAtkBuff = 5;
+                //             spawnedNpc.SpeedBuff = 10;
+                //             spawnedNpc.HP = spawnedNpc.MaxHP;
+
+                //         }
+                //         break;
+                //     case 1401:
+                //         {//Vespiquen (Boss Rush)
+
+                //             map.Npc.Remove(npc);
+                //             spawnedNpc.DefenseBuff = 1;
+                //             spawnedNpc.SpDefBuff = 1;
+                //             spawnedNpc.MaxHPBonus = 150;
+                //             spawnedNpc.HP = spawnedNpc.MaxHP;
+
+                //         }
+                //         break;
+                //     case 1402:
+                //         {//Roselia (Boss Rush)
+
+                //             map.Npc.Remove(npc);
+                //             spawnedNpc.DefenseBuff = 1;
+                //             spawnedNpc.SpDefBuff = 1;
+                //             spawnedNpc.MaxHPBonus = 100;
+                //             spawnedNpc.HP = spawnedNpc.MaxHP;
+
+                //         }
+                //         break;
+                //     case 1403:
+                //         {//Vileplume (Boss Rush)
+
+                //             map.Npc.Remove(npc);
+                //             spawnedNpc.DefenseBuff = 1;
+                //             spawnedNpc.SpDefBuff = 1;
+                //             spawnedNpc.MaxHPBonus = 100;
+                //             spawnedNpc.HP = spawnedNpc.MaxHP;
+
+                //         }
+                //         break;
+                //     case 1404:
+                //         {//Rhyperior (Boss Rush)
+
+                //             map.Npc.Remove(npc);
+                //             spawnedNpc.DefenseBuff = 2;
+                //             spawnedNpc.SpDefBuff = 2;
+                //             spawnedNpc.MaxHPBonus = 195;
+                //             spawnedNpc.AttackBuff = 1;
+                //             spawnedNpc.HP = spawnedNpc.MaxHP;
+
+                //         }
+                //         break;
+                //     case 1405:
+                //         {//Golem (Boss Rush)
+
+                //             map.Npc.Remove(npc);
+                //             spawnedNpc.DefenseBuff = 2;
+                //             spawnedNpc.SpDefBuff = 2;
+                //             spawnedNpc.MaxHPBonus = 165;
+                //             spawnedNpc.HP = spawnedNpc.MaxHP;
+
+                //         }
+                //         break;
+                //     case 1406:
+                //         {//Rhydon (Boss Rush)
+
+                //             map.Npc.Remove(npc);
+                //             spawnedNpc.DefenseBuff = 2;
+                //             spawnedNpc.SpDefBuff = 2;
+                //             spawnedNpc.MaxHPBonus = 165;
+                //             spawnedNpc.HP = spawnedNpc.MaxHP;
+
+                //         }
+                //         break;
+                //     case 1407:
+                //         {//Lapras (Boss Rush)
+
+                //             map.Npc.Remove(npc);
+                //             spawnedNpc.DefenseBuff = 2;
+                //             spawnedNpc.SpDefBuff = 3;
+                //             spawnedNpc.MaxHPBonus = 335;
+                //             spawnedNpc.HP = spawnedNpc.MaxHP;
+
+                //         }
+                //         break;
+                //     case 1408:
+                //         {//Gorebyss (Boss Rush)
+
+                //             map.Npc.Remove(npc);
+                //             spawnedNpc.DefenseBuff = 2;
+                //             spawnedNpc.SpDefBuff = 2;
+                //             spawnedNpc.MaxHPBonus = 235;
+                //             spawnedNpc.HP = spawnedNpc.MaxHP;
+
+                //         }
+                //         break;
+                //     case 1409:
+                //         {//Huntail (Boss Rush)
+
+                //             map.Npc.Remove(npc);
+                //             spawnedNpc.DefenseBuff = 2;
+                //             spawnedNpc.SpDefBuff = 2;
+                //             spawnedNpc.MaxHPBonus = 215;
+                //             spawnedNpc.AttackBuff = 1;
+                //             spawnedNpc.HP = spawnedNpc.MaxHP;
+
+                //         }
+                //         break;
+                //     case 1410:
+                //         {//Regice (Boss Rush)
+
+                //             map.Npc.Remove(npc);
+                //             spawnedNpc.DefenseBuff = 2;
+                //             spawnedNpc.SpDefBuff = 1;
+                //             spawnedNpc.MaxHPBonus = 150;
+                //             spawnedNpc.HP = spawnedNpc.MaxHP;
+
+                //         }
+                //         break;
+                //     case 1411:
+                //         {//Froslass (Boss Rush)
+
+                //             map.Npc.Remove(npc);
+                //             spawnedNpc.DefenseBuff = 1;
+                //             spawnedNpc.SpDefBuff = 1;
+                //             spawnedNpc.EvasionBuff = 1;
+                //             spawnedNpc.MaxHPBonus = 100;
+                //             spawnedNpc.HP = spawnedNpc.MaxHP;
+
+                //         }
+                //         break;
+                //     case 1412:
+                //         {//Beartic (Boss Rush)
+
+                //             map.Npc.Remove(npc);
+                //             spawnedNpc.DefenseBuff = 2;
+                //             spawnedNpc.SpDefBuff = 2;
+                //             spawnedNpc.AttackBuff = 2;
+                //             spawnedNpc.MaxHPBonus = 200;
+                //             spawnedNpc.HP = spawnedNpc.MaxHP;
+
+                //         }
+                //         break;
+                //     case 1413:
+                //         {//Umbreon (Boss Rush)
+
+                //             map.Npc.Remove(npc);
+                //             spawnedNpc.DefenseBuff = 1;
+                //             spawnedNpc.SpDefBuff = 2;
+                //             spawnedNpc.MaxHPBonus = 200;
+                //             spawnedNpc.HP = spawnedNpc.MaxHP;
+
+                //         }
+                //         break;
+                //     case 1414:
+                //         {//Mogok (Boss Rush)
+
+                //             map.Npc.Remove(npc);
+                //             spawnedNpc.DefenseBuff = 4;
+                //             spawnedNpc.SpDefBuff = 4;
+                //             spawnedNpc.AttackBuff = 5;
+                //             spawnedNpc.SpeedBuff = 10;
+                //             spawnedNpc.MaxHPBonus = 450;
+                //             spawnedNpc.HP = spawnedNpc.MaxHP;
+
+                //         }
+                //         break;
+                //     case 1415:
+                //         {//Silvan (Boss Rush)
+
+                //             map.Npc.Remove(npc);
+                //             spawnedNpc.DefenseBuff = 3;
+                //             spawnedNpc.SpDefBuff = 5;
+                //             spawnedNpc.AttackBuff = 6;
+                //             spawnedNpc.SpAtkBuff = 5;
+                //             spawnedNpc.SpeedBuff = 10;
+                //             spawnedNpc.MaxHPBonus = 400;
+                //             spawnedNpc.HP = spawnedNpc.MaxHP;
+
+                //         }
+                //         break;
+                //     case 1416:
+                //         {//Erkenwald (Boss Rush)
+
+                //             map.Npc.Remove(npc);
+                //             spawnedNpc.DefenseBuff = 2;
+                //             spawnedNpc.SpDefBuff = 2;
+                //             spawnedNpc.AttackBuff = 3;
+                //             spawnedNpc.SpAtkBuff = 3;
+                //             spawnedNpc.SpeedBuff = 10;
+                //             spawnedNpc.MaxHPBonus = 400;
+                //             spawnedNpc.HP = spawnedNpc.MaxHP;
+
+                //         }
+                //         break;
+                //     case 1417:
+                //         {//Alistar (Boss Rush)
+
+                //             map.Npc.Remove(npc);
+                //             spawnedNpc.DefenseBuff = 3;
+                //             spawnedNpc.SpDefBuff = 3;
+                //             spawnedNpc.MaxHPBonus = 300;
+                //             spawnedNpc.SpAtkBuff = 3;
+                //             spawnedNpc.HP = spawnedNpc.MaxHP;
+
+                //         }
+                //         break;
+                //     case 1397:
+                //         {//Vespiquen
+
+                //             map.Npc.Remove(npc);
+                //             spawnedNpc.DefenseBuff = 1;
+                //             spawnedNpc.SpDefBuff = 1;
+                //             spawnedNpc.MaxHPBonus = 325;
+                //             spawnedNpc.AttackBuff = 2;
+                //             spawnedNpc.SpeedBuff = 10;
+                //             spawnedNpc.HP = spawnedNpc.MaxHP;
+
+                //         }
+                //         break;
+                //     case 177:
+                //         {//Luxray
+
+                //             map.Npc.Remove(npc);
+                //             spawnedNpc.DefenseBuff = 2;
+                //             spawnedNpc.SpDefBuff = 1;
+                //             spawnedNpc.MaxHPBonus = 200;
+                //             spawnedNpc.SpAtkBuff = 1;
+                //             spawnedNpc.AttackBuff = 2;
+                //             spawnedNpc.EvasionBuff = 2;
+                //             spawnedNpc.SpeedBuff = 10;
+                //             spawnedNpc.HP = spawnedNpc.MaxHP;
+
+                //         }
+                //         break;
+                //     case 1192:
+                //         {//Entei
+                //             foreach (Client n in map.GetClients())
+                //             {
+                //                 StoryManager.PlayStory(n, 381);
+                //             }
+                //             map.Npc.Remove(npc);
+                //             spawnedNpc.DefenseBuff = 3;
+                //             spawnedNpc.SpDefBuff = 3;
+                //             spawnedNpc.MaxHPBonus = 300;
+                //             spawnedNpc.SpAtkBuff = 3;
+                //             spawnedNpc.AttackBuff = 3;
+                //             spawnedNpc.HP = spawnedNpc.MaxHP;
+
+                //         }
+                //         break;
+                //     case 1194:
+                //         {//Suicune
+                //             foreach (Client n in map.GetClients())
+                //             {
+                //                 StoryManager.PlayStory(n, 382);
+                //             }
+                //             map.Npc.Remove(npc);
+                //             spawnedNpc.DefenseBuff = 3;
+                //             spawnedNpc.SpDefBuff = 3;
+                //             spawnedNpc.MaxHPBonus = 300;
+                //             spawnedNpc.SpAtkBuff = 3;
+                //             spawnedNpc.AttackBuff = 3;
+                //             spawnedNpc.HP = spawnedNpc.MaxHP;
+
+                //         }
+                //         break;
+                //     case 1193:
+                //         {//Raikou
+                //             foreach (Client n in map.GetClients())
+                //             {
+                //                 StoryManager.PlayStory(n, 380);
+                //             }
+                //             map.Npc.Remove(npc);
+                //             spawnedNpc.DefenseBuff = 3;
+                //             spawnedNpc.SpDefBuff = 3;
+                //             spawnedNpc.MaxHPBonus = 300;
+                //             spawnedNpc.SpAtkBuff = 3;
+                //             spawnedNpc.AttackBuff = 3;
+                //             spawnedNpc.HP = spawnedNpc.MaxHP;
+
+                //         }
+                //         break;
+                //     case 1195:
+                //         {//Flareon
+
+                //             map.Npc.Remove(npc);
+                //             spawnedNpc.DefenseBuff = 2;
+                //             spawnedNpc.SpDefBuff = 4;
+                //             spawnedNpc.MaxHPBonus = 350;
+                //             spawnedNpc.AttackBuff = 3;
+                //             spawnedNpc.SpeedBuff = 8;
+                //             spawnedNpc.SpAtkBuff = 1;
+                //             spawnedNpc.HP = spawnedNpc.MaxHP;
+
+                //         }
+                //         break;
+                //     case 1196:
+                //         {//Leafeon
+
+                //             map.Npc.Remove(npc);
+                //             spawnedNpc.DefenseBuff = 3;
+                //             spawnedNpc.SpDefBuff = 3;
+                //             spawnedNpc.MaxHPBonus = 385;
+                //             spawnedNpc.AttackBuff = 3;
+                //             spawnedNpc.SpeedBuff = 7;
+                //             spawnedNpc.HP = spawnedNpc.MaxHP;
+
+                //         }
+                //         break;
+                //     case 1197:
+                //         {//Vaporeon
+
+                //             map.Npc.Remove(npc);
+                //             spawnedNpc.DefenseBuff = 3;
+                //             spawnedNpc.SpDefBuff = 5;
+                //             spawnedNpc.MaxHPBonus = 425;
+                //             spawnedNpc.SpAtkBuff = 2;
+                //             spawnedNpc.SpeedBuff = 9;
+                //             spawnedNpc.HP = spawnedNpc.MaxHP;
+
+                //         }
+                //         break;
+                //     case 1198:
+                //         {//Glaceon
+
+                //             map.Npc.Remove(npc);
+                //             spawnedNpc.DefenseBuff = 1;
+                //             spawnedNpc.SpDefBuff = 2;
+                //             spawnedNpc.MaxHPBonus = 350;
+                //             spawnedNpc.SpAtkBuff = 4;
+                //             spawnedNpc.EvasionBuff = 2;
+                //             spawnedNpc.AccuracyBuff = 3;
+                //             spawnedNpc.SpeedBuff = 6;
+                //             spawnedNpc.HP = spawnedNpc.MaxHP;
+
+                //         }
+                //         break;
+                //     case 1199:
+                //         {//Jolteon
+
+                //             map.Npc.Remove(npc);
+                //             spawnedNpc.DefenseBuff = 1;
+                //             spawnedNpc.SpDefBuff = 1;
+                //             spawnedNpc.MaxHPBonus = 300;
+                //             spawnedNpc.SpAtkBuff = 4;
+                //             spawnedNpc.SpeedBuff = 9;
+                //             spawnedNpc.EvasionBuff = 2;
+                //             spawnedNpc.HP = spawnedNpc.MaxHP;
+
+                //         }
+                //         break;
+                //     case 1200:
+                //         {//Umbreon
+
+                //             map.Npc.Remove(npc);
+                //             spawnedNpc.DefenseBuff = 3;
+                //             spawnedNpc.SpDefBuff = 2;
+                //             spawnedNpc.MaxHPBonus = 500;
+                //             spawnedNpc.AttackBuff = 2;
+                //             spawnedNpc.SpeedBuff = 4;
+                //             spawnedNpc.HP = spawnedNpc.MaxHP;
+
+                //         }
+                //         break;
+                //     case 1201:
+                //         {//Espeon
+
+                //             map.Npc.Remove(npc);
+                //             spawnedNpc.DefenseBuff = 2;
+                //             spawnedNpc.SpDefBuff = 2;
+                //             spawnedNpc.MaxHPBonus = 350;
+                //             spawnedNpc.SpAtkBuff = 2;
+                //             spawnedNpc.SpeedBuff = 8;
+                //             spawnedNpc.EvasionBuff = 1;
+                //             spawnedNpc.HP = spawnedNpc.MaxHP;
+
+                //         }
+                //         break;
+                //     case 1202:
+                //         {//Ho-Oh
+
+                //             map.Npc.Remove(npc);
+                //             spawnedNpc.DefenseBuff = 3;
+                //             spawnedNpc.SpDefBuff = 4;
+                //             spawnedNpc.MaxHPBonus = 850;
+                //             spawnedNpc.AttackBuff = 3;
+                //             spawnedNpc.SpeedBuff = 10;
+                //             spawnedNpc.HP = spawnedNpc.MaxHP;
+
+                //         }
+                //         break;
+                //     case 806:
+                //         {//rotom
+
+                //             spawnedNpc.MaxHPBonus = 200;
+                //             spawnedNpc.AttackBuff = 1;
+                //             spawnedNpc.SpAtkBuff = 1;
+                //             spawnedNpc.HP = spawnedNpc.MaxHP;
+                //         }
+                //         break;
+                //     case 807:
+                //         {//rotom
+
+                //             spawnedNpc.MaxHPBonus = 200;
+                //             spawnedNpc.AttackBuff = 1;
+                //             spawnedNpc.SpAtkBuff = 1;
+                //             spawnedNpc.HP = spawnedNpc.MaxHP;
+                //         }
+                //         break;
+                //     case 434:
+                //         {//rotom
+
+                //             spawnedNpc.MaxHPBonus = 200;
+                //             spawnedNpc.AttackBuff = 1;
+                //             spawnedNpc.SpAtkBuff = 1;
+                //             spawnedNpc.HP = spawnedNpc.MaxHP;
+                //         }
+                //         break;
+                //     case 422:
+                //         {//rotom
+
+                //             spawnedNpc.MaxHPBonus = 200;
+                //             spawnedNpc.AttackBuff = 1;
+                //             spawnedNpc.SpAtkBuff = 1;
+                //             spawnedNpc.HP = spawnedNpc.MaxHP;
+                //         }
+                //         break;
+                //     case 886:
+                //         {//lapras
+
+                //             spawnedNpc.MaxHPBonus = 550;
+                //             spawnedNpc.SpeedBuff = 3;
+                //             spawnedNpc.SpDefBuff = 3;
+                //             spawnedNpc.DefenseBuff = 3;
+                //             spawnedNpc.SpAtkBuff = 3;
+                //             spawnedNpc.HP = spawnedNpc.MaxHP;
+                //         }
+                //         break;
+                //     case 397:
+                //         {//golem
+
+                //             spawnedNpc.DefenseBuff = 1;
+                //             spawnedNpc.SpeedBuff = 8;
+                //             spawnedNpc.SpDefBuff = 1;
+                //             spawnedNpc.AttackBuff = 3;
+                //             spawnedNpc.MaxHPBonus = 250;
+                //             spawnedNpc.HP = spawnedNpc.MaxHP;
+                //         }
+                //         break;
+                //     case 578:
+                //         {//froslass
+
+                //             spawnedNpc.MaxHPBonus = 350;
+                //             spawnedNpc.SpeedBuff = 7;
+                //             spawnedNpc.SpAtkBuff = 3;
+                //             spawnedNpc.EvasionBuff = 3;
+                //             spawnedNpc.HP = spawnedNpc.MaxHP;
+                //         }
+                //         break;
+                //     case 1527:
+                //         {//Nidoking
+
+                //             spawnedNpc.MaxHPBonus = 350;
+                //             spawnedNpc.SpeedBuff = 10;
+                //             spawnedNpc.SpAtkBuff = 3;
+                //             spawnedNpc.DefenseBuff = 2;
+                //             spawnedNpc.SpDefBuff = 2;
+                //             spawnedNpc.HP = spawnedNpc.MaxHP;
+                //         }
+                //         break;
+                //     case 1528:
+                //         {//Nidoking
+
+                //             spawnedNpc.MaxHPBonus = 400;
+                //             spawnedNpc.SpeedBuff = 10;
+                //             spawnedNpc.SpAtkBuff = 1;
+                //             spawnedNpc.DefenseBuff = 3;
+                //             spawnedNpc.SpDefBuff = 3;
+                //             spawnedNpc.HP = spawnedNpc.MaxHP;
+                //         }
+                //         break;
+                //     case 1529:
+                //         {//Regirock
+
+                //             spawnedNpc.MaxHPBonus = 850;
+                //             spawnedNpc.SpeedBuff = 10;
+                //             spawnedNpc.AttackBuff = 3;
+                //             spawnedNpc.DefenseBuff = 2;
+                //             spawnedNpc.SpDefBuff = 4;
+                //             spawnedNpc.HP = spawnedNpc.MaxHP;
+                //         }
+                //         break;
+                //     case 1521:
+                //         {//Steelix
+
+                //             spawnedNpc.MaxHPBonus = 255;
+                //             spawnedNpc.SpDefBuff = 4;
+                //             spawnedNpc.AttackBuff = 1;
+                //             spawnedNpc.DefenseBuff = 2;
+                //             spawnedNpc.HP = spawnedNpc.MaxHP;
+                //         }
+                //         break;
+                //     case 1523:
+                //         {//Aggron
+
+                //             spawnedNpc.MaxHPBonus = 155;
+                //             spawnedNpc.SpDefBuff = 3;
+                //             spawnedNpc.AttackBuff = 1;
+                //             spawnedNpc.DefenseBuff = 2;
+                //             spawnedNpc.HP = spawnedNpc.MaxHP;
+                //         }
+                //         break;
+                //     case 1522:
+                //         {//Golem
+
+                //             spawnedNpc.MaxHPBonus = 125;
+                //             spawnedNpc.SpDefBuff = 2;
+                //             spawnedNpc.AttackBuff = 1;
+                //             spawnedNpc.DefenseBuff = 2;
+                //             spawnedNpc.HP = spawnedNpc.MaxHP;
+                //         }
+                //         break;
+                //     case 1520:
+                //         {//Crobat
+
+                //             spawnedNpc.MaxHPBonus = 100;
+                //             spawnedNpc.SpDefBuff = 2;
+                //             spawnedNpc.AttackBuff = 3;
+                //             spawnedNpc.DefenseBuff = 1;
+                //             spawnedNpc.HP = spawnedNpc.MaxHP;
+                //         }
+                //         break;
+                //     case 389:
+                //         {//rhyperior
+
+                //             spawnedNpc.MaxHPBonus = 400;
+                //             spawnedNpc.AttackBuff = 2;
+                //             spawnedNpc.SpeedBuff = 8;
+                //             spawnedNpc.DefenseBuff = 2;
+                //             spawnedNpc.SpDefBuff = 2;
+                //             spawnedNpc.HP = spawnedNpc.MaxHP;
+                //         }
+                //         break;
+                //     case 145:
+                //         {//mamoswine
+
+                //             spawnedNpc.MaxHPBonus = 400;
+                //             spawnedNpc.AttackBuff = 2;
+                //             spawnedNpc.SpeedBuff = 6;
+                //             spawnedNpc.DefenseBuff = 2;
+                //             spawnedNpc.SpDefBuff = 2;
+                //             spawnedNpc.HP = spawnedNpc.MaxHP;
+                //         }
+                //         break;
+                //     case 381:
+                //         {//rhydon
+
+                //             spawnedNpc.MaxHPBonus = 250;
+                //             spawnedNpc.SpeedBuff = 6;
+                //             spawnedNpc.AttackBuff = 1;
+                //             spawnedNpc.SpDefBuff = 1;
+                //             spawnedNpc.HP = spawnedNpc.MaxHP;
+                //         }
+                //         break;
+                //     case 640:
+                //         {//huntail
+
+                //             spawnedNpc.MaxHPBonus = 200;
+                //             spawnedNpc.SpAtkBuff = 3;
+                //             spawnedNpc.HP = spawnedNpc.MaxHP;
+                //         }
+                //         break;
+                //     case 641:
+                //         {//gorebyss
+
+                //             spawnedNpc.MaxHPBonus = 250;
+                //             spawnedNpc.SpDefBuff = 2;
+                //             spawnedNpc.HP = spawnedNpc.MaxHP;
+                //         }
+                //         break;
+                //     case 579:
+                //         {//xatu
+
+                //             spawnedNpc.MaxHPBonus = 200;
+                //             spawnedNpc.SpAtkBuff = 4;
+                //             spawnedNpc.HP = spawnedNpc.MaxHP;
+                //         }
+                //         break;
+                //     case 481:
+                //         {//weepinbell
+
+                //             spawnedNpc.MaxHPBonus = 125;
+                //             spawnedNpc.AttackBuff = 1;
+                //             spawnedNpc.DefenseBuff = 1;
+                //             spawnedNpc.SpeedBuff = 3;
+                //             spawnedNpc.HP = spawnedNpc.MaxHP;
+                //         }
+                //         break;
+                //     case 1220:
+                //         {//Groundon
+
+                //             spawnedNpc.MaxHPBonus = 775;
+                //             spawnedNpc.SpeedBuff = 10;
+                //             spawnedNpc.SpDefBuff = 6;
+                //             spawnedNpc.DefenseBuff = 6;
+                //             spawnedNpc.AttackBuff = 5;
+                //             spawnedNpc.SpAtkBuff = 5;
+                //             spawnedNpc.HP = spawnedNpc.MaxHP;
+                //         }
+                //         break;
+                //     case 1060:
+                //         {//Abomsnow
+
+                //             spawnedNpc.MaxHPBonus = 400;
+                //             spawnedNpc.SpeedBuff = 1;
+                //             spawnedNpc.SpDefBuff = 2;
+                //             spawnedNpc.DefenseBuff = 2;
+                //             spawnedNpc.HP = spawnedNpc.MaxHP;
+                //         }
+                //         break;
+                //     case 480:
+                //         {//vileplume
+
+                //             spawnedNpc.MaxHPBonus = 200;
+                //             spawnedNpc.SpAtkBuff = 2;
+                //             spawnedNpc.DefenseBuff = 1;
+                //             spawnedNpc.SpDefBuff = 1;
+                //             spawnedNpc.SpeedBuff = 6;
+                //             spawnedNpc.HP = spawnedNpc.MaxHP;
+                //         }
+                //         break;
+                //     case 1046:
+                //         {//beartic
+                //             spawnedNpc.MaxHPBonus = 450;
+                //             spawnedNpc.HP = spawnedNpc.MaxHP;
+                //             spawnedNpc.DefenseBuff = 2;
+                //             spawnedNpc.SpDefBuff = 2;
+                //             spawnedNpc.EvasionBuff = 1;
+                //             spawnedNpc.AttackBuff = 2;
+                //             spawnedNpc.SpeedBuff = 4;
+                //         }
+                //         break;
+                //     case 1047:
+                //         {//umbreon
+                //             spawnedNpc.MaxHPBonus = 450;
+                //             spawnedNpc.HP = spawnedNpc.MaxHP;
+                //             spawnedNpc.DefenseBuff = 4;
+                //             spawnedNpc.SpDefBuff = 4;
+                //             spawnedNpc.AttackBuff = 2;
+                //             spawnedNpc.SpeedBuff = 6;
+                //         }
+                //         break;
+                //     case 1048:
+                //         {//hitmonlee
+                //             spawnedNpc.MaxHPBonus = 300;
+                //             spawnedNpc.HP = spawnedNpc.MaxHP;
+                //             spawnedNpc.AttackBuff = 5;
+                //             spawnedNpc.DefenseBuff = 2;
+                //             spawnedNpc.SpDefBuff = 2;
+                //             spawnedNpc.SpeedBuff = 8;
+                //         }
+                //         break;
+                //     case 1049:
+                //         {//grumpig
+                //             spawnedNpc.MaxHPBonus = 250;
+                //             spawnedNpc.HP = spawnedNpc.MaxHP;
+                //             spawnedNpc.SpAtkBuff = 5;
+                //             spawnedNpc.DefenseBuff = 2;
+                //             spawnedNpc.SpDefBuff = 2;
+                //             spawnedNpc.SpeedBuff = 6;
+                //         }
+                //         break;
+                //     case 1050:
+                //         {//clefable
+                //             spawnedNpc.MaxHPBonus = 250;
+                //             spawnedNpc.HP = spawnedNpc.MaxHP;
+                //             spawnedNpc.EvasionBuff = 3;
+                //             spawnedNpc.SpDefBuff = 2;
+                //             spawnedNpc.DefenseBuff = 2;
+                //             spawnedNpc.SpeedBuff = 8;
+                //         }
+                //         break;
+                //     case 800:
+                //         {//mew
+                //             map.Npc.Remove(npc);
+                //             spawnedNpc.MaxHPBonus = 50;
+                //             spawnedNpc.HP = spawnedNpc.MaxHP;
+                //             spawnedNpc.AttackBuff = 1;
+                //             spawnedNpc.DefenseBuff = 1;
+                //             spawnedNpc.SpAtkBuff = 1;
+                //             spawnedNpc.SpDefBuff = 1;
+                //             spawnedNpc.AccuracyBuff = 1;
+                //             spawnedNpc.EvasionBuff = 1;
+                //             AddExtraStatus(spawnedNpc, null, map, "Invisible", 1000, null, "", hitlist, false);
+                //             TargetCollection targets = MoveProcessor.GetTargetsInRange(Enums.MoveRange.Floor, 0, map, null, spawnedNpc.X, spawnedNpc.Y, Enums.Direction.Up, true, true, true);
+                //             for (int i = 0; i < targets.Count; i++)
+                //             {
+                //                 if (targets[i].CharacterType == Enums.CharacterType.Recruit)
+                //                 {
+                //                     Messenger.PlayMusic(((Recruit)targets[i]).Owner, "PMDB) Friend Area ~ Final Island.ogg");
+                //                 }
+                //             }
+                //         }
+                //         break;
+                //     case 846:
+                //         {//zorua
+
+                //             map.Npc.Remove(npc);
+                //         }
+                //         break;
+                //     case 1394:
+                //         {//Scyther
+
+                //             map.Npc.Remove(npc);
+                //         }
+                //         break;
+                //     case 1395:
+                //         {//Pinsir
+
+                //             map.Npc.Remove(npc);
+                //         }
+                //         break;
+                //     case 936:
+                //         {//vanilluxe
+                //             //foreach (Client n in map.GetClients()) {
+                //             //    StoryManager.PlayStory(n, 187);
+                //             //}
+                //             map.Npc.Remove(npc);
+                //             spawnedNpc.MaxHPBonus = 200;
+                //             spawnedNpc.HP = spawnedNpc.MaxHP;
+                //         }
+                //         break;
+                //     case 1061:
+                //         {//ARTICUNO
+                //             //map.Npc.Remove(npc);
+                //             spawnedNpc.MaxHPBonus = 300;
+                //             spawnedNpc.HP = spawnedNpc.MaxHP;
+                //             if (map.PlayersOnMap.Count == 1)
+                //             {
+                //                 InventoryItem item = new InventoryItem();
+                //                 item.Num = 156;
+                //                 item.Tag = "144";
+                //                 spawnedNpc.GiveItem(item);
+                //             }
+                //         }
+                //         break;
+                // }
 
                 if ((map.MapType == Enums.MapType.RDungeonMap) && spawnedNpc.HeldItem == null)
                 {
