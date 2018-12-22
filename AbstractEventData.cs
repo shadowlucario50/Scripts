@@ -17,6 +17,11 @@ namespace Script
         public bool Started { get; set; }
         public Dictionary<string, TPlayerData> PlayerData { get; set; }
 
+        public AbstractEventData()
+        {
+            this.PlayerData = new Dictionary<string, TPlayerData>();
+        }
+
         public TPlayerData ExtendPlayer(Client client)
         {
             if (!PlayerData.TryGetValue(client.Player.CharID, out var playerData))
