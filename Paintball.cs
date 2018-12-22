@@ -174,6 +174,7 @@ namespace Script
                 if (!IsInSafeZone(attacker))
                 {
                     attacker.Player.Map.SpawnItem(783, 1, false, false, "", false, 25, 25, attacker);
+                    Messenger.MapMsg(attacker.Player.MapID, "A splashball appeared!", Text.BrightGreen);
                 }
             }
         }
