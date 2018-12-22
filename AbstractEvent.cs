@@ -12,7 +12,11 @@ using Server.Stories;
 
 namespace Script
 {
-    public abstract class AbstractEvent<TData> : IEvent where TData : AbstractEventData, new()
+    public abstract class AbstractEvent<TData> : AbstractEvent<TData, AbstractEventData.NullPlayerData> where TData : AbstractEventData<AbstractEventData.NullPlayerData>, new()
+    {
+    }
+
+    public abstract class AbstractEvent<TData, TPlayerData> : IEvent where TData : AbstractEventData<TPlayerData>, new() where TPlayerData : new()
     {
         public abstract string Identifier { get; }
 
@@ -158,6 +162,10 @@ namespace Script
         }
 
         public virtual void OnNpcDeath(PacketHitList hitlist, ICharacter attacker, MapNpc npc)
+        {
+        }
+
+        public virtual void OnMoveHitCharacter(Client attacker, Client defender)
         {
         }
     }

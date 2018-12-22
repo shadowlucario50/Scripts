@@ -3337,6 +3337,20 @@ namespace Script
                 ExtraStatus status;
                 switch (setup.Move.Data1)
                 {
+                    case -7:
+                        {
+                            if (setup.Attacker.CharacterType == Enums.CharacterType.Recruit && setup.Defender.CharacterType == Enums.CharacterType.Recruit)
+                            {
+                                var attacker = ((Recruit)setup.Attacker).Owner;
+                                var defender = ((Recruit)setup.Defender).Owner;
+
+                                if (ActiveEvent != null)
+                                {
+                                    ActiveEvent.OnMoveHitCharacter(attacker, defender);
+                                }
+                            }
+                        }
+                        break;
                     case -6:
                         {
                             if (setup.AttackerMap.MapType == Enums.MapType.Instanced && ((InstancedMap)setup.AttackerMap).MapBase == 1945

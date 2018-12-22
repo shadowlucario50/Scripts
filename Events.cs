@@ -16,6 +16,8 @@ namespace Script
                     return new TreasureHuntEvent();
                 case "shinyspectacular":
                     return new ShinySpectacular();
+                case "paintball":
+                    return new Paintball();
                 default:
                     return null;
             }
