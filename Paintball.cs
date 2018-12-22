@@ -153,6 +153,11 @@ namespace Script
         {
             base.OnMoveHitCharacter(attacker, defender);
 
+            if (!EventManager.IsRegistered(attacker) || !EventManager.IsRegistered(defender))
+            {
+                return;
+            }
+
             var attackerPlayerData = Data.ExtendPlayer(attacker);
             var defenderPlayerData = Data.ExtendPlayer(defender);
 
@@ -165,6 +170,8 @@ namespace Script
                 Messenger.PlayerMsg(defender, $"You were hit by {attacker.Player.DisplayName}!", Text.BrightRed);
 
                 WarpPlayerToTeamSpawn(defender);
+
+                attacker.Player.Map.SpawnItem(783, 1, false, false, "", false, 25, 25, attacker);
             }
         }
 
