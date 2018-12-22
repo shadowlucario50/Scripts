@@ -75,6 +75,11 @@ namespace Script
 
             if (Data.Started)
             {
+                var playerData = Data.ExtendPlayer(client);
+
+                client.Player.Status = $"[{playerData.Team.ToString().ToLower()}]";
+                Messenger.SendPlayerData(client);
+
                 if (client.Player.HasItem(446) == 0)
                 {
                     client.Player.GiveItem(446, 999);
@@ -87,12 +92,14 @@ namespace Script
         {
             base.DeconfigurePlayer(client);
 
-            if (Data.Started)
+            var playerData = Data.ExtendPlayer(client);
+
+            client.Player.Status = "";
+            Messenger.SendPlayerData(client);
+
+            if (client.Player.HasItem(446) > 0)
             {
-                if (client.Player.HasItem(446) > 0)
-                {
-                    client.Player.TakeItem(446, client.Player.HasItem(446));
-                }
+                client.Player.TakeItem(446, client.Player.HasItem(446));
             }
         }
 
@@ -157,6 +164,32 @@ namespace Script
 
                 WarpPlayerToTeamSpawn(defender);
             }
+        }
+
+        public override string HandoutReward(EventRanking eventRanking, int position)
+        {
+            base.HandoutReward(eventRanking, position);
+
+            switch (position)
+            {
+                case 1:
+                    {
+                        eventRanking.Client.Player.GiveItem(133, 10);
+                        return "10 event tokens";
+                    }
+                case 2:
+                    {
+                        eventRanking.Client.Player.GiveItem(133, 5);
+                        return "5 event tokens";
+                    }
+                case 3:
+                    {
+                        eventRanking.Client.Player.GiveItem(133, 3);
+                        return "3 event tokens";
+                    }
+            }
+
+            return "";
         }
     }
 }
