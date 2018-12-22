@@ -79,7 +79,7 @@ namespace Script
             {
                 var playerData = Data.ExtendPlayer(client);
 
-                client.Player.Status = $"[{playerData.Team.ToString().ToLower()}]";
+                client.Player.Status = playerData.Team.ToString();
                 Messenger.SendPlayerData(client);
 
                 if (client.Player.HasItem(446) == 0)
@@ -171,7 +171,10 @@ namespace Script
 
                 WarpPlayerToTeamSpawn(defender);
 
-                attacker.Player.Map.SpawnItem(783, 1, false, false, "", false, 25, 25, attacker);
+                if (!IsInSafeZone(attacker))
+                {
+                    attacker.Player.Map.SpawnItem(783, 1, false, false, "", false, 25, 25, attacker);
+                }
             }
         }
 
@@ -180,7 +183,7 @@ namespace Script
             var playerData = Data.ExtendPlayer(client);
 
             var boundsList = new List<Rectangle>();
-            boundsList.Add(new Rectangle(23, 24, 4, 3));
+            //boundsList.Add(new Rectangle(23, 24, 4, 3));
 
             switch (playerData.Team)
             {
