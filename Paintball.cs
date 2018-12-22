@@ -79,7 +79,7 @@ namespace Script
             {
                 var playerData = Data.ExtendPlayer(client);
 
-                client.Player.Status = $"[{playerData.Team.ToString().ToLower()}]";
+                client.Player.Status = playerData.Team.ToString();
                 Messenger.SendPlayerData(client);
 
                 if (client.Player.HasItem(446) == 0)
