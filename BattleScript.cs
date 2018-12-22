@@ -3134,6 +3134,11 @@ namespace Script
                             {
                                 setup.Move.Accuracy = 100;
                             }
+                            // Paintball splash ball
+                            if (setup.moveIndex == 537)
+                            {
+                                setup.Move.Accuracy = 100;
+                            }
                         }
                     }
 

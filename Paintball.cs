@@ -79,7 +79,7 @@ namespace Script
             {
                 var playerData = Data.ExtendPlayer(client);
 
-                client.Player.Status = playerData.Team.ToString();
+                client.Player.Status = $"[{playerData.Team.ToString().ToLower()}]";
                 Messenger.SendPlayerData(client);
 
                 if (client.Player.HasItem(446) == 0)
@@ -172,25 +172,34 @@ namespace Script
         {
             var playerData = Data.ExtendPlayer(client);
 
-            var bounds = new Rectangle();
+            var boundsList = new List<Rectangle>();
+            boundsList.Add(new Rectangle(23, 24, 4, 3));
 
             switch (playerData.Team)
             {
                 case Team.Red:
-                    bounds = new Rectangle(1, 1, 8, 6);
+                    boundsList.Add(new Rectangle(1, 1, 8, 6));
                     break;
                 case Team.Blue:
-                    bounds = new Rectangle(41, 43, 9, 7);
+                    boundsList.Add(new Rectangle(41, 43, 9, 7));
                     break;
                 case Team.Green:
-                    bounds = new Rectangle(41, 1, 9, 6);
+                    boundsList.Add(new Rectangle(41, 1, 9, 6));
                     break;
                 case Team.Yellow:
-                    bounds = new Rectangle(1, 43, 8, 7);
+                    boundsList.Add(new Rectangle(1, 43, 8, 7));
                     break;
             }
 
-            return bounds.Contains(new Point(client.Player.X, client.Player.Y));
+            foreach (var bounds in boundsList)
+            {
+                if (bounds.Contains(new Point(client.Player.X, client.Player.Y)))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public override string HandoutReward(EventRanking eventRanking, int position)
