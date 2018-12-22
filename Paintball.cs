@@ -217,26 +217,23 @@ namespace Script
         {
             base.HandoutReward(eventRanking, position);
 
-            if (Ranks.IsAllowed(eventRanking.Client, Enums.Rank.Scripter))
+            switch (position)
             {
-                switch (position)
-                {
-                    case 1:
-                        {
-                            eventRanking.Client.Player.GiveItem(133, 10);
-                            return "10 event tokens";
-                        }
-                    case 2:
-                        {
-                            eventRanking.Client.Player.GiveItem(133, 5);
-                            return "5 event tokens";
-                        }
-                    case 3:
-                        {
-                            eventRanking.Client.Player.GiveItem(133, 3);
-                            return "3 event tokens";
-                        }
-                }
+                case 1:
+                    {
+                        eventRanking.Client.Player.GiveItem(133, 10);
+                        return "10 event tokens";
+                    }
+                case 2:
+                    {
+                        eventRanking.Client.Player.GiveItem(133, 5);
+                        return "5 event tokens";
+                    }
+                case 3:
+                    {
+                        eventRanking.Client.Player.GiveItem(133, 3);
+                        return "3 event tokens";
+                    }
             }
 
             return "";
