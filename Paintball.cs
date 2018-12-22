@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using Server;
 using Server.Events;
 using Server.Network;
+using Server.Players;
 
 namespace Script
 {
@@ -154,7 +156,7 @@ namespace Script
             var attackerPlayerData = Data.ExtendPlayer(attacker);
             var defenderPlayerData = Data.ExtendPlayer(defender);
 
-            if (attackerPlayerData.Team != defenderPlayerData.Team)
+            if (attackerPlayerData.Team != defenderPlayerData.Team && !IsInSafeZone(defender))
             {
                 attackerPlayerData.Score += 1;
                 defenderPlayerData.Score -= 0.25;
@@ -166,27 +168,55 @@ namespace Script
             }
         }
 
+        private bool IsInSafeZone(Client client)
+        {
+            var playerData = Data.ExtendPlayer(client);
+
+            var bounds = new Rectangle();
+
+            switch (playerData.Team)
+            {
+                case Team.Red:
+                    bounds = new Rectangle(1, 1, 8, 6);
+                    break;
+                case Team.Blue:
+                    bounds = new Rectangle(41, 43, 9, 7);
+                    break;
+                case Team.Green:
+                    bounds = new Rectangle(41, 1, 9, 6);
+                    break;
+                case Team.Yellow:
+                    bounds = new Rectangle(1, 43, 8, 7);
+                    break;
+            }
+
+            return bounds.Contains(new Point(client.Player.X, client.Player.Y));
+        }
+
         public override string HandoutReward(EventRanking eventRanking, int position)
         {
             base.HandoutReward(eventRanking, position);
 
-            switch (position)
+            if (Ranks.IsAllowed(eventRanking.Client, Enums.Rank.Scripter))
             {
-                case 1:
-                    {
-                        eventRanking.Client.Player.GiveItem(133, 10);
-                        return "10 event tokens";
-                    }
-                case 2:
-                    {
-                        eventRanking.Client.Player.GiveItem(133, 5);
-                        return "5 event tokens";
-                    }
-                case 3:
-                    {
-                        eventRanking.Client.Player.GiveItem(133, 3);
-                        return "3 event tokens";
-                    }
+                switch (position)
+                {
+                    case 1:
+                        {
+                            eventRanking.Client.Player.GiveItem(133, 10);
+                            return "10 event tokens";
+                        }
+                    case 2:
+                        {
+                            eventRanking.Client.Player.GiveItem(133, 5);
+                            return "5 event tokens";
+                        }
+                    case 3:
+                        {
+                            eventRanking.Client.Player.GiveItem(133, 3);
+                            return "3 event tokens";
+                        }
+                }
             }
 
             return "";
