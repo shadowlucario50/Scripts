@@ -1417,11 +1417,23 @@ namespace Script
                             }
                         }
                         break;
-                    case 79:
+                    case 79: // Exit Plaza
                         {
                             if (!string.IsNullOrEmpty(exPlayer.Get(client).PlazaEntranceMap))
                             {
                                 Messenger.PlayerWarp(client, exPlayer.Get(client).PlazaEntranceMap, exPlayer.Get(client).PlazaEntranceX, exPlayer.Get(client).PlazaEntranceY);
+                            }
+                        }
+                        break;
+                    case 80: // Crow Block
+                        {
+                            if (client != null)
+                            {
+                                if (client.ClientEdition != Constants.ALTERNATE_CLIENT_EDITION)
+                                {
+                                    BlockPlayer(client);
+                                    Messenger.PlayerMsg(client, "You must be using the Crow client to get through!", Text.BrightRed);
+                                }
                             }
                         }
                         break;
@@ -1597,6 +1609,8 @@ namespace Script
                     return scriptNum + ": Friendship Forest Warps";
                 case 79:
                     return scriptNum + ": Exit Plaza";
+                case 80:
+                    return scriptNum + ": Crow Block";
                 default:
                     return scriptNum.ToString() + ": Unknown";
             }
