@@ -9738,13 +9738,6 @@ namespace Script
 
         public static void PostDungeonCompletion(Client client, int dungeonIndex)
         {
-            if (dungeonIndex == 23)
-            {
-                exPlayer.Get(client).SpawnMap = Main.Crossroads;
-                exPlayer.Get(client).SpawnX = 25;
-                exPlayer.Get(client).SpawnY = 25;
-                StoryManager.PlayStory(client, 205);
-            }
         }
 
 
