@@ -114,7 +114,7 @@ namespace Script
                         {
                             var bonus = Main.ScriptedRecruitBonus(client.Player, null);
 
-                            Messenger.PlayerMsg(client, $"Your recruit bonus is: {bonus / 10f}%", Text.BrightGreen);
+                            Messenger.PlayerMsg(client, $"Your recruit bonus is {bonus / 10f}%", Text.BrightGreen);
                         }
                         break;
                     case "/abilities":
