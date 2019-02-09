@@ -110,6 +110,13 @@ namespace Script
 
                 switch (command[0])
                 {
+                    case "/idlemessage":
+                        {
+                            client.Player.PlayerData.IdleMessage = joinedArgs;
+
+                            Messenger.PlayerMsg(client, "Your idle message has been updated!", Text.BrightGreen);
+                        }
+                        break;
                     case "/recruitbonus":
                         {
                             var bonus = Main.ScriptedRecruitBonus(client.Player, null);

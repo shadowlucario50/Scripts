@@ -10589,6 +10589,24 @@ namespace Script
             shutdownTimerThread.Start();
         }
 
+        public static void InteractWithPlayer(Client attacker, Client defender)
+        {
+            var idleMessage = defender.Player.PlayerData.IdleMessage;
+
+            if (!string.IsNullOrEmpty(idleMessage))
+            {
+                var defenderSpecies = defender.Player.GetActiveRecruit().Species;
+                
+                var story = new Story();
+                var segment = StoryBuilder.BuildStory();
+
+                StoryBuilder.AppendSaySegment(segment, $"{defender.Player.DisplayName}: {idleMessage}", defenderSpecies, 0, 0);
+
+                segment.AppendToStory(story);
+
+                StoryManager.PlayStory(attacker, story);
+            }
+        }
 
     }
 }
