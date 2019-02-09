@@ -110,6 +110,11 @@ namespace Script
 
                 switch (command[0])
                 {
+                    case "/charid": 
+                        {
+                            Messenger.PlayerMsg(client, "Your character ID is: " + client.Player.CharID, Text.BrightGreen);
+                        }
+                        break;
                     case "/pullscripts": 
                         {
                             if (Ranks.IsAllowed(client, Enums.Rank.Scripter))
