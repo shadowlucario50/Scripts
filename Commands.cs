@@ -110,6 +110,26 @@ namespace Script
 
                 switch (command[0])
                 {
+                    case "/abilities":
+                        {
+                            var activeRecruit = client.Player.GetActiveRecruit();
+
+                            Messenger.PlayerMsg(client, $"Abilities for {activeRecruit.Name}:", Text.BrightGreen);
+
+                            if (!string.IsNullOrEmpty(activeRecruit.Ability1))
+                            {
+                                Messenger.PlayerMsg(client, $"Ability 1: {activeRecruit.Ability1}", Text.BrightGreen);
+                            }
+                            if (!string.IsNullOrEmpty(activeRecruit.Ability2))
+                            {
+                                Messenger.PlayerMsg(client, $"Ability 2: {activeRecruit.Ability2}", Text.BrightGreen);
+                            }
+                            if (!string.IsNullOrEmpty(activeRecruit.Ability3))
+                            {
+                                Messenger.PlayerMsg(client, $"Ability 3: {activeRecruit.Ability3}", Text.BrightGreen);
+                            }
+                        }
+                        break;
                     case "/charid": 
                         {
                             Messenger.PlayerMsg(client, "Your character ID is: " + client.Player.CharID, Text.BrightGreen);
