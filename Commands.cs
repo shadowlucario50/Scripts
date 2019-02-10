@@ -112,9 +112,20 @@ namespace Script
                 {
                     case "/idlemessage":
                         {
-                            client.Player.PlayerData.IdleMessage = joinedArgs;
+                            if (string.IsNullOrEmpty(joinedArgs)) {
+                                var story = new Story();
+                                var segment = StoryBuilder.BuildStory();
 
-                            Messenger.PlayerMsg(client, "Your idle message has been updated!", Text.BrightGreen);
+                                StoryBuilder.AppendSaySegment(segment, $"{client.Player.DisplayName}: {client.Player.PlayerData.IdleMessage}", client.Player.GetActiveRecruit().Species, 0, 0);
+
+                                segment.AppendToStory(story);
+
+                                StoryManager.PlayStory(client, story);
+                            } else {
+                                client.Player.PlayerData.IdleMessage = joinedArgs;
+
+                                Messenger.PlayerMsg(client, "Your idle message has been updated!", Text.BrightGreen);
+                            }
                         }
                         break;
                     case "/recruitbonus":
