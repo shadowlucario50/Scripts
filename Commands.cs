@@ -2365,26 +2365,23 @@ namespace Script
 
                     case "/hb":
                         {
-                            if (Ranks.IsAllowed(client, Enums.Rank.Admin))
-                            {
-                                string playerMap = client.Player.MapID;
-                                Messenger.MapMsg(playerMap, "H", Text.Blue);
-                                Messenger.MapMsg(playerMap, "A", Text.Green);
-                                Messenger.MapMsg(playerMap, "P", Text.Cyan);
-                                Messenger.MapMsg(playerMap, "P", Text.Red);
-                                Messenger.MapMsg(playerMap, "Y", Text.Magenta);
-                                Messenger.MapMsg(playerMap, "-", Text.Grey);
-                                Messenger.MapMsg(playerMap, "B", Text.Brown);
-                                Messenger.MapMsg(playerMap, "I", Text.BrightBlue);
-                                Messenger.MapMsg(playerMap, "R", Text.BrightGreen);
-                                Messenger.MapMsg(playerMap, "T", Text.BrightCyan);
-                                Messenger.MapMsg(playerMap, "H", Text.BrightRed);
-                                Messenger.MapMsg(playerMap, "D", Text.Pink);
-                                Messenger.MapMsg(playerMap, "A", Text.Yellow);
-                                Messenger.MapMsg(playerMap, "Y", Text.Blue);
-                                Messenger.MapMsg(playerMap, joinedArgs + "!", Text.White);
-                                Messenger.PlaySoundToMap(client.Player.MapID, "magic7.wav");
-                            }
+                            string playerMap = client.Player.MapID;
+                            Messenger.MapMsg(playerMap, "H", Text.Blue);
+                            Messenger.MapMsg(playerMap, "A", Text.Green);
+                            Messenger.MapMsg(playerMap, "P", Text.Cyan);
+                            Messenger.MapMsg(playerMap, "P", Text.Red);
+                            Messenger.MapMsg(playerMap, "Y", Text.Magenta);
+                            Messenger.MapMsg(playerMap, "-", Text.Grey);
+                            Messenger.MapMsg(playerMap, "B", Text.Brown);
+                            Messenger.MapMsg(playerMap, "I", Text.BrightBlue);
+                            Messenger.MapMsg(playerMap, "R", Text.BrightGreen);
+                            Messenger.MapMsg(playerMap, "T", Text.BrightCyan);
+                            Messenger.MapMsg(playerMap, "H", Text.BrightRed);
+                            Messenger.MapMsg(playerMap, "D", Text.Pink);
+                            Messenger.MapMsg(playerMap, "A", Text.Yellow);
+                            Messenger.MapMsg(playerMap, "Y", Text.Blue);
+                            Messenger.MapMsg(playerMap, joinedArgs + "!", Text.White);
+                            Messenger.PlaySoundToMap(client.Player.MapID, "magic7.wav");
                         }
                         break;
                     case "/pk":
