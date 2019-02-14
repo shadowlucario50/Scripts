@@ -1437,6 +1437,16 @@ namespace Script
                             }
                         }
                         break;
+                    case 81:
+                        { // Whirlpool trap
+                            if (WillTrapActivate(character, map, character.X, character.Y))
+                            {
+                                RevealTrap(map, character.X, character.Y, hitlist);
+                                hitlist.AddPacketToMap(map, PacketBuilder.CreateBattleMsg(character.Name + " stepped on a Whirlpool Trap!", Text.BrightRed), character.X, character.Y, 10);
+                                ActivateTrap(map, character.X, character.Y, script, hitlist);
+                            }
+                        }   
+                        break;
                 }
                 PacketHitList.MethodEnded(ref hitlist);
             }
@@ -1611,6 +1621,8 @@ namespace Script
                     return scriptNum + ": Exit Plaza";
                 case 80:
                     return scriptNum + ": Crow Block";
+                case 81:
+                    return scriptNum + ": Whirlpool Trap";
                 default:
                     return scriptNum.ToString() + ": Unknown";
             }

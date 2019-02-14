@@ -1442,6 +1442,17 @@ namespace Script
                             }
                         }
                         break;
+                    case 81:
+                        {//whirlpool
+                            hitlist.AddPacketToMap(map, PacketBuilder.CreateSoundPacket("Magic356.wav"), x, y, 10);
+                            hitlist.AddPacketToMap(map, PacketBuilder.CreateSpellAnim(203, x, y));
+                            targets = MoveProcessor.GetTargetsInRange(Enums.MoveRange.Room, 0, map, null, x, y, Enums.Direction.Up, true, true, false);
+                            for (int i = 0; i < targets.Count; i++)
+                            {
+                                AddExtraStatus(targets[i], MapManager.RetrieveActiveMap(targets[i].MapID), "Whirlpool", Server.Math.Rand(3, 5), null, "", hitlist);
+                            }
+                        }
+                        break;
                 }
             }
             PacketHitList.MethodEnded(ref hitlist);
@@ -1745,6 +1756,8 @@ namespace Script
                     return "Gust";
                 case 70:
                     return "Shocker";
+                case 81:
+                    return "Whirlpool";
                 default:
                     return null;
             }
