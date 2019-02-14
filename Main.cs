@@ -1297,7 +1297,6 @@ namespace Script
                 if (sprinko != null && sprinko.Player.Map == map)
                 {
                     Messenger.PlayerMsg(sprinko, "Npc Spawned:" + spawnedNpc.Num, Text.Pink);
-                    spawnedNpc.Shiny = Enums.Coloration.Shiny;
                 }
 
                 // switch (spawnedNpc.Num)
