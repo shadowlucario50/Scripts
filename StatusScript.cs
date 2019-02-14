@@ -2542,15 +2542,15 @@ namespace Script {
                             RefreshCharacterSwapLock(character, map, hitlist);
                         }
                         break;
-                    case "FireSpin":
-                    case "Whirlpool":
-                    case "SandTomb":
                     case "Infestation": {
                             if (msg) hitlist.AddPacketToMap(map, PacketBuilder.CreateBattleMsg(character.Name + " was trapped in the swarm!", Text.WhiteSmoke), character.X, character.Y, 10);
                             RefreshCharacterSpeedLimit(character, map, hitlist);
                             RefreshCharacterSwapLock(character, map, hitlist);
                         }
                         break;
+                    case "FireSpin":
+                    case "Whirlpool":
+                    case "SandTomb":
                     case "MagmaStorm": {
                             if (msg) hitlist.AddPacketToMap(map, PacketBuilder.CreateBattleMsg(character.Name + " was trapped in the vortex!", Text.WhiteSmoke), character.X, character.Y, 10);
                             RefreshCharacterSpeedLimit(character, map, hitlist);
