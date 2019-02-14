@@ -160,6 +160,16 @@ namespace Script
                             Messenger.PlayerMsg(client, "Your character ID is: " + client.Player.CharID, Text.BrightGreen);
                         }
                         break;
+                    case "/fetchscripts":
+                        {
+                            if (Ranks.IsAllowed(client, Enums.Rank.Scripter))
+                            {
+                                Messenger.PlayerMsg(client, "Pulling scripts...", Text.BrightGreen);
+                                Server.Scripting.ScriptRepoHelper.PullChanges();
+                                Messenger.PlayerMsg(client, "Scripts fetched!", Text.BrightGreen);
+                            }
+                        }
+                        break;
                     case "/pullscripts": 
                         {
                             if (Ranks.IsAllowed(client, Enums.Rank.Scripter))
