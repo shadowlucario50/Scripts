@@ -1293,11 +1293,11 @@ namespace Script
                     //map.ActiveNpc[spawnedNpc.MapSlot] = new MapNpc(map.MapID, spawnedNpc.MapSlot);
                     //hitlist.AddPacketToMap(map, TcpPacket.CreatePacket("npcdead", spawnedNpc.MapSlot));
                 }
-                Client sprinko = ClientManager.FindClient("Sprinko");
+                Client sprinko = ClientManager.FindClient("Blaze");
                 if (sprinko != null && sprinko.Player.Map == map)
                 {
                     Messenger.PlayerMsg(sprinko, "Npc Spawned:" + spawnedNpc.Num, Text.Pink);
-
+                    spawnedNpc.Shiny = Enums.Coloration.Shiny;
                 }
 
                 // switch (spawnedNpc.Num)
