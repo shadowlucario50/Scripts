@@ -99,6 +99,8 @@ namespace Script
         public static string QuizAnswer { get; set; }
         public static bool CanAnswer = false;
 
+        public static List<Tuple<string, int, int>> positions = new List<Tuple<string, int, int>>();
+
         public static void Commands(Client client, Command command)
         {
             try
@@ -110,11 +112,29 @@ namespace Script
 
                 switch (command[0])
                 {
+                    case "/saveposition":
+                        {
+                            if (Ranks.IsAllowed(client, Enums.Rank.Scripter))
+                            {
+                                positions.Add(Tuple.Create(client.Player.MapID, client.Player.X, client.Player.Y));
+
+                                using (var fileStream = new System.IO.FileStream(System.IO.Path.Combine(Server.IO.Paths.ScriptsIOFolder, "positions.txt"), System.IO.FileMode.Create, System.IO.FileAccess.ReadWrite)) {
+                                    using (var streamWriter = new System.IO.StreamWriter(fileStream)) {
+                                        foreach (var position in positions) {
+                                            streamWriter.WriteLine($"new TreasureHuntData.TreasureData() {{ MapID = \"{position.Item1}\", X = {position.Item2}, Y = {position.Item3}, Claimed = false }},");
+                                        }
+                                    }
+                                }
+
+                                Messenger.PlayerMsg(client, "Position saved!", Text.BrightGreen);
+                            }
+                        }
+                        break;
                     case "/clearidlemessage":
                         {
                             client.Player.PlayerData.IdleMessage = "";
 
-                            Messenger.PlayerMsg(client, "Your idle message has been cleared!", TupleExtensions.BrightGreen);
+                            Messenger.PlayerMsg(client, "Your idle message has been cleared!", Text.BrightGreen);
                         }
                         break;
                     case "/idlemessage":
