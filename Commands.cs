@@ -110,6 +110,13 @@ namespace Script
 
                 switch (command[0])
                 {
+                    case "/clearidlemessage":
+                        {
+                            client.Player.PlayerData.IdleMessage = "";
+
+                            Messenger.PlayerMsg(client, "Your idle message has been cleared!", TupleExtensions.BrightGreen);
+                        }
+                        break;
                     case "/idlemessage":
                         {
                             if (string.IsNullOrEmpty(joinedArgs)) {
