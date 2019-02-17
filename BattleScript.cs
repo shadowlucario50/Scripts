@@ -9623,9 +9623,9 @@ namespace Script
                 // Check if the player:
                 // 1) Has an active outlaw mission
                 // 2) Defeated the correct outlaw npc
-                if (attacker.CharacterType == Enums.CharacterType.Recruit)
+                if (client != null)
                 {
-                    var owner = ((Recruit)attacker).Owner;
+                    var owner = client;
 
                     for (int i = 0; i < owner.Player.JobList.JobList.Count; i++)
                     {
