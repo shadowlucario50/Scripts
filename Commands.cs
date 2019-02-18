@@ -1890,7 +1890,7 @@ namespace Script
                         break;
                     case "/motd":
                         {
-                            if (Ranks.IsAllowed(client, Enums.Rank.Mapper))
+                            if (Ranks.IsAllowed(client, Enums.Rank.Scripter))
                             {
                                 Server.Settings.MOTD = joinedArgs;
                                 Messenger.GlobalMsg("MOTD changed to: " + joinedArgs, Text.BrightCyan);
