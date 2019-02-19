@@ -1314,10 +1314,7 @@ namespace Script
                         break;
                     case "/explode":
                         {
-                            if (Ranks.IsAllowed(client, Enums.Rank.Monitor))
-                            {
-                                Messenger.GlobalMsg(client.Player.Name + " has exploded.", Text.BrightRed);
-                            }
+                            Messenger.GlobalMsg(client.Player.Name + " has exploded.", Text.BrightRed);
                         }
                         break;
 
