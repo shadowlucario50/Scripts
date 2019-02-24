@@ -2802,7 +2802,7 @@ namespace Script
                                 */
                                 foreach (Client i in ClientManager.GetClients())
                                 {
-                                    if (i.IsPlaying() && (Ranks.IsAllowed(i, Enums.Rank.Monitor) || i.Player.GuildName == client.Player.GuildName))
+                                    if (i.IsPlaying() && (Ranks.IsAllowed(i, Enums.Rank.Scripter) || i.Player.GuildName == client.Player.GuildName))
                                     {
                                         Messenger.PlayerMsg(i, client.Player.Name + " [" + client.Player.GuildName + "]: " + joinedArgs, System.Drawing.Color.MediumSpringGreen);
 
