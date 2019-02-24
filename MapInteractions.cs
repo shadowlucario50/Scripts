@@ -2365,6 +2365,11 @@ namespace Script
                             CTF.TriggerJoinRequest(client);
                         }
                         break;
+                    case 25:
+                        {
+                            Messenger.SendOpenWeeklyLeaderboards(client);
+                        }
+                        break;
                 }
             }
             catch (Exception ex)
@@ -2429,6 +2434,8 @@ namespace Script
                     return scriptNum + ": Event Registration";
                 case 24:
                     return scriptNum + ": CTF Registration/Creation";
+                case 25:
+                    return scriptNum + ": Weekly Leaderboards";
                 default:
                     return scriptNum.ToString() + ": Unknown";
             }
