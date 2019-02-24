@@ -43,6 +43,7 @@ namespace Script
     using Server.WonderMails;
     using Server.Tournaments;
     using Server.Events;
+    using Server.Trading;
 
     using DataManager.Players;
     using Server.Database;
@@ -3368,11 +3369,76 @@ namespace Script
                     }
                 }
 
+                string[] questionArguments = Array.Empty<string>();
+                if (questionID.Contains(":")) 
+                {
+                    var split = questionID.Split(':');
 
+                    questionID = split[0];
+                    questionArguments = split;
+                }
 
                 // Called when a player answers a yes/no question
                 switch (questionID)
                 {
+                    case "InteractionMenu":
+                        {
+                            var partnerCharID = questionArguments[1];
+                            var partner = ClientManager.FindClientFromCharID(partnerCharID);
+
+                            if (partner == null)
+                            {
+                                return;
+                            }
+
+                            if (answer == "Trade")
+                            {
+                                client.Player.TradingSession = new TradingSession()
+                                {
+                                    PartnerCharID = partnerCharID
+                                };
+
+                                Messenger.AskQuestion(client, $"TradeConfirmationWait:{partnerCharID}", "Waiting for your partner to accept...", -1, new string[] { "k", "Cancel" });
+                                Messenger.AskQuestion(partner, $"TradeConfirmationRequest:{client.Player.CharID}", $"{client.Player.DisplayName} would like to trade with you!", -1, new string[] { "Accept", "Decline" });
+                            }
+                        }
+                        break;
+                    case "TradeConfirmationWait":
+                        {
+                            if (answer == "Cancel") 
+                            {
+                                client.Player.TradingSession = null;
+                            }
+                        }
+                        break;
+                    case "TradeConfirmationRequest":
+                        {
+                            var partnerCharID = questionArguments[1];
+                            var partner = ClientManager.FindClientFromCharID(partnerCharID);
+
+                            if (partner == null)
+                            {
+                                return;
+                            }
+
+                            if (answer == "Accept")
+                            {
+                                client.Player.TradingSession = new TradingSession()
+                                {
+                                    PartnerCharID = partnerCharID
+                                };
+
+                                Messenger.PlayerMsg(partner, $"{client.Player.DisplayName} accepted!", Text.BrightGreen);
+                            } 
+                            else
+                            {
+                                partner.Player.TradingSession = null;
+                                Messenger.PlayerMsg(partner, $"{client.Player.DisplayName} denied.", Text.BrightRed);
+                            }
+
+                            Messenger.ForceEndStoryTo(partner);
+                        }
+                        break;
                     case "Appraisal":
                         {
                             if (answer == "Yes")
@@ -10592,19 +10658,23 @@ namespace Script
         {
             var idleMessage = defender.Player.PlayerData.IdleMessage;
 
-            if (!string.IsNullOrEmpty(idleMessage))
+            if (string.IsNullOrEmpty(idleMessage)) 
             {
-                var defenderSpecies = defender.Player.GetActiveRecruit().Species;
-                
-                var story = new Story();
-                var segment = StoryBuilder.BuildStory();
-
-                StoryBuilder.AppendSaySegment(segment, $"{defender.Player.DisplayName}: {idleMessage}", defenderSpecies, 0, 0);
-
-                segment.AppendToStory(story);
-
-                StoryManager.PlayStory(attacker, story);
+                idleMessage = "Hello!";
             }
+
+            var defenderSpecies = defender.Player.GetActiveRecruit().Species;
+
+            var choices = new List<string>();
+
+            if (attacker.Player.MapID == "s334") // Aurora Trading Center
+            {
+                choices.Add("Trade");
+            }
+            choices.Add("Profile");
+            choices.Add("Bye!");
+
+            Messenger.AskQuestion(attacker, $"InteractionMenu:{defender.Player.CharID}", $"{defender.Player.DisplayName}: {idleMessage}", defenderSpecies, choices.ToArray());
         }
 
     }
