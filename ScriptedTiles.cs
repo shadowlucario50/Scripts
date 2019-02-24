@@ -1447,6 +1447,14 @@ namespace Script
                             }
                         }   
                         break;
+                    case 82:
+                        { // Pokemon Trading
+                            if (client?.Player?.TradingSession != null)
+                            {
+                                Messenger.OpenPokemonTradingMenu(client);
+                            }
+                        }
+                        break;
                 }
                 PacketHitList.MethodEnded(ref hitlist);
             }
@@ -1623,6 +1631,8 @@ namespace Script
                     return scriptNum + ": Crow Block";
                 case 81:
                     return scriptNum + ": Whirlpool Trap";
+                case 82:
+                    return scriptNum + ": Pokemon Trading";
                 default:
                     return scriptNum.ToString() + ": Unknown";
             }
