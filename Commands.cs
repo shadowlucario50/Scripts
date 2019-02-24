@@ -3645,7 +3645,7 @@ namespace Script
                                     } 
                                     else 
                                     {
-                                        Messenger.PlayerMsg(client, "Unable to warp. The destination must be a sandboxed map that you can access.", Text.Green);
+                                        Messenger.PlayerMsg(client, "Unable to warp. The destination must be a sandboxed map that you can access.", Text.BrightRed);
                                     }
                                 }
                                 else
