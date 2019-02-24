@@ -10679,14 +10679,24 @@ namespace Script
 
         public static void PokemonTradeComplete(Client playerA, Client playerB, Recruit playerARecruit, Recruit playerBRecruit)
         {
-            var playerAStory = CreateTradeStory(playerA, playerBRecruit, playerARecruit);
-            var playerBStory = CreateTradeStory(playerB, playerARecruit, playerBRecruit);
+            var playerAStory = CreateTradeStory(playerA, playerBRecruit, playerARecruit, false);
+            var playerBStory = CreateTradeStory(playerB, playerARecruit, playerBRecruit, false);
 
             StoryManager.PlayStory(playerA, playerAStory);
             StoryManager.PlayStory(playerB, playerBStory);
+
+            var externalStory = CreateTradeStory(playerA, playerBRecruit, playerARecruit, true);
+
+            foreach (var client in playerA.Player.Map.GetClients())
+            {
+                if (client != playerA && client != playerB) 
+                {
+                    StoryManager.PlayStory(client, externalStory);
+                }
+            }
         }
 
-        private static Story CreateTradeStory(Client client, Recruit myRecruit, Recruit theirRecruit)
+        private static Story CreateTradeStory(Client client, Recruit myRecruit, Recruit theirRecruit, bool external)
         {
             var speciesA = -1;
             var speciesB = -1;
@@ -10705,7 +10715,9 @@ namespace Script
             var story = new Story();
             var segment = StoryBuilder.BuildStory();
 
-            StoryBuilder.AppendSaySegment(segment, $"{client.Player.DisplayName}: Bye {myRecruit.Name}!", client.Player.GetActiveRecruit().Species, 0, 0);
+            if (!external) {
+                StoryBuilder.AppendSaySegment(segment, $"{client.Player.DisplayName}: Bye {myRecruit.Name}!", client.Player.GetActiveRecruit().Species, 0, 0);
+            }
             StoryBuilder.AppendCreateFNPCAction(segment, "0", "s334", 6, 5, speciesA);
             StoryBuilder.AppendCreateFNPCAction(segment, "1", "s334", 19, 5, speciesB);
             StoryBuilder.AppendMoveFNPCAction(segment, "0", 19, 5, Enums.Speed.Walking, false);
