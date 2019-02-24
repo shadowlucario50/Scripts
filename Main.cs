@@ -10677,5 +10677,44 @@ namespace Script
             Messenger.AskQuestion(attacker, $"InteractionMenu:{defender.Player.CharID}", $"{defender.Player.DisplayName}: {idleMessage}", defenderSpecies, choices.ToArray());
         }
 
+        public static void PokemonTradeComplete(Client playerA, Client playerB, Recruit playerARecruit, Recruit playerBRecruit)
+        {
+            var playerAStory = CreateTradeStory(playerA, playerBRecruit, playerARecruit);
+            var playerBStory = CreateTradeStory(playerB, playerARecruit, playerBRecruit);
+
+            StoryManager.PlayStory(playerA, playerAStory);
+            StoryManager.PlayStory(playerB, playerBStory);
+        }
+
+        private static Story CreateTradeStory(Client client, Recruit myRecruit, Recruit theirRecruit)
+        {
+            var speciesA = -1;
+            var speciesB = -1;
+
+            if (client.Player.X == 6 && client.Player.Y == 7)
+            {
+                speciesA = myRecruit.Species;
+                speciesB = theirRecruit.Species;
+            }
+            if (client.Player.X == 19 && client.Player.Y == 7)
+            {
+                speciesA = theirRecruit.Species;
+                speciesB = myRecruit.Species;
+            }
+
+            var story = new Story();
+            var segment = StoryBuilder.BuildStory();
+
+            StoryBuilder.AppendSaySegment(segment, $"{client.Player.DisplayName}: Bye {myRecruit.Name}!", client.Player.GetActiveRecruit().Species, 0, 0);
+            StoryBuilder.AppendCreateFNPCAction(segment, "0", "s334", 6, 5, speciesA);
+            StoryBuilder.AppendCreateFNPCAction(segment, "1", "s334", 19, 5, speciesB);
+            StoryBuilder.AppendMoveFNPCAction(segment, "0", 19, 5, Enums.Speed.Walking, false);
+            StoryBuilder.AppendMoveFNPCAction(segment, "1", 6, 5, Enums.Speed.Walking, true);
+
+            segment.AppendToStory(story);
+
+            return story;
+        }
+
     }
 }
