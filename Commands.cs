@@ -3638,7 +3638,7 @@ namespace Script
                                 if (target != null)
                                 {
                                     var targetMap = target.Player.GetCurrentMap();
-                                    if ((targetMap.IsZoneOrObjectSandboxed() && client.Player.CanViewZone(targetMap.ZoneID)) || Ranks.IsAllowed(client, Enums.Rank.Scripter))
+                                    if ((targetMap.IsZoneOrObjectSandboxed() && client.Player.CanViewZone(targetMap.ZoneID)) || Ranks.IsAllowed(client, Enums.Rank.Mapper))
                                     {
                                         Messenger.PlayerWarp(client, targetMap, target.Player.X, target.Player.Y);
                                         Server.Logging.ChatLogger.AppendToChatLog("Staff", "[Warp Event] " + client.Player.Name + " warped to " + target.Player.Name + " on map: " + target.Player.MapID + " - " + target.Player.Map.Name);
