@@ -3637,8 +3637,16 @@ namespace Script
                                 }
                                 if (target != null)
                                 {
-                                    Messenger.PlayerWarp(client, target.Player.GetCurrentMap(), target.Player.X, target.Player.Y);
-                                    Server.Logging.ChatLogger.AppendToChatLog("Staff", "[Warp Event] " + client.Player.Name + " warped to " + target.Player.Name + " on map: " + target.Player.MapID + " - " + target.Player.Map.Name);
+                                    var targetMap = target.Player.GetCurrentMap();
+                                    if (targetMap.IsZoneOrObjectSandboxed() && client.Player.CanViewZone(targetMap.ZoneID))
+                                    {
+                                        Messenger.PlayerWarp(client, targetMap, target.Player.X, target.Player.Y);
+                                        Server.Logging.ChatLogger.AppendToChatLog("Staff", "[Warp Event] " + client.Player.Name + " warped to " + target.Player.Name + " on map: " + target.Player.MapID + " - " + target.Player.Map.Name);
+                                    } 
+                                    else 
+                                    {
+                                        Messenger.PlayerMsg(client, "Unable to warp. The destination must be a sandboxed map that you can access.", Text.Green);
+                                    }
                                 }
                                 else
                                 {
