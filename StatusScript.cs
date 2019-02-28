@@ -4045,10 +4045,6 @@ namespace Script {
                     setup.moveIndex == 311 ||
                     setup.moveIndex == 222 ||
                     setup.moveIndex == 210 ||
-                    setup.moveIndex == 733 ||
-                    setup.moveIndex == 703 ||
-                    setup.moveIndex == 705 ||
-                    setup.moveIndex == 708 ||
                     setup.moveIndex == 737) {
                     setup.Move.Accuracy = 0;
                     setup.PacketStack.AddPacketToMap(setup.AttackerMap, PacketBuilder.CreateBattleMsg(setup.Defender.Name + " avoided damage with Soundproof!", Text.WhiteSmoke), setup.Attacker.X, setup.Attacker.Y, 10);
