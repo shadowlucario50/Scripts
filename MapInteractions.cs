@@ -203,12 +203,8 @@ namespace Script
 
                             foreach (Client client in map.GetClients())
                             {
-                                if (Ranks.IsDisallowed(client, Enums.Rank.Mapper))
-                                {
-
-                                    HandleGameOver(client, Enums.KillType.Other);
-                                    victims++;
-                                }
+                                HandleGameOver(client, Enums.KillType.Other);
+                                victims++;
                             }
                             if (victims > 0)
                             {
