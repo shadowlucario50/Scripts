@@ -3830,24 +3830,6 @@ namespace Script
                             }
                         }
                         break;
-                    case "/playerintc":
-                        {
-                            if (Ranks.IsAllowed(client, Enums.Rank.Scripter))
-                            {
-
-                                foreach (Client i in ClientManager.GetClients())
-                                {
-                                    if (i.IsPlaying() && i.Player.Map.MapType == Enums.MapType.RDungeonMap
-                                        && ((RDungeonMap)i.Player.Map).RDungeonIndex >= 70 && ((RDungeonMap)i.Player.Map).RDungeonIndex <= 86)
-                                    {
-                                        Messenger.PlayerMsg(client, i.Player.Name + " is on #" + (((RDungeonMap)i.Player.Map).RDungeonIndex + 1), Text.BrightCyan);
-                                        Messenger.PlayerMsg(client, "-Floor " + (((RDungeonMap)i.Player.Map).RDungeonFloor + 1), Text.Yellow);
-                                    }
-                                }
-
-                            }
-                        }
-                        break;
                     case "/playerindungeons":
                         {
                             if (Ranks.IsAllowed(client, Enums.Rank.Scripter))
