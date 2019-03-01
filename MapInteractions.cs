@@ -2457,8 +2457,23 @@ namespace Script
                             req.Start = Enums.Acceptance.Never;
                             req.End = Enums.Acceptance.Never;
 
-
                             IMap sourceMap = MapManager.RetrieveMap(string1.ToInt());
+
+                            for (var x = 0; x < req.MinX; x++)
+                            {
+                                for (var y = 0; y < req.MinY; y++) 
+                                {
+                                    if (sourceMap.Tile[sourceX + x, sourceY + y].RDungeonMapValue == DungeonArrayFloor.STARTTILE)
+                                    {
+                                        req.Start = Enums.Acceptance.Always;
+                                    }
+                                    if (sourceMap.Tile[sourceX + x, sourceY + y].RDungeonMapValue == DungeonArrayFloor.ENDTILE)
+                                    {
+                                        req.End = Enums.Acceptance.Always;
+                                    }
+                                }
+                            }
+
                             List<int> entrances = new List<int>();
                             for (int x = 0; x < req.MinX; x++)
                             {
@@ -2662,7 +2677,10 @@ namespace Script
                             {
                                 for (int y = 0; y < yDiff; y++)
                                 {
-                                    MapCloner.CloneTile(sourceMap, sourceX + x, sourceY + y, map.Tile[room.StartX + x, room.StartY + y]);
+                                    if (sourceMap.Tile[sourceX + x, sourceY + y].RDungeonMapValue != DungeonArrayFloor.ENDTILE)
+                                    {
+                                    	MapCloner.CloneTile(sourceMap, sourceX + x, sourceY + y, map.Tile[room.StartX + x, room.StartY + y]);
+                                    }
                                     arrayFloor.MapArray[room.StartX + x, room.StartY + y] = sourceMap.Tile[sourceX + x, sourceY + y].RDungeonMapValue;
                                 }
                             }
