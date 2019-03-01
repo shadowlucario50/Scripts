@@ -3984,8 +3984,10 @@ namespace Script
                                 client.Player.RemoveFromTeam(activeSlot);
 
                                 client.Player.Dead = false;
+                                client.Player.Hunted = false;
                                 PacketHitList hitlist = null;
                                 PacketHitList.MethodStart(ref hitlist);
+                                PacketBuilder.AppendHunted(client, hitlist);
                                 PacketBuilder.AppendDead(client, hitlist);
                                 PacketHitList.MethodEnded(ref hitlist);
 
