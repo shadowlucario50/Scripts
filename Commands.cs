@@ -112,6 +112,37 @@ namespace Script
 
                 switch (command[0])
                 {
+                    case "/setcostume":
+                        {
+                            if (Ranks.IsAllowed(client, Enums.Rank.Scripter))
+                            {
+                                Client n;
+                                string[] subCommand = command[0].Split('*');
+                                if (subCommand.Length > 1)
+                                {
+                                    n = ClientManager.FindClient(command[1], true);
+                                }
+                                else
+                                {
+                                    n = ClientManager.FindClient(command[1]);
+                                }
+
+                                if (n != null) {
+                                    n.Player.GetActiveRecruit().Costume = command[2].ToInt();
+                                    Messenger.SendPlayerData(n);
+                                } 
+                                else
+                                {
+                                    Messenger.PlayerMsg(client, "Player is offline.", Text.Grey);
+                                }
+                            } 
+                            else if (Ranks.IsAllowed(client, Enums.Rank.Mapper))
+                            {
+                                client.Player.GetActiveRecruit().Costume = command[1].ToInt();
+                                Messenger.SendPlayerData(client);
+                            } 
+                        }
+                        break;
                     case "/saveposition":
                         {
                             if (Ranks.IsAllowed(client, Enums.Rank.Scripter))
