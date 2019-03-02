@@ -1652,6 +1652,8 @@ namespace Script
                     return scriptNum + ": Whirlpool Trap";
                 case 82:
                     return scriptNum + ": Pokemon Trading";
+                case 83:
+                    return scriptNum + ": Story Block";
                 default:
                     return scriptNum.ToString() + ": Unknown";
             }
