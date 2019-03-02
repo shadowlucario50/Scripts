@@ -45,7 +45,7 @@ namespace Script
     public partial class Main
     {
 
-        public static void ScriptedTile(IMap map, ICharacter character, int script, string param1, string param2, string param3, PacketHitList hitlist)
+        public static bool ScriptedTile(IMap map, ICharacter character, int script, string param1, string param2, string param3, PacketHitList hitlist)
         {
             try
             {
@@ -1455,6 +1455,23 @@ namespace Script
                             }
                         }
                         break;
+                    case 83:
+                        { // Story block
+                            if (client != null)
+                            {
+                                var chapter = param1.ToInt() - 1;
+
+                                if (!client.Player.GetStoryState(chapter))
+                                {
+                                    return true;
+                                }
+                                else
+                                {
+                                    return false;
+                                }
+                            }
+                        }
+                        break;
                 }
                 PacketHitList.MethodEnded(ref hitlist);
             }
@@ -1465,6 +1482,8 @@ namespace Script
                 Messenger.AdminMsg(map.Name, Text.Black);
                 Messenger.AdminMsg(ex.ToString(), Text.Black);
             }
+
+            return false;
         }
 
         public static string ScriptedTileInfo(Client client, int scriptNum)
