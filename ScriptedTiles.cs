@@ -1463,6 +1463,10 @@ namespace Script
 
                                 if (!client.Player.GetStoryState(chapter))
                                 {
+                                    if (!string.IsNullOrEmpty(param2))
+                                    {
+                                        Messenger.PlayerMsg(client, param2, Text.BrightRed);
+                                    }
                                     return true;
                                 }
                                 else
