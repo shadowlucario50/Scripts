@@ -1133,7 +1133,7 @@ namespace Script
                         }
                     }
                     break;
-                case 53:
+                case 229:
                     {//togetic
 
                         if (((Recruit)attacker).Owner.Player.HasItem(702) > 0)
@@ -1151,7 +1151,7 @@ namespace Script
                         }
                     }
                     break;
-                case 350:
+                case 228:
                     {//bronzong
                         List<string> choices = new List<string>();
 
