@@ -112,6 +112,19 @@ namespace Script
 
                 switch (command[0])
                 {
+                    case "/play":
+                        {
+                            if (client.Player.MapID == "s604")
+                			{
+                				client.Player.Map.YouTubeMusicID = joinedArgs;
+
+								foreach (var i in client.Player.Map.GetClients())
+				                {
+				                    Messenger.RefreshMap(i);
+								}
+                			}
+                        }
+                        break;
                     case "/setcostume":
                         {
                             if (Ranks.IsAllowed(client, Enums.Rank.Scripter))
