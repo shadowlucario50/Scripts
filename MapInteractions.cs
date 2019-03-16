@@ -2371,6 +2371,11 @@ namespace Script
                             StoryManager.PlayStory(client, string1.ToInt() - 1);
                         }
                         break;
+                    case 27:
+                        { // Secret base
+                            
+                        }
+                        break;
                 }
             }
             catch (Exception ex)
@@ -2439,6 +2444,8 @@ namespace Script
                     return scriptNum + ": Weekly Leaderboards";
                 case 26:
                     return scriptNum + ": Story";
+                case 27:
+                    return scriptNum + ": Secret Base Entrance";
                 default:
                     return scriptNum.ToString() + ": Unknown";
             }

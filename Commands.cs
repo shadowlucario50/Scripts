@@ -45,6 +45,7 @@ namespace Script
     using Server.Events;
     using DataManager.Players;
     using PMDCP.DatabaseConnector;
+    using Server.SecretBases;
 
     public partial class Main
     {
@@ -112,6 +113,19 @@ namespace Script
 
                 switch (command[0])
                 {
+                    case "/closebase":
+                        {
+                            if (SecretBaseManager.HasSecretBase(client))
+                            {
+                                SecretBaseManager.DeleteSecretBase(client);
+                                Messenger.PlayerMsg(client, "Your secret base has been removed from the overworld!", Text.BrightRed);
+                            }   
+                            else
+                            {
+                                Messenger.PlayerMsg(client, "You don't have a secret base anywhere!", Text.BrightRed);
+                            }
+                        }
+                        break;
                     case "/play":
                         {
                             if (client.Player.MapID == "s604")
