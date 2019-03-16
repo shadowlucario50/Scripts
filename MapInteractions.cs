@@ -43,6 +43,7 @@ namespace Script
     using Server.Tournaments;
     using Server.Zones;
     using Server.Database;
+    using Server.SecretBases;
 
     public partial class Main
     {
@@ -2373,7 +2374,29 @@ namespace Script
                         break;
                     case 27:
                         { // Secret base
-                            
+                            var x = client.Player.X;
+                            var y = client.Player.Y;
+
+                            switch (dir)
+                            {
+                                case Enums.Direction.Down:
+                                    y++;
+                                    break;
+                                case Enums.Direction.Up:
+                                    y--;
+                                    break;
+                                case Enums.Direction.Left:
+                                    x--;
+                                    break;
+                                case Enums.Direction.Right:
+                                    x++;
+                                    break;
+                            }
+
+                            exPlayer.Get(client).HousingCenterMap = client.Player.MapID;
+                            exPlayer.Get(client).HousingCenterX = client.Player.X;
+                            exPlayer.Get(client).HousingCenterY = client.Player.Y;
+                            SecretBaseManager.EnterSecretBase(client, x, y);
                         }
                         break;
                 }
@@ -2449,6 +2472,11 @@ namespace Script
                 default:
                     return scriptNum.ToString() + ": Unknown";
             }
+        }
+
+        public static void SetupSecretBase(Client client, int x, int y) 
+        {
+            Messenger.PlayerMsg(client, $"Nothing here... {x}, {y}", Text.BrightRed);
         }
 
         public static RDungeonChamberReq GetChamberReq(int chamberNum, string string1, string string2, string string3)
