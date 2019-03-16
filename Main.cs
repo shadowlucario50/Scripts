@@ -44,6 +44,7 @@ namespace Script
     using Server.Tournaments;
     using Server.Events;
     using Server.Trading;
+    using Server.SecretBases;
 
     using DataManager.Players;
     using Server.Database;
@@ -3381,6 +3382,23 @@ namespace Script
                 // Called when a player answers a yes/no question
                 switch (questionID)
                 {
+                    case "CreateSecretBase":
+                        {
+                            if (answer == "Yes")
+                            {
+                                var x = questionArguments[1].ToInt();
+                                var y = questionArguments[2].ToInt();
+
+                                SecretBaseManager.CreateSecretBase(client, x, y);
+
+                                Story story = new Story();
+                                StoryBuilderSegment segment = StoryBuilder.BuildStory();
+                                StoryBuilder.AppendSaySegment(segment, "Your secret base is now ready!", -1, 0, 0);
+                                segment.AppendToStory(story);
+                                StoryManager.PlayStory(client, story);
+                            }
+                        }
+                        break;
                     case "InteractionMenu":
                         {
                             var partnerCharID = questionArguments[1];
