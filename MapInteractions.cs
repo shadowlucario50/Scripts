@@ -2476,7 +2476,11 @@ namespace Script
 
         public static void SetupSecretBase(Client client, int x, int y) 
         {
-            Messenger.PlayerMsg(client, $"Nothing here... {x}, {y}", Text.BrightRed);
+            Story story = new Story();
+            StoryBuilderSegment segment = StoryBuilder.BuildStory();
+            StoryBuilder.AppendAskQuestionAction(segment, "You see a small opening... would you like to create a secret base here?", $"CreateSecretBase:{x},{y}", -1, new string[] { "Yes", "No" });
+            segment.AppendToStory(story);
+            StoryManager.PlayStory(client, story);
         }
 
         public static RDungeonChamberReq GetChamberReq(int chamberNum, string string1, string string2, string string3)
