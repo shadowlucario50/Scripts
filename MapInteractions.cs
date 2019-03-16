@@ -2366,6 +2366,11 @@ namespace Script
                             Messenger.SendOpenWeeklyLeaderboards(client);
                         }
                         break;
+                    case 26:
+                        { // Story sign
+                            StoryManager.PlayStory(client, string1.ToInt() - 1);
+                        }
+                        break;
                 }
             }
             catch (Exception ex)
@@ -2432,6 +2437,8 @@ namespace Script
                     return scriptNum + ": CTF Registration/Creation";
                 case 25:
                     return scriptNum + ": Weekly Leaderboards";
+                case 26:
+                    return scriptNum + ": Story";
                 default:
                     return scriptNum.ToString() + ": Unknown";
             }
