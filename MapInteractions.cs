@@ -2486,11 +2486,7 @@ namespace Script
             }
             else 
             {
-                Story story = new Story();
-                StoryBuilderSegment segment = StoryBuilder.BuildStory();
-                StoryBuilder.AppendAskQuestionAction(segment, "You see a small opening... would you like to create a secret base here?", $"CreateSecretBase:{x}:{y}", -1, new string[] { "Yes", "No" });
-                segment.AppendToStory(story);
-                StoryManager.PlayStory(client, story);
+                Messenger.AskQuestion(client, $"CreateSecretBase:{x}:{y}", "You see a small opening... would you like to create a secret base here?", -1);
             }
         }
 
