@@ -407,7 +407,6 @@ namespace Script {
         
         
         public static string GetWarningString(string[] parameters) {
-        	//Messenger.AdminMsg(parameters[0], Text.Black);
         	int index = parameters[0].ToInt();
         	switch (index) {
         		case 0:
@@ -630,20 +629,19 @@ namespace Script {
                     restrictionString = param3.Split(':')[2];
                 }
 
-
                 if (CheckDungeonRequirements(client, reqString.Split(';')))
                 {
 
-
                     if (restrictionString != "")
                     {
+                    	var segmentCount = story.Segments.Count;
 
                         AppendEntranceWarning(story, dungeonName, restrictionString.Split(';'));
 
                         segment = new StorySegment();
                         segment.Action = Enums.StoryAction.AskQuestion;
                         segment.AddParameter("Question", "Will you enter " + dungeonName + "?");
-                        segment.AddParameter("SegmentOnYes", "3");
+                        segment.AddParameter("SegmentOnYes",  (segmentCount + 2).ToString());
                         segment.AddParameter("SegmentOnNo", (story.Segments.Count + 4).ToString());
                         segment.AddParameter("Mugshot", "-1");
                         story.Segments.Insert(offsetSegment, segment);
@@ -765,13 +763,13 @@ namespace Script {
             if (param3 == "") {
                 client.Player.WarpToRDungeon(param1.ToInt() - 1, param2.ToInt() - 1);
             } else if (param3.IsNumeric()) {
-                ApplyDungeonRestrictions(client, param3);
                 client.Player.WarpToRDungeon(param1.ToInt() - 1, param2.ToInt() - 1);
+                ApplyDungeonRestrictions(client, param3);
                 client.Player.AddDungeonAttempt(param3.ToInt() - 1);
 
             } else {
-                ApplyDungeonRestrictions(client, param3);
                 client.Player.WarpToRDungeon(param1.ToInt() - 1, param2.ToInt() - 1);
+                ApplyDungeonRestrictions(client, param3);
             }
             OnDungeonStart(client, param3.ToInt() - 1);
             
