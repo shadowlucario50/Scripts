@@ -3395,7 +3395,7 @@ namespace Script
                             {
                                 n = ClientManager.FindClient(joinedArgs);
                             }
-                            if (Ranks.IsAllowed(client, Enums.Rank.Monitor) && n != null)
+                            if (Ranks.IsAllowed(client, Enums.Rank.Scripter) && n != null)
                             {
                                 n.Player.Muted = true;
                                 n.Player.Status = "MUTED";
@@ -3494,7 +3494,7 @@ namespace Script
                             {
                                 n = ClientManager.FindClient(joinedArgs);
                             }
-                            if (Ranks.IsAllowed(client, Enums.Rank.Monitor) && n != null)
+                            if (Ranks.IsAllowed(client, Enums.Rank.Scripter) && n != null)
                             {
                                 n.Player.Muted = false;
                                 n.Player.Status = "";
@@ -3665,9 +3665,18 @@ namespace Script
                             {
                                 if (command[1].IsNumeric())
                                 {
-
-                                    Messenger.PlayerWarp(client, command[1].ToInt(), client.Player.X, client.Player.Y);
-                                    Server.Logging.ChatLogger.AppendToChatLog("Staff", "[Warp Event] " + client.Player.Name + " warped to map " + command[1] + " - " + client.Player.Map.Name);
+                                	var map = MapManager.RetrieveMap(command[1].ToInt());
+                                	
+                                	if ((map.IsZoneOrObjectSandboxed() && client.Player.CanViewZone(map.ZoneID)))
+									{
+										Messenger.PlayerWarp(client, command[1].ToInt(), client.Player.X, client.Player.Y);
+                                    	Server.Logging.ChatLogger.AppendToChatLog("Staff", "[Warp Event] " + client.Player.Name + " warped to map " + command[1] + " - " + client.Player.Map.Name);
+									}
+									else
+									{
+										Messenger.PlayerMsg(client, "Unable to warp. The destination must be a sandboxed map that you can access.", Text.BrightRed);
+									}
+                                    
                                 }
                                 else
                                 {
@@ -3696,7 +3705,7 @@ namespace Script
                                 if (target != null)
                                 {
                                     var targetMap = target.Player.GetCurrentMap();
-                                    if ((targetMap.IsZoneOrObjectSandboxed() && client.Player.CanViewZone(targetMap.ZoneID)) || Ranks.IsAllowed(client, Enums.Rank.Mapper))
+                                    if ((targetMap.IsZoneOrObjectSandboxed() && client.Player.CanViewZone(targetMap.ZoneID)) /*|| Ranks.IsAllowed(client, Enums.Rank.Mapper)*/)
                                     {
                                         Messenger.PlayerWarp(client, targetMap, target.Player.X, target.Player.Y);
                                         Server.Logging.ChatLogger.AppendToChatLog("Staff", "[Warp Event] " + client.Player.Name + " warped to " + target.Player.Name + " on map: " + target.Player.MapID + " - " + target.Player.Map.Name);
