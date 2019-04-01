@@ -3295,6 +3295,16 @@ namespace Script
                             client.Player.RemoveFriend(joinedArgs);
                         }
                         break;
+                    case "/block":
+                        {
+                            client.Player.BlockPlayer(joinedArgs);
+                        }
+                        break;
+                    case "/unblock":
+                        {
+                            client.Player.UnblockPlayer(joinedArgs);
+                        }
+                        break;
                     //storytile
                     //clearstorytile
                     case "/unlockstory":
