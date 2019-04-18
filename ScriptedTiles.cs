@@ -218,7 +218,7 @@ namespace Script
                         break;
 
                     case 11:
-                        {//Warp out of Destiny Cavern
+                        {//Warp out of starter area
                             if (client != null)
                             {
                                 if (Settings.NewCharForm > 0)
@@ -240,12 +240,10 @@ namespace Script
                                     }
                                     //}
                                     //}
-                                    //Messenger.PlayerWarp(client, 1, 10, 7);
-                                    exPlayer.Get(client).SpawnMap = "s1035";
-                                    exPlayer.Get(client).SpawnX = 9;
-                                    exPlayer.Get(client).SpawnY = 7;
-                                    StoryManager.PlayStory(client, 639);
-                                    //StoryManager.PlayStory(client, 640);
+                                    exPlayer.Get(client).SpawnMap = "s5";
+                                    exPlayer.Get(client).SpawnX = 23;
+                                    exPlayer.Get(client).SpawnY = 30;
+                                    Messenger.PlayerWarp(client, 101, 13, 34);
                                     //} else {
                                     //	StoryManager.PlayStory(client, StoryConstruction.CreateIntroStory(client));
                                     //}
