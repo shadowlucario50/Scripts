@@ -65,6 +65,8 @@ namespace Script
         {
 
             DatabaseManager.InitOptionsDB();
+
+            InitializeFlyPoints();
         }
 
         public static void JoinGame(Client client)

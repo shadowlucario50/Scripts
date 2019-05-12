@@ -113,6 +113,19 @@ namespace Script
 
                 switch (command[0])
                 {
+                    case "/setupfly":
+                        {
+                            if (Ranks.IsAllowed(client, Enums.Rank.Scripter))
+                            {
+                                InitializeFlyPoints();
+                            }
+                        }
+                        break;
+                    case "/fly":
+                        {
+                            Messenger.SendAvailableFlyPoints(client);
+                        }
+                        break;
                     case "/closebase":
                         {
                             if (SecretBaseManager.HasSecretBase(client))
