@@ -32,6 +32,7 @@ namespace Script
             FlightManager.AddFlightPoint(new FlightPoint() { ID = 2, Name = "Dream Village", MapNumber = 35, Description = "Hidden within the cherry blossoms." });
             FlightManager.AddFlightPoint(new FlightPoint() { ID = 3, Name = "Borealis City", MapNumber = 223, Description = "A city that rose from a glorious history." });
             FlightManager.AddFlightPoint(new FlightPoint() { ID = 4, Name = "Mysveil Town", MapNumber = 358, Description = "Beyond the veil of time." });
+            FlightManager.AddFlightPoint(new FlightPoint() { ID = 5, Name = "Moonhaven", MapNumber = 490, ImageName = "moonhaven.png", Description = "A friendly bat town located inside a long-dormant ocean volcano." });
         }
     }
 }
