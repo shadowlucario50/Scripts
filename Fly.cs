@@ -28,7 +28,7 @@ namespace Script
             FlightManager.ClearFlightPoints();
 
             FlightManager.AddFlightPoint(new FlightPoint() { ID = 0, Name = "Florea Town", MapNumber = 5, Description = "Where everything blooms beautifully." });
-            FlightManager.AddFlightPoint(new FlightPoint() { ID = 1, Name = "Newpond Village", MapNumber = 54, Description = "Fresh air and fresh water." });
+            FlightManager.AddFlightPoint(new FlightPoint() { ID = 1, Name = "Newpond Village", MapNumber = 54, ImageName = "newpond.png", Description = "Fresh air and fresh water." });
             FlightManager.AddFlightPoint(new FlightPoint() { ID = 2, Name = "Dream Village", MapNumber = 35, Description = "Hidden within the cherry blossoms." });
             FlightManager.AddFlightPoint(new FlightPoint() { ID = 3, Name = "Borealis City", MapNumber = 223, Description = "A city that rose from a glorious history." });
             FlightManager.AddFlightPoint(new FlightPoint() { ID = 4, Name = "Mysveil Town", MapNumber = 358, Description = "Beyond the veil of time." });
