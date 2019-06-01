@@ -176,7 +176,7 @@ namespace Script
                                     Messenger.PlayerMsg(client, "Player is offline.", Text.Grey);
                                 }
                             } 
-                            else if (Ranks.IsAllowed(client, Enums.Rank.Mapper))
+                            else
                             {
                                 client.Player.GetActiveRecruit().Costume = command[1].ToInt();
                                 Messenger.SendPlayerData(client);
