@@ -32,7 +32,14 @@ namespace Script
     {
         public static void ScriptedKeyItem(Client client, KeyItem keyItem, int slot) 
         {
-            
+            switch (keyItem.ItemID)
+            {
+                case 1839: // Costume box
+                {
+                    Messenger.PlayerMsg(client, "You don't have any costumes yet!", Text.BrightRed);
+                }
+                break;
+            }
         }
     }
 }
