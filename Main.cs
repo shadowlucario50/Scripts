@@ -8385,7 +8385,7 @@ namespace Script
                                 TakeItemSlotFromCharacter(setup.Attacker, invNum, 1);
                                 client.Player.AddCostume(species, costumeId);
 
-                                var speciesName = Pokedex.GetPokemon(species);
+                                var speciesName = Pokedex.GetPokemon(species).Name;
 
                                 Messenger.PlayerMsg(client, $"{speciesName} costume {costumeId} has been added to your costume box!", Text.BrightGreen);
                             } 
