@@ -121,11 +121,6 @@ namespace Script
                             }
                         }
                         break;
-                    case "/fly":
-                        {
-                            Messenger.SendAvailableFlyPoints(client);
-                        }
-                        break;
                     case "/closebase":
                         {
                             if (SecretBaseManager.HasSecretBase(client))

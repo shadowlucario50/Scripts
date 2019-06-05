@@ -35,10 +35,15 @@ namespace Script
             switch (keyItem.ItemID)
             {
                 case 1839: // Costume box
-                {
-                    Messenger.PlayerMsg(client, "You don't have any costumes yet!", Text.BrightRed);
-                }
-                break;
+                    {
+                        Messenger.PlayerMsg(client, "You don't have any costumes yet!", Text.BrightRed);
+                    }
+                    break;
+                case 1842: // Drif-Flute
+                    {
+                        Messenger.SendAvailableFlyPoints(client);
+                    }
+                    break;
             }
         }
     }
