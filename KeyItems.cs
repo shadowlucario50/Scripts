@@ -36,7 +36,7 @@ namespace Script
             {
                 case 1839: // Costume box
                     {
-                        Messenger.PlayerMsg(client, "You don't have any costumes yet!", Text.BrightRed);
+                        Messenger.SendAvailableCostumes(client);
                     }
                     break;
                 case 1842: // Drif-Flute
