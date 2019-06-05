@@ -8366,6 +8366,12 @@ namespace Script
                             if (setup.Attacker.CharacterType == Enums.CharacterType.Recruit) {
                                 var client = ((Recruit)setup.Attacker).Owner;
 
+                                if (item.IsSandboxed)
+                                {
+                                    Messenger.PlayerMsg(client, "You can't use a sandboxed costume!", Text.BrightRed);
+                                    return;
+                                }
+
                                 if (!client.Player.HasKeyItem(1839, 1))
                                 {
                                     Messenger.PlayerMsg(client, "You don't have a Costume Box to store this item!", Text.BrightRed);
@@ -8379,7 +8385,9 @@ namespace Script
                                 TakeItemSlotFromCharacter(setup.Attacker, invNum, 1);
                                 client.Player.AddCostume(species, costumeId);
 
-                                Messenger.PlayerMsg(client, "The costume has been added to your costume box!", Text.BrightGreen);
+                                var speciesName = Pokedex.GetPokemon(species);
+
+                                Messenger.PlayerMsg(client, $"{speciesName} costume {costumeId} has been added to your costume box!", Text.BrightGreen);
                             } 
                         }
                         break;
