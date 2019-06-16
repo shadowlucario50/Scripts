@@ -21,6 +21,7 @@ namespace Script.Events
         {
             public UserRole Role { get; set; }
             public bool IsDead { get; set; }
+            public string SelectedCharId { get; set; }
 
             public UserInfo()
             {
@@ -68,10 +69,6 @@ namespace Script.Events
 
             if (Data.Started)
             {
-                if (!Data.Users.ContainsKey(client.Player.CharID)) {
-                    Data.Users.Add(client.Player.CharID, new UserInfo());
-                }
-
                 ApplyState(client);
             }
         }
@@ -158,6 +155,22 @@ namespace Script.Events
                 case "/werewolfchoose":
                     Messenger.PlayerMsg(client, $"You chose ${joinedArgs}! Too bad it doesn't work yet.", Text.BrightGreen);
                     return true;
+                case "/werewolfstate":
+                    Messenger.PlayerMsg(client, $"{Data.GameState}", Text.BrightGreen);
+                    ApplyState(client);
+                    return true;
+                case "/w":
+                    {
+                        if (Data.Users[client.Player.CharID].Role == UserRole.Werewolf)
+                        {
+                            WerewolfMessage(client, joinedArgs);
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
                 default:
                     return false;
             }
@@ -170,6 +183,14 @@ namespace Script.Events
             StoryBuilder.AppendSaySegment(segment, message, -1, 0, 0);
             segment.AppendToStory(story);
             StoryManager.PlayStory(client, story);
+        }
+
+        public void WerewolfMessage(Client client, string message)
+        {
+            foreach (var eventClient in EventManager.GetRegisteredClients().Where(x => Data.Users[x.Player.CharID].Role == UserRole.Werewolf))
+            {
+                Messenger.PlayerMsg(eventClient, $"[Werewolf] {client.Player.DisplayName}: {message}", Text.White);
+            }
         }
 
         private void ApplyState(Client client)
