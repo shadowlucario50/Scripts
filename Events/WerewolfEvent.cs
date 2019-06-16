@@ -159,6 +159,12 @@ namespace Script.Events
                         return true;
                     }
 
+                    if (Data.Users[chosenClient.Player.CharID].IsDead)
+                    {
+                        Messenger.PlayerMsg(client, "Player is already dead!", Text.BrightRed);
+                        return true;
+                    }
+
                     switch (Data.GameState)
                     {
                         case GameState.WerewolfSelecting:
@@ -221,7 +227,9 @@ namespace Script.Events
 
                                 if (CanTransition())
                                 {
-                                    Transition(GameState.VillagersSelecting);
+                                    var majoritySelection = GetMajorityPlayerSelection();
+
+                                    ExecuteTurn(majoritySelection);
                                 }
                             }
                             break;
@@ -275,7 +283,7 @@ namespace Script.Events
 
         private IEnumerable<Client> GetRoleClients(UserRole role)
         {
-            foreach (var eventClient in EventManager.GetRegisteredClients().Where(x => Data.Users[x.Player.CharID].Role == role))
+            foreach (var eventClient in EventManager.GetRegisteredClients().Where(x => Data.Users[x.Player.CharID].Role == role).Where(x => !Data.Users[x.Player.CharID].IsDead))
             {
                 yield return eventClient;
             }
@@ -293,19 +301,41 @@ namespace Script.Events
                     }
                 case GameState.DoctorSelecting:
                     {
-                        var doctor = GetRoleClients(UserRole.Doctor).First();
+                        var doctor = GetRoleClients(UserRole.Doctor).FirstOrDefault();
 
                         return !string.IsNullOrEmpty(Data.Users[doctor.Player.CharID].SelectedCharId);
                     }
                 case GameState.SeerSelecting:
                     {
-                        var seer = GetRoleClients(UserRole.Seer).First();
+                        var seer = GetRoleClients(UserRole.Seer).FirstOrDefault();
 
                         return !string.IsNullOrEmpty(Data.Users[seer.Player.CharID].SelectedCharId);
+                    }
+                case GameState.VillagersSelecting:
+                    {
+                        var majoritySelection = GetMajorityPlayerSelection();
+
+                        return !string.IsNullOrEmpty(majoritySelection);
                     }
             }
 
             return false;
+        }
+
+        private string GetMajorityPlayerSelection()
+        {
+            var alivePlayers = EventManager.GetRegisteredClients().Where(x => !Data.Users[x.Player.CharID].IsDead).ToArray();
+
+            var groupings = alivePlayers.Select(x => Data.Users[x.Player.CharID].SelectedCharId).GroupBy(x => x);
+            foreach (var grouping in groupings)
+            {
+                if (grouping.Count() >= alivePlayers.Length)
+                {
+                    return grouping.Key;
+                }
+            }
+
+            return null;
         }
 
         private void Transition(GameState newState)
@@ -381,7 +411,9 @@ namespace Script.Events
                 if (chosenUser == null)
                 {
                     StoryBuilder.AppendSaySegment(segment, $"Character {chosenCharId} was killed. They logged off in fear.", -1, 0, 0);
-                } else {
+                }
+                else
+                {
                     StoryBuilder.AppendSaySegment(segment, $"{chosenUser.Player.DisplayName} was killed in the attack.", -1, 0, 0);
                 }
             }
@@ -479,9 +511,38 @@ namespace Script.Events
             StoryManager.PlayStory(client, story);
         }
 
-        private void ExecuteTurn()
+        private void ExecuteTurn(string selectionCharId)
         {
+            Data.Users[selectionCharId].IsDead = true;
+            foreach (var eventClient in EventManager.GetRegisteredClients())
+            {
+                Data.Users[eventClient.Player.CharID].SelectedCharId = null;
+            }
 
+            var chosenUser = ClientManager.FindClientFromCharID(selectionCharId);
+
+            var story = new Story(Guid.NewGuid().ToString());
+            var segment = StoryBuilder.BuildStory();
+            StoryBuilder.AppendSaySegment(segment, "A decision has been made!", -1, 0, 0);
+            if (chosenUser == null)
+            {
+                StoryBuilder.AppendSaySegment(segment, $"Character {selectionCharId} was killed. They logged off in fear.", -1, 0, 0);
+            }
+            else
+            {
+                StoryBuilder.AppendSaySegment(segment, $"{chosenUser.Player.DisplayName} was hanged! Hopefully they were a werewolf...", -1, 0, 0);
+            }
+
+            var werewolfCount = GetRoleClients(UserRole.Werewolf).Count();
+
+            if (werewolfCount == 0)
+            {
+                StoryBuilder.AppendSaySegment(segment, $"You win! All the werewolves have been killed!", -1, 0, 0);
+            }
+            else
+            {
+                Transition(GameState.WerewolfSelecting);
+            }
         }
     }
 }
