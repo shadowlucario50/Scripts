@@ -49,6 +49,7 @@ namespace Script.Events
         {
             public Dictionary<string, UserInfo> Users { get; set; }
             public GameState GameState { get; set; }
+            public string WerewolfKilledUser { get; set; }
 
             public WerewolfData()
             {
@@ -212,6 +213,8 @@ namespace Script.Events
 
                                 if (CanTransition())
                                 {
+                                    TransitionToDaytime();
+
                                     Transition(GameState.VillagersSelecting);
                                 }
                             }
@@ -322,19 +325,28 @@ namespace Script.Events
             {
                 case GameState.WerewolfSelecting:
                     {
-                        return GetRoleClients(UserRole.Werewolf).Select(x => Data.Users[x.Player.CharID].SelectedCharId)
+                        return GetRoleClients(UserRole.Werewolf).Where(x => !Data.Users[x.Player.CharID].IsDead)
+                                                                .Select(x => Data.Users[x.Player.CharID].SelectedCharId)
                                                                 .Where(x => !string.IsNullOrEmpty(x))
                                                                 .Distinct().Count() == 1;
                     }
                 case GameState.DoctorSelecting:
                     {
                         var doctor = GetRoleClients(UserRole.Doctor).FirstOrDefault();
+                        if (doctor == null)
+                        {
+                            return true;
+                        }
 
                         return !string.IsNullOrEmpty(Data.Users[doctor.Player.CharID].SelectedCharId);
                     }
                 case GameState.SeerSelecting:
                     {
                         var seer = GetRoleClients(UserRole.Seer).FirstOrDefault();
+                        if (seer == null)
+                        {
+                            return true;
+                        }
 
                         return !string.IsNullOrEmpty(Data.Users[seer.Player.CharID].SelectedCharId);
                     }
@@ -404,8 +416,7 @@ namespace Script.Events
             }
         }
 
-        private void ApplyVillagerSelectingState(Client client)
-        {
+        private void TransitionToDaytime() {
             var doctor = GetRoleClients(UserRole.Doctor).First();
             var werewolf = GetRoleClients(UserRole.Werewolf).First();
 
@@ -422,14 +433,23 @@ namespace Script.Events
                 Data.Users[chosenCharId].IsDead = true;
             }
 
-            var chosenUser = ClientManager.FindClientFromCharID(chosenCharId);
+            Data.WerewolfKilledUser = chosenCharId;
+
+            foreach (var eventClient in EventManager.GetRegisteredClients()) {
+                Data.Users[eventClient.Player.CharID].SelectedCharId = null;
+            }
+        }
+
+        private void ApplyVillagerSelectingState(Client client)
+        {
+            var chosenUser = ClientManager.FindClientFromCharID(Data.WerewolfKilledUser);
 
             var story = new Story(Guid.NewGuid().ToString());
             var segment = StoryBuilder.BuildStory();
             StoryBuilder.AppendSaySegment(segment, "Daytime has arrived!", -1, 0, 0);
             StoryBuilder.AppendSaySegment(segment, "While you slept, werewolves attacked.", -1, 0, 0);
 
-            if (saved)
+            if (!Data.Users[Data.WerewolfKilledUser].IsDead)
             {
                 StoryBuilder.AppendSaySegment(segment, "...however, the doctor protected the village, and no one was hurt!", -1, 0, 0);
             }
@@ -437,7 +457,7 @@ namespace Script.Events
             {
                 if (chosenUser == null)
                 {
-                    StoryBuilder.AppendSaySegment(segment, $"Character {chosenCharId} was killed. They logged off in fear.", -1, 0, 0);
+                    StoryBuilder.AppendSaySegment(segment, $"Character {Data.WerewolfKilledUser} was killed. They logged off in fear.", -1, 0, 0);
                 }
                 else
                 {
