@@ -5381,7 +5381,7 @@ namespace Script
             }
             catch (Exception ex)
             {
-                Messenger.AdminMsg("Error: Command (" + command.CommandArgs[0] + ")", Text.Black);
+                Messenger.AdminMsg("Error: Command (" + command.CommandArgs[0] + $") [{joinedArgs}]" + ex.ToString(), Text.Black);
                 //Messenger.AdminMsg(ex.ToString(), Text.Black);
             }
         }
