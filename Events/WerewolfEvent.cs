@@ -76,6 +76,8 @@ namespace Script.Events
         public override void DeconfigurePlayer(Client client)
         {
             base.DeconfigurePlayer(client);
+
+            client.Player.Muted = false;
         }
 
         public override void Start()
@@ -188,8 +190,18 @@ namespace Script.Events
             }
         }
 
+        private void UnmuteAll()
+        {
+            foreach (var eventClient in EventManager.GetRegisteredClients()) {
+                eventClient.Player.Muted = false;
+            }
+        }
+
         private void ApplyState(Client client)
         {
+            // Unmute all
+            UnmuteAll();
+
             switch (Data.GameState)
             {
                 case GameState.WerewolfSelecting:
@@ -202,6 +214,8 @@ namespace Script.Events
 
         private void ApplyWerewolfSelectingState(Client client)
         {
+            client.Player.Muted = true;
+
             var story = new Story(Guid.NewGuid().ToString());
             var segment = StoryBuilder.BuildStory();
             StoryBuilder.AppendSaySegment(segment, "Night has fallen!", -1, 0, 0);
@@ -214,7 +228,7 @@ namespace Script.Events
                         {
                             StoryBuilder.AppendSaySegment(segment, $"{eventClient.Player.DisplayName} is a werewolf!", -1, 0, 0);
                         }
-                        StoryBuilder.AppendSaySegment(segment, $"Choose a player to eat with /werewolfchoose", -1, 0, 0);
+                        StoryBuilder.AppendSaySegment(segment, $"Choose a player to eat with /wchoose", -1, 0, 0);
                     }
                     break;
                 case UserRole.Seer:
@@ -236,6 +250,8 @@ namespace Script.Events
                     }
                     break;
             }
+
+            StoryBuilder.AppendSaySegment(segment, "Everyone is muted while werewolves decide.", -1, 0, 0);
 
             segment.AppendToStory(story);
             StoryManager.PlayStory(client, story);
