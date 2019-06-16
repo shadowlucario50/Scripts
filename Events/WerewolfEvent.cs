@@ -199,8 +199,7 @@ namespace Script.Events
 
         private void ApplyState(Client client)
         {
-            // Unmute all
-            UnmuteAll();
+            client.Player.Muted = false;
 
             switch (Data.GameState)
             {
