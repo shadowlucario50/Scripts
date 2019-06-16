@@ -144,13 +144,40 @@ namespace Script.Events
                 return false;
             }
 
+            var userData = Data.Users[client.Player.CharID];
+
             switch (command[0])
             {
                 case "/wrole":
-                    Messenger.PlayerMsg(client, $"You are a {Data.Users[client.Player.CharID].Role}!", Text.BrightGreen);
+                    Messenger.PlayerMsg(client, $"You are a {userData.Role}!", Text.BrightGreen);
                     return true;
                 case "/wchoose":
-                    Messenger.PlayerMsg(client, $"You chose ${joinedArgs}! Too bad it doesn't work yet.", Text.BrightGreen);
+                    var chosenClient = ClientManager.FindClient(joinedArgs);
+
+                    switch (Data.GameState)
+                    {
+                        case GameState.WerewolfSelecting:
+                            {
+                                if (userData.Role == UserRole.Werewolf)
+                                {
+                                    RoleAlertMessage(UserRole.Werewolf, $"{client.Player.DisplayName} chose {chosenClient.Player.DisplayName}!");
+                                }
+
+                                if (CanTransition())
+                                {
+                                    Transition(GameState.DoctorSelecting);
+                                }
+                            }
+                            break;
+                        case GameState.DoctorSelecting:
+                            {
+                                if (userData.Role == UserRole.Doctor)
+                                {
+                                    Messenger.PlayerMsg(client, "Decision made.", Text.BrightGreen);
+                                }
+                            }
+                            break;
+                    }
                     return true;
                 case "/wstate":
                     Messenger.PlayerMsg(client, $"{Data.GameState}", Text.BrightGreen);
@@ -190,10 +217,42 @@ namespace Script.Events
             }
         }
 
-        private void UnmuteAll()
+        public void RoleAlertMessage(UserRole role, string message)
         {
-            foreach (var eventClient in EventManager.GetRegisteredClients()) {
-                eventClient.Player.Muted = false;
+            foreach (var eventClient in EventManager.GetRegisteredClients().Where(x => Data.Users[x.Player.CharID].Role == role))
+            {
+                Messenger.PlayerMsg(eventClient, $"[Werewolf] {message}", Text.White);
+            }
+        }
+
+        private IEnumerable<Client> GetRoleClients(UserRole role)
+        {
+            foreach (var eventClient in EventManager.GetRegisteredClients().Where(x => Data.Users[x.Player.CharID].Role == role))
+            {
+                yield return eventClient;
+            }
+        }
+
+        private bool CanTransition()
+        {
+            switch (Data.GameState)
+            {
+                case GameState.WerewolfSelecting:
+                    return GetRoleClients(UserRole.Werewolf).Select(x => Data.Users[x.Player.CharID].SelectedCharId)
+                                                            .Where(x => !string.IsNullOrEmpty(x))
+                                                            .Distinct().Count() == 1;
+            }
+
+            return false;
+        }
+
+        private void Transition(GameState newState)
+        {
+            Data.GameState = newState;
+
+            foreach (var eventClient in EventManager.GetRegisteredClients())
+            {
+                ApplyState(eventClient);
             }
         }
 
@@ -208,7 +267,32 @@ namespace Script.Events
                         ApplyWerewolfSelectingState(client);
                     }
                     break;
+                case GameState.DoctorSelecting:
+                    {
+                        ApplyDoctorSelectingState(client);
+                    }
+                    break;
             }
+        }
+
+        private void ApplyDoctorSelectingState(Client client)
+        {
+            client.Player.Muted = true;
+
+            var story = new Story(Guid.NewGuid().ToString());
+            var segment = StoryBuilder.BuildStory();
+            StoryBuilder.AppendSaySegment(segment, "Night has fallen!", -1, 0, 0);
+            StoryBuilder.AppendSaySegment(segment, "The doctor must now decide who to save.", -1, 0, 0);
+
+            if (Data.Users[client.Player.CharID].Role == UserRole.Doctor)
+            {
+                StoryBuilder.AppendSaySegment(segment, "Make your decision with /wchoose.", -1, 0, 0);
+            }
+
+            StoryBuilder.AppendSaySegment(segment, "Everyone is muted while the doctor decides.", -1, 0, 0);
+
+            segment.AppendToStory(story);
+            StoryManager.PlayStory(client, story);
         }
 
         private void ApplyWerewolfSelectingState(Client client)
