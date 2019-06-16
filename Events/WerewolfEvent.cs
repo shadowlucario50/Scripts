@@ -356,7 +356,7 @@ namespace Script.Events
             var groupings = alivePlayers.Select(x => Data.Users[x.Player.CharID].SelectedCharId).GroupBy(x => x);
             foreach (var grouping in groupings)
             {
-                if (grouping.Count() >= alivePlayers.Length)
+                if (grouping.Count() >= (alivePlayers.Length / 2))
                 {
                     return grouping.Key;
                 }
