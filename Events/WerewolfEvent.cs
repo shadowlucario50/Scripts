@@ -153,6 +153,10 @@ namespace Script.Events
                     return true;
                 case "/wchoose":
                     var chosenClient = ClientManager.FindClient(joinedArgs);
+                    if (chosenClient == null) {
+                        Messenger.PlayerMsg(client, "Player is offline.", Text.BrightRed);
+                        return true;
+                    }
 
                     switch (Data.GameState)
                     {
@@ -160,6 +164,7 @@ namespace Script.Events
                             {
                                 if (userData.Role == UserRole.Werewolf)
                                 {
+                                    userData.SelectedCharId = chosenClient.Player.CharID;
                                     RoleAlertMessage(UserRole.Werewolf, $"{client.Player.DisplayName} chose {chosenClient.Player.DisplayName}!");
                                 }
 
