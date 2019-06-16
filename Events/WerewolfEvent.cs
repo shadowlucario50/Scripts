@@ -210,6 +210,21 @@ namespace Script.Events
                                 }
                             }
                             break;
+                        case GameState.VillagersSelecting:
+                            {
+                                userData.SelectedCharId = chosenClient.Player.CharID;
+
+                                foreach (var eventClient in EventManager.GetRegisteredClients())
+                                {
+                                    Messenger.PlayerMsg(eventClient, $"[Werewolf] {client.Player.DisplayName} chose {chosenClient.Player.DisplayName}!", Text.White);
+                                }
+
+                                if (CanTransition())
+                                {
+                                    Transition(GameState.VillagersSelecting);
+                                }
+                            }
+                            break;
                     }
                     return true;
                 case "/wstate":
@@ -246,7 +261,7 @@ namespace Script.Events
         {
             foreach (var eventClient in EventManager.GetRegisteredClients().Where(x => Data.Users[x.Player.CharID].Role == UserRole.Werewolf))
             {
-                Messenger.PlayerMsg(eventClient, $"[Werewolf] {client.Player.DisplayName}: {message}", Text.White);
+                Messenger.PlayerMsg(eventClient, $"[Werewolf Chat] {client.Player.DisplayName}: {message}", Text.White);
             }
         }
 
@@ -326,10 +341,57 @@ namespace Script.Events
                     break;
                 case GameState.VillagersSelecting:
                     {
-                        Messenger.PlayerMsg(client, "No more.", Text.BrightRed);
+                        ApplyVillagerSelectingState(client);
                     }
                     break;
             }
+        }
+
+        private void ApplyVillagerSelectingState(Client client)
+        {
+            var doctor = GetRoleClients(UserRole.Doctor).First();
+            var werewolf = GetRoleClients(UserRole.Werewolf).First();
+
+            var chosenCharId = Data.Users[werewolf.Player.CharID].SelectedCharId;
+
+            var saved = false;
+            if (Data.Users[doctor.Player.CharID].SelectedCharId == chosenCharId)
+            {
+                saved = true;
+            }
+
+            if (!saved)
+            {
+                Data.Users[chosenCharId].IsDead = true;
+            }
+
+            var chosenUser = ClientManager.FindClientFromCharID(chosenCharId);
+
+            var story = new Story(Guid.NewGuid().ToString());
+            var segment = StoryBuilder.BuildStory();
+            StoryBuilder.AppendSaySegment(segment, "Daytime has arrived!", -1, 0, 0);
+            StoryBuilder.AppendSaySegment(segment, "While you slept, werewolves attacked.", -1, 0, 0);
+
+            if (saved)
+            {
+                StoryBuilder.AppendSaySegment(segment, "...however, the doctor protected the village, and no one was hurt!", -1, 0, 0);
+            }
+            else
+            {
+                if (chosenUser == null)
+                {
+                    StoryBuilder.AppendSaySegment(segment, $"Character {chosenCharId} was killed. They logged off in fear.", -1, 0, 0);
+                } else {
+                    StoryBuilder.AppendSaySegment(segment, $"{chosenUser.Player.DisplayName} was killed in the attack.", -1, 0, 0);
+                }
+            }
+
+            StoryBuilder.AppendSaySegment(segment, "Now, you must stop the werewolves!", -1, 0, 0);
+            StoryBuilder.AppendSaySegment(segment, "Who will be killed? Make your decision with /wchoose.", -1, 0, 0);
+            StoryBuilder.AppendSaySegment(segment, "None shall rest until a majority decision is made.", -1, 0, 0);
+
+            segment.AppendToStory(story);
+            StoryManager.PlayStory(client, story);
         }
 
         private void ApplySeerSelectingState(Client client)
@@ -415,6 +477,11 @@ namespace Script.Events
 
             segment.AppendToStory(story);
             StoryManager.PlayStory(client, story);
+        }
+
+        private void ExecuteTurn()
+        {
+
         }
     }
 }
