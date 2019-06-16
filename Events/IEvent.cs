@@ -5,6 +5,7 @@ using Server.Network;
 using Server.Maps;
 using Server.Players;
 using Server.Combat;
+using Server;
 
 namespace Script.Events
 {
@@ -24,6 +25,7 @@ namespace Script.Events
         void OnNpcSpawn(IMap map, MapNpcPreset npc, MapNpc spawnedNpc, PacketHitList hitlist);
         void OnNpcDeath(PacketHitList hitlist, ICharacter attacker, MapNpc npc);
         void OnMoveHitCharacter(Client attacker, Client defender);
+        bool ProcessCommand(Client client, Command command, string joinedArgs);
 
         void Load(string data);
         string Save();

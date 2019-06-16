@@ -127,7 +127,7 @@ namespace Script
                             {
                                 SecretBaseManager.DeleteSecretBase(client);
                                 Messenger.PlayerMsg(client, "Your secret base has been removed from the overworld!", Text.BrightRed);
-                            }   
+                            }
                             else
                             {
                                 Messenger.PlayerMsg(client, "You don't have a secret base anywhere!", Text.BrightRed);
@@ -137,14 +137,14 @@ namespace Script
                     case "/play":
                         {
                             if (client.Player.MapID == "s604")
-                			{
-                				client.Player.Map.YouTubeMusicID = joinedArgs;
+                            {
+                                client.Player.Map.YouTubeMusicID = joinedArgs;
 
-								foreach (var i in client.Player.Map.GetClients())
-				                {
-				                    Messenger.RefreshMap(i);
-								}
-                			}
+                                foreach (var i in client.Player.Map.GetClients())
+                                {
+                                    Messenger.RefreshMap(i);
+                                }
+                            }
                         }
                         break;
                     case "/setcostume":
@@ -162,20 +162,21 @@ namespace Script
                                     n = ClientManager.FindClient(command[1]);
                                 }
 
-                                if (n != null) {
+                                if (n != null)
+                                {
                                     n.Player.GetActiveRecruit().Costume = command[2].ToInt();
                                     Messenger.SendPlayerData(n);
-                                } 
+                                }
                                 else
                                 {
                                     Messenger.PlayerMsg(client, "Player is offline.", Text.Grey);
                                 }
-                            } 
+                            }
                             else
                             {
                                 client.Player.GetActiveRecruit().Costume = command[1].ToInt();
                                 Messenger.SendPlayerData(client);
-                            } 
+                            }
                         }
                         break;
                     case "/saveposition":
@@ -184,9 +185,12 @@ namespace Script
                             {
                                 positions.Add(Tuple.Create(client.Player.MapID, client.Player.X, client.Player.Y));
 
-                                using (var fileStream = new System.IO.FileStream(System.IO.Path.Combine(Server.IO.Paths.ScriptsIOFolder, "positions.txt"), System.IO.FileMode.Create, System.IO.FileAccess.ReadWrite)) {
-                                    using (var streamWriter = new System.IO.StreamWriter(fileStream)) {
-                                        foreach (var position in positions) {
+                                using (var fileStream = new System.IO.FileStream(System.IO.Path.Combine(Server.IO.Paths.ScriptsIOFolder, "positions.txt"), System.IO.FileMode.Create, System.IO.FileAccess.ReadWrite))
+                                {
+                                    using (var streamWriter = new System.IO.StreamWriter(fileStream))
+                                    {
+                                        foreach (var position in positions)
+                                        {
                                             streamWriter.WriteLine($"new TreasureHuntData.TreasureData() {{ MapID = \"{position.Item1}\", X = {position.Item2}, Y = {position.Item3}, Claimed = false }},");
                                         }
                                     }
@@ -205,7 +209,8 @@ namespace Script
                         break;
                     case "/idlemessage":
                         {
-                            if (string.IsNullOrEmpty(joinedArgs)) {
+                            if (string.IsNullOrEmpty(joinedArgs))
+                            {
                                 var story = new Story();
                                 var segment = StoryBuilder.BuildStory();
 
@@ -214,7 +219,9 @@ namespace Script
                                 segment.AppendToStory(story);
 
                                 StoryManager.PlayStory(client, story);
-                            } else {
+                            }
+                            else
+                            {
                                 client.Player.PlayerData.IdleMessage = joinedArgs;
 
                                 Messenger.PlayerMsg(client, "Your idle message has been updated!", Text.BrightGreen);
@@ -248,7 +255,7 @@ namespace Script
                             }
                         }
                         break;
-                    case "/charid": 
+                    case "/charid":
                         {
                             Messenger.PlayerMsg(client, "Your character ID is: " + client.Player.CharID, Text.BrightGreen);
                         }
@@ -263,7 +270,7 @@ namespace Script
                             }
                         }
                         break;
-                    case "/pullscripts": 
+                    case "/pullscripts":
                         {
                             if (Ranks.IsAllowed(client, Enums.Rank.Scripter))
                             {
@@ -3683,18 +3690,18 @@ namespace Script
                             {
                                 if (command[1].IsNumeric())
                                 {
-                                	var map = MapManager.RetrieveMap(command[1].ToInt());
-                                	
-                                	if ((map.IsZoneOrObjectSandboxed() && client.Player.CanViewZone(map.ZoneID)))
-									{
-										Messenger.PlayerWarp(client, command[1].ToInt(), client.Player.X, client.Player.Y);
-                                    	Server.Logging.ChatLogger.AppendToChatLog("Staff", "[Warp Event] " + client.Player.Name + " warped to map " + command[1] + " - " + client.Player.Map.Name);
-									}
-									else
-									{
-										Messenger.PlayerMsg(client, "Unable to warp. The destination must be a sandboxed map that you can access.", Text.BrightRed);
-									}
-                                    
+                                    var map = MapManager.RetrieveMap(command[1].ToInt());
+
+                                    if ((map.IsZoneOrObjectSandboxed() && client.Player.CanViewZone(map.ZoneID)))
+                                    {
+                                        Messenger.PlayerWarp(client, command[1].ToInt(), client.Player.X, client.Player.Y);
+                                        Server.Logging.ChatLogger.AppendToChatLog("Staff", "[Warp Event] " + client.Player.Name + " warped to map " + command[1] + " - " + client.Player.Map.Name);
+                                    }
+                                    else
+                                    {
+                                        Messenger.PlayerMsg(client, "Unable to warp. The destination must be a sandboxed map that you can access.", Text.BrightRed);
+                                    }
+
                                 }
                                 else
                                 {
@@ -3727,8 +3734,8 @@ namespace Script
                                     {
                                         Messenger.PlayerWarp(client, targetMap, target.Player.X, target.Player.Y);
                                         Server.Logging.ChatLogger.AppendToChatLog("Staff", "[Warp Event] " + client.Player.Name + " warped to " + target.Player.Name + " on map: " + target.Player.MapID + " - " + target.Player.Map.Name);
-                                    } 
-                                    else 
+                                    }
+                                    else
                                     {
                                         Messenger.PlayerMsg(client, "Unable to warp. The destination must be a sandboxed map that you can access.", Text.BrightRed);
                                     }
@@ -5353,7 +5360,19 @@ namespace Script
                         break;
                     default:
                         {
-                            Messenger.PlayerMsg(client, "That is not a valid command.", Text.BrightRed);
+                            var processed = false;
+                            if (ActiveEvent != null)
+                            {
+                                if (ActiveEvent.ProcessCommand(client, command, joinedArgs))
+                                {
+                                    processed = true;
+                                }
+                            }
+
+                            if (!processed)
+                            {
+                                Messenger.PlayerMsg(client, "That is not a valid command.", Text.BrightRed);
+                            }
                         }
                         break;
                 }

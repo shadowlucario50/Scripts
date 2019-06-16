@@ -19,6 +19,8 @@ namespace Script
                     return new ShinySpectacular();
                 case "paintball":
                     return new Paintball();
+                case "werewolf":
+                    return new WerewolfEvent();
                 default:
                     return null;
             }

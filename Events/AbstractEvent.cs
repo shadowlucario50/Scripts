@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
+using Server;
 using Server.Combat;
 using Server.Events;
 using Server.Maps;
@@ -167,6 +168,11 @@ namespace Script.Events
 
         public virtual void OnMoveHitCharacter(Client attacker, Client defender)
         {
+        }
+
+        public virtual bool ProcessCommand(Client client, Command command, string joinedArgs)
+        {
+            return false;
         }
     }
 }
