@@ -165,6 +165,11 @@ namespace Script.Events
                         Messenger.PlayerMsg(client, "Player is already dead!", Text.BrightRed);
                         return true;
                     }
+                    if (userData.IsDead)
+                    {
+                        Messenger.PlayerMsg(client, "You can't make any choices while dead!", Text.BrightRed);
+                        return true;
+                    }
 
                     switch (Data.GameState)
                     {
@@ -172,6 +177,12 @@ namespace Script.Events
                             {
                                 if (userData.Role == UserRole.Werewolf)
                                 {
+                                    if (Data.Users[chosenClient.Player.CharID].Role == UserRole.Werewolf)
+                                    {
+                                        Messenger.PlayerMsg(client, "You can't choose another werewolf!", Text.BrightRed);
+                                        return true;
+                                    }
+
                                     userData.SelectedCharId = chosenClient.Player.CharID;
                                     RoleAlertMessage(UserRole.Werewolf, $"{client.Player.DisplayName} chose {chosenClient.Player.DisplayName}!");
                                 }
@@ -416,14 +427,15 @@ namespace Script.Events
             }
         }
 
-        private void TransitionToDaytime() {
-            var doctor = GetRoleClients(UserRole.Doctor).First();
+        private void TransitionToDaytime()
+        {
+            var doctor = GetRoleClients(UserRole.Doctor).FirstOrDefault();
             var werewolf = GetRoleClients(UserRole.Werewolf).First();
 
             var chosenCharId = Data.Users[werewolf.Player.CharID].SelectedCharId;
 
             var saved = false;
-            if (Data.Users[doctor.Player.CharID].SelectedCharId == chosenCharId)
+            if (doctor != null && Data.Users[doctor.Player.CharID].SelectedCharId == chosenCharId)
             {
                 saved = true;
             }
@@ -435,7 +447,8 @@ namespace Script.Events
 
             Data.WerewolfKilledUser = chosenCharId;
 
-            foreach (var eventClient in EventManager.GetRegisteredClients()) {
+            foreach (var eventClient in EventManager.GetRegisteredClients())
+            {
                 Data.Users[eventClient.Player.CharID].SelectedCharId = null;
             }
         }
@@ -612,7 +625,8 @@ namespace Script.Events
         private bool IsRoleDead(UserRole role)
         {
             var user = GetRoleClients(role).FirstOrDefault();
-            if (user == null) {
+            if (user == null)
+            {
                 return true;
             }
 
