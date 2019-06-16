@@ -15,7 +15,7 @@ namespace Script.Events
 {
     public class WerewolfEvent : AbstractEvent<WerewolfEvent.WerewolfData>
     {
-        public static readonly int WerewolfCount = 2;
+        public static readonly int WerewolfCount = 1;
 
         public class UserInfo
         {
@@ -47,10 +47,12 @@ namespace Script.Events
         public class WerewolfData : AbstractEventData
         {
             public Dictionary<string, UserInfo> Users { get; set; }
+            public GameState GameState { get; set; }
 
             public WerewolfData()
             {
                 this.Users = new Dictionary<string, UserInfo>();
+                this.GameState = GameState.WerewolfSelecting;
             }
         }
 
@@ -66,7 +68,11 @@ namespace Script.Events
 
             if (Data.Started)
             {
+                if (!Data.Users.ContainsKey(client.Player.CharID)) {
+                    Data.Users.Add(client.Player.CharID, new UserInfo());
+                }
 
+                ApplyState(client);
             }
         }
 
@@ -91,7 +97,6 @@ namespace Script.Events
 
             var candidates = Data.Users.Keys.ToList();
 
-
             // Select a seer
             var seerId = SelectUser(candidates);
             Data.Users[seerId].Role = UserRole.Seer;
@@ -102,7 +107,12 @@ namespace Script.Events
             for (var i = 0; i < WerewolfCount; i++)
             {
                 var werewolfId = SelectUser(candidates);
-                Data.Users[werewolfId].Role = UserRole.Werewolf;               
+                Data.Users[werewolfId].Role = UserRole.Werewolf;
+            }
+
+            foreach (var client in EventManager.GetRegisteredClients())
+            {
+                ConfigurePlayer(client);
             }
         }
 
@@ -133,16 +143,86 @@ namespace Script.Events
             return rankings;
         }
 
-        public override bool ProcessCommand(Client client, Command command, string joinedArgs) {
-            switch (command[0]) {
-                case "/werewolfrole": 
+        public override bool ProcessCommand(Client client, Command command, string joinedArgs)
+        {
+            if (!Data.Started)
+            {
+                return false;
+            }
+
+            switch (command[0])
+            {
+                case "/werewolfrole":
                     Messenger.PlayerMsg(client, $"You are a {Data.Users[client.Player.CharID].Role}!", Text.BrightGreen);
                     return true;
                 case "/werewolfchoose":
+                    Messenger.PlayerMsg(client, $"You chose ${joinedArgs}! Too bad it doesn't work yet.", Text.BrightGreen);
                     return true;
                 default:
                     return false;
             }
+        }
+
+        public void StoryMessage(Client client, string message)
+        {
+            var story = new Story();
+            var segment = StoryBuilder.BuildStory();
+            StoryBuilder.AppendSaySegment(segment, message, -1, 0, 0);
+            segment.AppendToStory(story);
+            StoryManager.PlayStory(client, story);
+        }
+
+        private void ApplyState(Client client)
+        {
+            switch (Data.GameState)
+            {
+                case GameState.WerewolfSelecting:
+                    {
+                        ApplyWerewolfSelectingState(client);
+                    }
+                    break;
+            }
+        }
+
+        private void ApplyWerewolfSelectingState(Client client)
+        {
+            var story = new Story();
+            var segment = StoryBuilder.BuildStory();
+            StoryBuilder.AppendSaySegment(segment, "Night has fallen!", -1, 0, 0);
+
+            switch (Data.Users[client.Player.CharID].Role)
+            {
+                case UserRole.Werewolf:
+                    {
+                        foreach (var eventClient in EventManager.GetRegisteredClients().Where(x => Data.Users[x.Player.CharID].Role == UserRole.Werewolf))
+                        {
+                            StoryBuilder.AppendSaySegment(segment, $"{eventClient.Player.DisplayName} is a werewolf!", -1, 0, 0);
+                        }
+                        StoryBuilder.AppendSaySegment(segment, $"Choose a player to eat with /werewolfchoose", -1, 0, 0);
+                    }
+                    break;
+                case UserRole.Seer:
+                    {
+                        StoryBuilder.AppendSaySegment(segment, "You are a seer.", -1, 0, 0);
+                        StoryBuilder.AppendSaySegment(segment, "Every night you will choose one player and learn about what they are.", -1, 0, 0);
+                    }
+                    break;
+                case UserRole.Doctor:
+                    {
+                        StoryBuilder.AppendSaySegment(segment, "You are a doctor.", -1, 0, 0);
+                        StoryBuilder.AppendSaySegment(segment, "Every night you will choose one player to protect from the werewolves.", -1, 0, 0);
+                    }
+                    break;
+                case UserRole.Villager:
+                    {
+                        StoryBuilder.AppendSaySegment(segment, "You are a villager.", -1, 0, 0);
+                        StoryBuilder.AppendSaySegment(segment, "Try not to get eaten!", -1, 0, 0);
+                    }
+                    break;
+            }
+
+            segment.AppendToStory(story);
+            StoryManager.PlayStory(client, story);
         }
     }
 }
