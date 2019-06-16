@@ -8,7 +8,7 @@ using Server.Events;
 using Server.Network;
 using Server.Players;
 
-namespace Script
+namespace Script.Events
 {
     public class Paintball : AbstractEvent<Paintball.PaintballData, Paintball.PlayerData>
     {

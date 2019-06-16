@@ -6,7 +6,7 @@ using Server.Maps;
 using Server.Players;
 using Server.Combat;
 
-namespace Script
+namespace Script.Events
 {
     public interface IEvent
     {

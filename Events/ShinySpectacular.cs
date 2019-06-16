@@ -11,7 +11,7 @@ using Server.Network;
 using Server.Players;
 using Server.Pokedex;
 
-namespace Script
+namespace Script.Events
 {
     public class ShinySpectacular : AbstractEvent<ShinySpectacular.ShinySpectacularData>
     {

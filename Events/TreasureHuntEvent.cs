@@ -11,7 +11,7 @@ using Server.Combat;
 using Server.Players;
 using Server.Stories;
 
-namespace Script
+namespace Script.Events
 {
     public class TreasureHuntEvent : AbstractEvent<TreasureHuntEvent.TreasureHuntData>
     {

@@ -10,7 +10,7 @@ using Server.Network;
 using Server.Players;
 using Server.Stories;
 
-namespace Script
+namespace Script.Events
 {
     public abstract class AbstractEvent<TData> : AbstractEvent<TData, AbstractEventData.NullPlayerData> where TData : AbstractEventData<AbstractEventData.NullPlayerData>, new()
     {

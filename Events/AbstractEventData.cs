@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Server.Network;
 
-namespace Script
+namespace Script.Events
 {
     public abstract class AbstractEventData : AbstractEventData<AbstractEventData.NullPlayerData>
     {
