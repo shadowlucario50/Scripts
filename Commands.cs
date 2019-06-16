@@ -323,7 +323,7 @@ namespace Script
                             {
                                 foreach (var registeredClient in EventManager.GetRegisteredClients())
                                 {
-                                    Story story = new Story();
+                                    Story story = new Story(Guid.NewGuid().ToString());
                                     StoryBuilderSegment segment = StoryBuilder.BuildStory();
                                     StoryBuilder.AppendSaySegment(segment, $"This event is... {ActiveEvent.Name}!", -1, 0, 0);
                                     StoryBuilder.AppendSaySegment(segment, ActiveEvent.IntroductionMessage, -1, 0, 0);

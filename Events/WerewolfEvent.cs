@@ -106,11 +106,6 @@ namespace Script.Events
                 var werewolfId = SelectUser(candidates);
                 Data.Users[werewolfId].Role = UserRole.Werewolf;
             }
-
-            foreach (var client in EventManager.GetRegisteredClients())
-            {
-                ConfigurePlayer(client);
-            }
         }
 
         private string SelectUser(List<string> users)
@@ -149,13 +144,13 @@ namespace Script.Events
 
             switch (command[0])
             {
-                case "/werewolfrole":
+                case "/wrole":
                     Messenger.PlayerMsg(client, $"You are a {Data.Users[client.Player.CharID].Role}!", Text.BrightGreen);
                     return true;
-                case "/werewolfchoose":
+                case "/wchoose":
                     Messenger.PlayerMsg(client, $"You chose ${joinedArgs}! Too bad it doesn't work yet.", Text.BrightGreen);
                     return true;
-                case "/werewolfstate":
+                case "/wstate":
                     Messenger.PlayerMsg(client, $"{Data.GameState}", Text.BrightGreen);
                     ApplyState(client);
                     return true;
@@ -178,7 +173,7 @@ namespace Script.Events
 
         public void StoryMessage(Client client, string message)
         {
-            var story = new Story();
+            var story = new Story(Guid.NewGuid().ToString());
             var segment = StoryBuilder.BuildStory();
             StoryBuilder.AppendSaySegment(segment, message, -1, 0, 0);
             segment.AppendToStory(story);
@@ -207,7 +202,7 @@ namespace Script.Events
 
         private void ApplyWerewolfSelectingState(Client client)
         {
-            var story = new Story();
+            var story = new Story(Guid.NewGuid().ToString());
             var segment = StoryBuilder.BuildStory();
             StoryBuilder.AppendSaySegment(segment, "Night has fallen!", -1, 0, 0);
 
