@@ -153,7 +153,8 @@ namespace Script.Events
                     return true;
                 case "/wchoose":
                     var chosenClient = ClientManager.FindClient(joinedArgs);
-                    if (chosenClient == null) {
+                    if (chosenClient == null)
+                    {
                         Messenger.PlayerMsg(client, "Player is offline.", Text.BrightRed);
                         return true;
                     }
@@ -178,7 +179,34 @@ namespace Script.Events
                             {
                                 if (userData.Role == UserRole.Doctor)
                                 {
-                                    Messenger.PlayerMsg(client, "Decision made.", Text.BrightGreen);
+                                    userData.SelectedCharId = chosenClient.Player.CharID;
+                                }
+
+                                if (CanTransition())
+                                {
+                                    Transition(GameState.SeerSelecting);
+                                }
+                            }
+                            break;
+                        case GameState.SeerSelecting:
+                            {
+                                if (userData.Role == UserRole.Seer)
+                                {
+                                    userData.SelectedCharId = chosenClient.Player.CharID;
+
+                                    if (Data.Users[chosenClient.Player.CharID].Role == UserRole.Werewolf)
+                                    {
+                                        Messenger.PlayerMsg(client, $"{chosenClient.Player.DisplayName} is a werewolf!", Text.BrightGreen);
+                                    }
+                                    else
+                                    {
+                                        Messenger.PlayerMsg(client, $"{chosenClient.Player.DisplayName} is not a werewolf!", Text.BrightRed);
+                                    }
+                                }
+
+                                if (CanTransition())
+                                {
+                                    Transition(GameState.VillagersSelecting);
                                 }
                             }
                             break;
@@ -243,9 +271,23 @@ namespace Script.Events
             switch (Data.GameState)
             {
                 case GameState.WerewolfSelecting:
-                    return GetRoleClients(UserRole.Werewolf).Select(x => Data.Users[x.Player.CharID].SelectedCharId)
-                                                            .Where(x => !string.IsNullOrEmpty(x))
-                                                            .Distinct().Count() == 1;
+                    {
+                        return GetRoleClients(UserRole.Werewolf).Select(x => Data.Users[x.Player.CharID].SelectedCharId)
+                                                                .Where(x => !string.IsNullOrEmpty(x))
+                                                                .Distinct().Count() == 1;
+                    }
+                case GameState.DoctorSelecting:
+                    {
+                        var doctor = GetRoleClients(UserRole.Doctor).First();
+
+                        return !string.IsNullOrEmpty(Data.Users[doctor.Player.CharID].SelectedCharId);
+                    }
+                case GameState.SeerSelecting:
+                    {
+                        var seer = GetRoleClients(UserRole.Seer).First();
+
+                        return !string.IsNullOrEmpty(Data.Users[seer.Player.CharID].SelectedCharId);
+                    }
             }
 
             return false;
@@ -277,7 +319,37 @@ namespace Script.Events
                         ApplyDoctorSelectingState(client);
                     }
                     break;
+                case GameState.SeerSelecting:
+                    {
+                        ApplySeerSelectingState(client);
+                    }
+                    break;
+                case GameState.VillagersSelecting:
+                    {
+                        Messenger.PlayerMsg(client, "No more.", Text.BrightRed);
+                    }
+                    break;
             }
+        }
+
+        private void ApplySeerSelectingState(Client client)
+        {
+            client.Player.Muted = true;
+
+            var story = new Story(Guid.NewGuid().ToString());
+            var segment = StoryBuilder.BuildStory();
+            StoryBuilder.AppendSaySegment(segment, "Night has fallen!", -1, 0, 0);
+            StoryBuilder.AppendSaySegment(segment, "The seer must now decide.", -1, 0, 0);
+
+            if (Data.Users[client.Player.CharID].Role == UserRole.Seer)
+            {
+                StoryBuilder.AppendSaySegment(segment, "You are the seer. Make your decision with /wchoose.", -1, 0, 0);
+            }
+
+            StoryBuilder.AppendSaySegment(segment, "Everyone is muted while the seer decides.", -1, 0, 0);
+
+            segment.AppendToStory(story);
+            StoryManager.PlayStory(client, story);
         }
 
         private void ApplyDoctorSelectingState(Client client)
@@ -291,7 +363,7 @@ namespace Script.Events
 
             if (Data.Users[client.Player.CharID].Role == UserRole.Doctor)
             {
-                StoryBuilder.AppendSaySegment(segment, "Make your decision with /wchoose.", -1, 0, 0);
+                StoryBuilder.AppendSaySegment(segment, "You are the doctor. Make your decision with /wchoose.", -1, 0, 0);
             }
 
             StoryBuilder.AppendSaySegment(segment, "Everyone is muted while the doctor decides.", -1, 0, 0);
