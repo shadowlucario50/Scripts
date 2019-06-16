@@ -16,19 +16,26 @@ namespace Script.Events
     {
         public bool Started { get; set; }
         public Dictionary<string, TPlayerData> PlayerData { get; set; }
+        public List<string> RegisteredCharacters { get; set; }
 
         public AbstractEventData()
         {
             this.PlayerData = new Dictionary<string, TPlayerData>();
+            this.RegisteredCharacters = new List<string>();
         }
 
         public TPlayerData ExtendPlayer(Client client)
         {
-            if (!PlayerData.TryGetValue(client.Player.CharID, out var playerData))
+            return ExtendPlayer(client.Player.CharID);
+        }
+
+        public TPlayerData ExtendPlayer(string charID)
+        {
+            if (!PlayerData.TryGetValue(charID, out var playerData))
             {
                 playerData = new TPlayerData();
 
-                PlayerData.Add(client.Player.CharID, playerData);
+                PlayerData.Add(charID, playerData);
             }
 
             return playerData;

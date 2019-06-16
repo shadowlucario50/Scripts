@@ -55,7 +55,7 @@ namespace Script.Events
                 rewards[0] = HandoutReward(sortedRankings[0], 1);
             }
 
-            foreach (var client in EventManager.GetRegisteredClients())
+            foreach (var client in GetRegisteredClients())
             {
                 CleanPlayer(client);
 
@@ -125,7 +125,7 @@ namespace Script.Events
         {
             Data.Started = false;
 
-            foreach (var client in EventManager.GetRegisteredClients())
+            foreach (var client in GetRegisteredClients())
             {
                 Messenger.PlayerWarp(client, 152, 15, 16);
             }
@@ -134,6 +134,11 @@ namespace Script.Events
         public virtual void Start()
         {
             Data.Started = true;
+
+            Data.RegisteredCharacters.Clear();
+            foreach (var client in EventManager.GetRegisteredClients()) {
+                Data.RegisteredCharacters.Add(client.Player.CharID);
+            }
         }
 
         public void Load(string data)
@@ -173,6 +178,16 @@ namespace Script.Events
         public virtual bool ProcessCommand(Client client, Command command, string joinedArgs)
         {
             return false;
+        }
+
+        public IEnumerable<Client> GetRegisteredClients() {
+            foreach (var registeredCharacter in Data.RegisteredCharacters) {
+                var client = ClientManager.FindClientFromCharID(registeredCharacter);
+
+                if (client != null) {
+                    yield return client;
+                }
+            }
         }
     }
 }

@@ -13,7 +13,7 @@ using Server.Stories;
 
 namespace Script.Events
 {
-    public class WerewolfEvent : AbstractEvent<WerewolfEvent.WerewolfData>
+    public class WerewolfEvent : AbstractEvent<WerewolfEvent.WerewolfData, WerewolfEvent.UserInfo>
     {
         public static readonly int WerewolfCount = 1;
 
@@ -45,15 +45,13 @@ namespace Script.Events
             VillagersSelecting
         }
 
-        public class WerewolfData : AbstractEventData
+        public class WerewolfData : AbstractEventData<UserInfo>
         {
-            public Dictionary<string, UserInfo> Users { get; set; }
             public GameState GameState { get; set; }
             public string WerewolfKilledUser { get; set; }
 
             public WerewolfData()
             {
-                this.Users = new Dictionary<string, UserInfo>();
                 this.GameState = GameState.WerewolfSelecting;
             }
         }
@@ -90,28 +88,22 @@ namespace Script.Events
 
         private void SetupPlayers()
         {
-            foreach (var client in EventManager.GetRegisteredClients())
-            {
-                Data.Users.Add(client.Player.CharID, new UserInfo());
-            }
+            var candidates = GetRegisteredClients().ToList();
 
-            var candidates = Data.Users.Keys.ToList();
+            var seer = SelectUser(candidates);
+            Data.ExtendPlayer(seer).Role = UserRole.Seer;
 
-            // Select a seer
-            var seerId = SelectUser(candidates);
-            Data.Users[seerId].Role = UserRole.Seer;
-
-            var doctorId = SelectUser(candidates);
-            Data.Users[doctorId].Role = UserRole.Doctor;
+            var doctor = SelectUser(candidates);
+            Data.ExtendPlayer(doctor).Role = UserRole.Doctor;
 
             for (var i = 0; i < WerewolfCount; i++)
             {
-                var werewolfId = SelectUser(candidates);
-                Data.Users[werewolfId].Role = UserRole.Werewolf;
+                var werewolf = SelectUser(candidates);
+                Data.ExtendPlayer(werewolf).Role = UserRole.Werewolf;
             }
         }
 
-        private string SelectUser(List<string> users)
+        private Client SelectUser(List<Client> users)
         {
             var slot = Server.Math.Rand(0, users.Count);
 
@@ -130,7 +122,7 @@ namespace Script.Events
         protected override List<EventRanking> DetermineRankings()
         {
             var rankings = new List<EventRanking>();
-            foreach (var client in EventManager.GetRegisteredClients())
+            foreach (var client in GetRegisteredClients())
             {
 
             }
@@ -145,7 +137,7 @@ namespace Script.Events
                 return false;
             }
 
-            var userData = Data.Users[client.Player.CharID];
+            var userData = Data.ExtendPlayer(client);
 
             switch (command[0])
             {
@@ -160,7 +152,7 @@ namespace Script.Events
                         return true;
                     }
 
-                    if (Data.Users[chosenClient.Player.CharID].IsDead)
+                    if (Data.ExtendPlayer(chosenClient).IsDead)
                     {
                         Messenger.PlayerMsg(client, "Player is already dead!", Text.BrightRed);
                         return true;
@@ -177,7 +169,7 @@ namespace Script.Events
                             {
                                 if (userData.Role == UserRole.Werewolf)
                                 {
-                                    if (Data.Users[chosenClient.Player.CharID].Role == UserRole.Werewolf)
+                                    if (Data.ExtendPlayer(chosenClient).Role == UserRole.Werewolf)
                                     {
                                         Messenger.PlayerMsg(client, "You can't choose another werewolf!", Text.BrightRed);
                                         return true;
@@ -212,7 +204,7 @@ namespace Script.Events
                                 {
                                     userData.SelectedCharId = chosenClient.Player.CharID;
 
-                                    if (Data.Users[chosenClient.Player.CharID].Role == UserRole.Werewolf)
+                                    if (Data.ExtendPlayer(chosenClient).Role == UserRole.Werewolf)
                                     {
                                         Messenger.PlayerMsg(client, $"{chosenClient.Player.DisplayName} is a werewolf!", Text.BrightGreen);
                                     }
@@ -232,7 +224,7 @@ namespace Script.Events
                             {
                                 userData.SelectedCharId = chosenClient.Player.CharID;
 
-                                foreach (var eventClient in EventManager.GetRegisteredClients())
+                                foreach (var eventClient in GetRegisteredClients())
                                 {
                                     Messenger.PlayerMsg(eventClient, $"[Werewolf] {client.Player.DisplayName} chose {chosenClient.Player.DisplayName}!", Text.White);
                                 }
@@ -247,13 +239,9 @@ namespace Script.Events
                             break;
                     }
                     return true;
-                case "/wstate":
-                    Messenger.PlayerMsg(client, $"{Data.GameState}", Text.BrightGreen);
-                    ApplyState(client);
-                    return true;
                 case "/w":
                     {
-                        if (Data.Users[client.Player.CharID].Role == UserRole.Werewolf)
+                        if (userData.Role == UserRole.Werewolf)
                         {
                             WerewolfMessage(client, joinedArgs);
                             return true;
@@ -306,7 +294,7 @@ namespace Script.Events
 
         public void WerewolfMessage(Client client, string message)
         {
-            foreach (var eventClient in EventManager.GetRegisteredClients().Where(x => Data.Users[x.Player.CharID].Role == UserRole.Werewolf))
+            foreach (var eventClient in GetRegisteredClients().Where(x => Data.ExtendPlayer(x).Role == UserRole.Werewolf))
             {
                 Messenger.PlayerMsg(eventClient, $"[Werewolf Chat] {client.Player.DisplayName}: {message}", Text.White);
             }
@@ -314,7 +302,7 @@ namespace Script.Events
 
         public void RoleAlertMessage(UserRole role, string message)
         {
-            foreach (var eventClient in EventManager.GetRegisteredClients().Where(x => Data.Users[x.Player.CharID].Role == role))
+            foreach (var eventClient in GetRegisteredClients().Where(x => Data.ExtendPlayer(x).Role == role))
             {
                 Messenger.PlayerMsg(eventClient, $"[Werewolf] {message}", Text.White);
             }
@@ -322,7 +310,7 @@ namespace Script.Events
 
         private IEnumerable<Client> GetRoleClients(UserRole role)
         {
-            foreach (var eventClient in EventManager.GetRegisteredClients().Where(x => Data.Users[x.Player.CharID].Role == role).Where(x => !Data.Users[x.Player.CharID].IsDead))
+            foreach (var eventClient in GetRegisteredClients().Where(x => Data.ExtendPlayer(x).Role == role).Where(x => !Data.ExtendPlayer(x).IsDead))
             {
                 yield return eventClient;
             }
@@ -334,8 +322,8 @@ namespace Script.Events
             {
                 case GameState.WerewolfSelecting:
                     {
-                        return GetRoleClients(UserRole.Werewolf).Where(x => !Data.Users[x.Player.CharID].IsDead)
-                                                                .Select(x => Data.Users[x.Player.CharID].SelectedCharId)
+                        return GetRoleClients(UserRole.Werewolf).Where(x => !Data.ExtendPlayer(x).IsDead)
+                                                                .Select(x => Data.ExtendPlayer(x).SelectedCharId)
                                                                 .Where(x => !string.IsNullOrEmpty(x))
                                                                 .Distinct().Count() == 1;
                     }
@@ -347,7 +335,7 @@ namespace Script.Events
                             return true;
                         }
 
-                        return !string.IsNullOrEmpty(Data.Users[doctor.Player.CharID].SelectedCharId);
+                        return !string.IsNullOrEmpty(Data.ExtendPlayer(doctor).SelectedCharId);
                     }
                 case GameState.SeerSelecting:
                     {
@@ -357,7 +345,7 @@ namespace Script.Events
                             return true;
                         }
 
-                        return !string.IsNullOrEmpty(Data.Users[seer.Player.CharID].SelectedCharId);
+                        return !string.IsNullOrEmpty(Data.ExtendPlayer(seer).SelectedCharId);
                     }
                 case GameState.VillagersSelecting:
                     {
@@ -372,12 +360,12 @@ namespace Script.Events
 
         private string GetMajorityPlayerSelection()
         {
-            var alivePlayers = EventManager.GetRegisteredClients().Where(x => !Data.Users[x.Player.CharID].IsDead).ToArray();
+            var alivePlayers = GetRegisteredClients().Where(x => !Data.ExtendPlayer(x).IsDead).ToArray();
 
-            var groupings = alivePlayers.Select(x => Data.Users[x.Player.CharID].SelectedCharId).GroupBy(x => x);
+            var groupings = alivePlayers.Select(x => Data.ExtendPlayer(x).SelectedCharId).GroupBy(x => x);
             foreach (var grouping in groupings)
             {
-                if (grouping.Count() >= (alivePlayers.Length / 2))
+                if (grouping.Count() >= (alivePlayers.Length / 2) + 1)
                 {
                     return grouping.Key;
                 }
@@ -390,11 +378,12 @@ namespace Script.Events
         {
             Data.GameState = newState;
 
-            if (newState == GameState.VillagersSelecting) {
+            if (newState == GameState.VillagersSelecting)
+            {
                 TransitionToDaytime();
             }
 
-            foreach (var eventClient in EventManager.GetRegisteredClients())
+            foreach (var eventClient in GetRegisteredClients())
             {
                 ApplyState(eventClient);
             }
@@ -434,24 +423,24 @@ namespace Script.Events
             var doctor = GetRoleClients(UserRole.Doctor).FirstOrDefault();
             var werewolf = GetRoleClients(UserRole.Werewolf).First();
 
-            var chosenCharId = Data.Users[werewolf.Player.CharID].SelectedCharId;
+            var chosenCharId = Data.ExtendPlayer(werewolf).SelectedCharId;
 
             var saved = false;
-            if (doctor != null && Data.Users[doctor.Player.CharID].SelectedCharId == chosenCharId)
+            if (doctor != null && Data.ExtendPlayer(doctor).SelectedCharId == chosenCharId)
             {
                 saved = true;
             }
 
             if (!saved)
             {
-                Data.Users[chosenCharId].IsDead = true;
+                Data.ExtendPlayer(chosenCharId).IsDead = true;
             }
 
             Data.WerewolfKilledUser = chosenCharId;
 
-            foreach (var eventClient in EventManager.GetRegisteredClients())
+            foreach (var eventClient in GetRegisteredClients())
             {
-                Data.Users[eventClient.Player.CharID].SelectedCharId = null;
+                Data.ExtendPlayer(eventClient).SelectedCharId = null;
             }
         }
 
@@ -464,7 +453,7 @@ namespace Script.Events
             StoryBuilder.AppendSaySegment(segment, "Daytime has arrived!", -1, 0, 0);
             StoryBuilder.AppendSaySegment(segment, "While you slept, werewolves attacked.", -1, 0, 0);
 
-            if (!Data.Users[Data.WerewolfKilledUser].IsDead)
+            if (!Data.ExtendPlayer(Data.WerewolfKilledUser).IsDead)
             {
                 StoryBuilder.AppendSaySegment(segment, "...however, the doctor protected the village, and no one was hurt!", -1, 0, 0);
             }
@@ -497,7 +486,7 @@ namespace Script.Events
             StoryBuilder.AppendSaySegment(segment, "Night has fallen!", -1, 0, 0);
             StoryBuilder.AppendSaySegment(segment, "The seer must now decide.", -1, 0, 0);
 
-            if (Data.Users[client.Player.CharID].Role == UserRole.Seer)
+            if (Data.ExtendPlayer(client).Role == UserRole.Seer)
             {
                 StoryBuilder.AppendSaySegment(segment, "You are the seer. Make your decision with /wchoose.", -1, 0, 0);
             }
@@ -522,7 +511,7 @@ namespace Script.Events
             StoryBuilder.AppendSaySegment(segment, "Night has fallen!", -1, 0, 0);
             StoryBuilder.AppendSaySegment(segment, "The doctor must now decide who to save.", -1, 0, 0);
 
-            if (Data.Users[client.Player.CharID].Role == UserRole.Doctor)
+            if (Data.ExtendPlayer(client).Role == UserRole.Doctor)
             {
                 StoryBuilder.AppendSaySegment(segment, "You are the doctor. Make your decision with /wchoose.", -1, 0, 0);
             }
@@ -545,7 +534,7 @@ namespace Script.Events
             var segment = StoryBuilder.BuildStory();
             StoryBuilder.AppendSaySegment(segment, "Night has fallen!", -1, 0, 0);
 
-            switch (Data.Users[client.Player.CharID].Role)
+            switch (Data.ExtendPlayer(client).Role)
             {
                 case UserRole.Werewolf:
                     {
@@ -584,18 +573,18 @@ namespace Script.Events
 
         private void ExecuteTurn(string selectionCharId)
         {
-            Data.Users[selectionCharId].IsDead = true;
-            foreach (var eventClient in EventManager.GetRegisteredClients())
+            Data.ExtendPlayer(selectionCharId).IsDead = true;
+            foreach (var eventClient in GetRegisteredClients())
             {
-                Data.Users[eventClient.Player.CharID].SelectedCharId = null;
+                Data.ExtendPlayer(eventClient).SelectedCharId = null;
             }
 
             var chosenUser = ClientManager.FindClientFromCharID(selectionCharId);
             var werewolfCount = GetRoleClients(UserRole.Werewolf).Count();
-            var aliveVillagersCount = EventManager.GetRegisteredClients().Where(x => Data.Users[x.Player.CharID].Role != UserRole.Werewolf).Where(x => !Data.Users[x.Player.CharID].IsDead).Count();
+            var aliveVillagersCount = GetRegisteredClients().Where(x => Data.ExtendPlayer(x).Role != UserRole.Werewolf).Where(x => !Data.ExtendPlayer(x).IsDead).Count();
             var gameOver = false;
 
-            foreach (var eventClient in EventManager.GetRegisteredClients())
+            foreach (var eventClient in GetRegisteredClients())
             {
                 var story = new Story(Guid.NewGuid().ToString());
                 var segment = StoryBuilder.BuildStory();
@@ -613,7 +602,9 @@ namespace Script.Events
                 {
                     StoryBuilder.AppendSaySegment(segment, $"The villagers win! All the werewolves have been killed!", -1, 0, 0);
                     gameOver = true;
-                } else if (werewolfCount == aliveVillagersCount) {
+                }
+                else if (werewolfCount == aliveVillagersCount)
+                {
                     StoryBuilder.AppendSaySegment(segment, $"The werewolves win!", -1, 0, 0);
                     gameOver = true;
                 }
@@ -626,17 +617,23 @@ namespace Script.Events
             {
                 Transition(GameState.WerewolfSelecting);
             }
+            else
+            {
+                Main.EndEvent();
+            }
         }
 
         private bool IsRoleDead(UserRole role)
         {
-            var user = GetRoleClients(role).FirstOrDefault();
-            if (user == null)
+            foreach (var roleClient in GetRoleClients(role))
             {
-                return true;
+                if (!Data.ExtendPlayer(roleClient).IsDead)
+                {
+                    return false;
+                }
             }
 
-            return Data.Users[user.Player.CharID].IsDead;
+            return true;
         }
     }
 }

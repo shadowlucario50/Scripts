@@ -346,20 +346,7 @@ namespace Script
                         {
                             if (Ranks.IsAllowed(client, Enums.Rank.Scripter))
                             {
-                                ActiveEvent.End();
-                                Messenger.GlobalMsg($"{ActiveEvent.Name} has finished!", Text.BrightGreen);
-
-                                foreach (var registeredClient in EventManager.GetRegisteredClients())
-                                {
-                                    ActiveEvent.DeconfigurePlayer(registeredClient);
-
-                                    Story story = new Story();
-                                    StoryBuilderSegment segment = StoryBuilder.BuildStory();
-                                    StoryBuilder.AppendSaySegment(segment, $"The event is now finished!", -1, 0, 0);
-                                    StoryBuilder.AppendSaySegment(segment, $"Please wait as a winner is announced...", -1, 0, 0);
-                                    segment.AppendToStory(story);
-                                    StoryManager.PlayStory(registeredClient, story);
-                                }
+                                Main.EndEvent();
                             }
                         }
                         break;
