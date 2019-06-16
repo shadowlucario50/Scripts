@@ -224,8 +224,6 @@ namespace Script.Events
 
                                 if (CanTransition())
                                 {
-                                    TransitionToDaytime();
-
                                     Transition(GameState.VillagersSelecting);
                                 }
                             }
@@ -392,6 +390,10 @@ namespace Script.Events
         {
             Data.GameState = newState;
 
+            if (newState == GameState.VillagersSelecting) {
+                TransitionToDaytime();
+            }
+
             foreach (var eventClient in EventManager.GetRegisteredClients())
             {
                 ApplyState(eventClient);
@@ -547,7 +549,7 @@ namespace Script.Events
             {
                 case UserRole.Werewolf:
                     {
-                        foreach (var eventClient in EventManager.GetRegisteredClients().Where(x => Data.Users[x.Player.CharID].Role == UserRole.Werewolf))
+                        foreach (var eventClient in GetRoleClients(UserRole.Werewolf))
                         {
                             StoryBuilder.AppendSaySegment(segment, $"{eventClient.Player.DisplayName} is a werewolf!", -1, 0, 0);
                         }
@@ -590,6 +592,7 @@ namespace Script.Events
 
             var chosenUser = ClientManager.FindClientFromCharID(selectionCharId);
             var werewolfCount = GetRoleClients(UserRole.Werewolf).Count();
+            var aliveVillagersCount = EventManager.GetRegisteredClients().Where(x => Data.Users[x.Player.CharID].Role != UserRole.Werewolf).Where(x => !Data.Users[x.Player.CharID].IsDead).Count();
             var gameOver = false;
 
             foreach (var eventClient in EventManager.GetRegisteredClients())
@@ -608,7 +611,10 @@ namespace Script.Events
 
                 if (werewolfCount == 0)
                 {
-                    StoryBuilder.AppendSaySegment(segment, $"You win! All the werewolves have been killed!", -1, 0, 0);
+                    StoryBuilder.AppendSaySegment(segment, $"The villagers win! All the werewolves have been killed!", -1, 0, 0);
+                    gameOver = true;
+                } else if (werewolfCount == aliveVillagersCount) {
+                    StoryBuilder.AppendSaySegment(segment, $"The werewolves win!", -1, 0, 0);
                     gameOver = true;
                 }
 
