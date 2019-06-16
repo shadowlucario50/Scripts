@@ -611,7 +611,10 @@ namespace Script.Events
 
         private bool IsRoleDead(UserRole role)
         {
-            var user = GetRoleClients(role).First();
+            var user = GetRoleClients(role).FirstOrDefault();
+            if (user == null) {
+                return true;
+            }
 
             return Data.Users[user.Player.CharID].IsDead;
         }
