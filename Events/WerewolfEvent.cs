@@ -177,7 +177,7 @@ namespace Script.Events
 
                                 if (CanTransition())
                                 {
-                                    Transition(GameState.DoctorSelecting);
+                                    TransitionNext(GameState.DoctorSelecting);
                                 }
                             }
                             break;
@@ -190,7 +190,7 @@ namespace Script.Events
 
                                 if (CanTransition())
                                 {
-                                    Transition(GameState.SeerSelecting);
+                                    TransitionNext(GameState.SeerSelecting);
                                 }
                             }
                             break;
@@ -253,6 +253,33 @@ namespace Script.Events
                     }
                 default:
                     return false;
+            }
+        }
+
+        private void TransitionNext(GameState gameState)
+        {
+            switch (gameState)
+            {
+                case GameState.DoctorSelecting:
+                    {
+                        Transition(gameState);
+
+                        if (IsRoleDead(UserRole.Doctor))
+                        {
+                            TransitionNext(GameState.SeerSelecting);
+                        }
+                    }
+                    break;
+                case GameState.SeerSelecting:
+                    {
+                        Transition(gameState);
+
+                        if (IsRoleDead(UserRole.Seer))
+                        {
+                            Transition(GameState.VillagersSelecting);
+                        }
+                    }
+                    break;
             }
         }
 
@@ -441,6 +468,10 @@ namespace Script.Events
             }
 
             StoryBuilder.AppendSaySegment(segment, "Everyone is muted while the seer decides.", -1, 0, 0);
+            if (IsRoleDead(UserRole.Seer))
+            {
+                StoryBuilder.AppendPauseAction(segment, 5000);
+            }
 
             segment.AppendToStory(story);
             StoryManager.PlayStory(client, story);
@@ -449,6 +480,7 @@ namespace Script.Events
         private void ApplyDoctorSelectingState(Client client)
         {
             client.Player.Muted = true;
+
 
             var story = new Story(Guid.NewGuid().ToString());
             var segment = StoryBuilder.BuildStory();
@@ -461,6 +493,10 @@ namespace Script.Events
             }
 
             StoryBuilder.AppendSaySegment(segment, "Everyone is muted while the doctor decides.", -1, 0, 0);
+            if (IsRoleDead(UserRole.Doctor))
+            {
+                StoryBuilder.AppendPauseAction(segment, 5000);
+            }
 
             segment.AppendToStory(story);
             StoryManager.PlayStory(client, story);
@@ -520,29 +556,44 @@ namespace Script.Events
             }
 
             var chosenUser = ClientManager.FindClientFromCharID(selectionCharId);
-
-            var story = new Story(Guid.NewGuid().ToString());
-            var segment = StoryBuilder.BuildStory();
-            StoryBuilder.AppendSaySegment(segment, "A decision has been made!", -1, 0, 0);
-            if (chosenUser == null)
-            {
-                StoryBuilder.AppendSaySegment(segment, $"Character {selectionCharId} was killed. They logged off in fear.", -1, 0, 0);
-            }
-            else
-            {
-                StoryBuilder.AppendSaySegment(segment, $"{chosenUser.Player.DisplayName} was hanged! Hopefully they were a werewolf...", -1, 0, 0);
-            }
-
             var werewolfCount = GetRoleClients(UserRole.Werewolf).Count();
+            var gameOver = false;
 
-            if (werewolfCount == 0)
+            foreach (var eventClient in EventManager.GetRegisteredClients())
             {
-                StoryBuilder.AppendSaySegment(segment, $"You win! All the werewolves have been killed!", -1, 0, 0);
+                var story = new Story(Guid.NewGuid().ToString());
+                var segment = StoryBuilder.BuildStory();
+                StoryBuilder.AppendSaySegment(segment, "A decision has been made!", -1, 0, 0);
+                if (chosenUser == null)
+                {
+                    StoryBuilder.AppendSaySegment(segment, $"Character {selectionCharId} was killed. They logged off in fear.", -1, 0, 0);
+                }
+                else
+                {
+                    StoryBuilder.AppendSaySegment(segment, $"{chosenUser.Player.DisplayName} was hanged! Hopefully they were a werewolf...", -1, 0, 0);
+                }
+
+                if (werewolfCount == 0)
+                {
+                    StoryBuilder.AppendSaySegment(segment, $"You win! All the werewolves have been killed!", -1, 0, 0);
+                    gameOver = true;
+                }
+
+                segment.AppendToStory(story);
+                StoryManager.PlayStory(eventClient, story);
             }
-            else
+
+            if (!gameOver)
             {
                 Transition(GameState.WerewolfSelecting);
             }
+        }
+
+        private bool IsRoleDead(UserRole role)
+        {
+            var user = GetRoleClients(role).First();
+
+            return Data.Users[user.Player.CharID].IsDead;
         }
     }
 }
