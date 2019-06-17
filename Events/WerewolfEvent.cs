@@ -322,9 +322,12 @@ namespace Script.Events
             {
                 case GameState.WerewolfSelecting:
                     {
+                        if (GetRoleClients(UserRole.Werewolf).Where(x => string.IsNullOrEmpty(Data.ExtendPlayer(x).SelectedCharId)).Any()) {
+                            return false;
+                        }
+
                         return GetRoleClients(UserRole.Werewolf).Where(x => !Data.ExtendPlayer(x).IsDead)
                                                                 .Select(x => Data.ExtendPlayer(x).SelectedCharId)
-                                                                .Where(x => !string.IsNullOrEmpty(x))
                                                                 .Distinct().Count() == 1;
                     }
                 case GameState.DoctorSelecting:
