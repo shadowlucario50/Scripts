@@ -4687,6 +4687,9 @@ namespace Script
                                 StoryBuilder.AppendSaySegment(segment, "You have been registered for the event!", -1, 0, 0);
                                 segment.AppendToStory(story);
                                 StoryManager.PlayStory(client, story);
+
+                                var registrationCount = EventManager.GetRegisteredClients().Count();
+                                Messenger.AdminMsg($"{client.Player.DisplayName} registered for the event! [{registrationCount} registered]", Text.Yellow);
                             }
                         }
                         break;
