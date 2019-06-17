@@ -127,7 +127,7 @@ namespace Script.Events
 
             foreach (var client in GetRegisteredClients())
             {
-                Messenger.PlayerWarp(client, 152, 15, 16);
+                Messenger.PlayerWarp(client, 999, 25, 19);
             }
         }
 
