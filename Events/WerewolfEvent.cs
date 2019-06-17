@@ -15,7 +15,7 @@ namespace Script.Events
 {
     public class WerewolfEvent : AbstractEvent<WerewolfEvent.WerewolfData, WerewolfEvent.UserInfo>
     {
-        public static readonly int WerewolfCount = 1;
+        public static readonly int WerewolfCount = 2;
 
         public class UserInfo
         {
