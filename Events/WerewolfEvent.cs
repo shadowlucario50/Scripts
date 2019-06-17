@@ -144,6 +144,12 @@ namespace Script.Events
                 case "/wrole":
                     Messenger.PlayerMsg(client, $"You are a {userData.Role}!", Text.BrightGreen);
                     return true;
+                case "/walive":
+                    Messenger.PlayerMsg(client, "The following players are alive:", Text.BrightGreen);
+                    foreach (var eventClient in GetRegisteredClients().Where(x => !Data.ExtendPlayer(x).IsDead)) {
+                        Messenger.PlayerMsg(client, eventClient.Player.DisplayName, Text.BrightGreen);
+                    }
+                    return true;
                 case "/wchoose":
                     var chosenClient = ClientManager.FindClient(joinedArgs);
                     if (chosenClient == null)
