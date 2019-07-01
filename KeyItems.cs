@@ -41,6 +41,16 @@ namespace Script
                     break;
                 case 1842: // Drif-Flute
                     {
+                        if (client.Player.Map.Indoors) {
+                            var story = new Story();
+                            var segment = StoryBuilder.BuildStory();
+                            StoryBuilder.AppendSaySegment(segment, "Oak's words echoed... There's a time and place for everything, but not now.", -1, 0, 0);
+                            segment.AppendToStory(story);
+                            StoryManager.PlayStory(client, story);
+
+                            return;
+                        }
+
                         Messenger.SendAvailableFlyPoints(client);
                     }
                     break;
