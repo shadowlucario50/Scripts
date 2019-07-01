@@ -8385,6 +8385,12 @@ namespace Script
                                 var species = tagSegments[0].ToInt();
                                 var costumeId = tagSegments[1].ToInt();
 
+                                if (client.Player.HasCostume(species, costumeId))
+                                {
+                                    Messenger.PlayerMsg(client, "You already have this costume in your costume box!", Text.BrightRed);
+                                    return;
+                                }
+
                                 TakeItemSlotFromCharacter(setup.Attacker, invNum, 1);
                                 client.Player.AddCostume(species, costumeId);
 
