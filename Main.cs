@@ -8400,7 +8400,28 @@ namespace Script
                             } 
                         }
                         break;
+                    case 101: // Birthday Present
+                        {
+                            if (setup.Attacker.CharacterType == Enums.CharacterType.Recruit) {
+                                var client = ((Recruit)setup.Attacker).Owner;
 
+                                if (item.IsSandboxed)
+                                {
+                                    Messenger.PlayerMsg(client, "You can't use this sandboxed item!", Text.BrightRed);
+                                    return;
+                                }
+
+                                foreach (var mapPlayer in client.Player.Map.GetClients()) {
+                                    StoryManager.PlayStory(mapPlayer, 572 - 1);
+                                }
+
+                                TakeItemSlotFromCharacter(setup.Attacker, invNum, 1);
+                                client.Player.AddKeyItem(1851, 1);
+
+                                Messenger.PlayerMsg(client, $"A birthday ribbon has been added to your key items!", Text.BrightGreen);
+                            }
+                        }
+                        break;
 
                 }
                 //if (setup.Attacker.CharacterType == Enums.CharacterType.Recruit) {
