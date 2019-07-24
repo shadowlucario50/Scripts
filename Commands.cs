@@ -136,7 +136,7 @@ namespace Script
                         break;
                     case "/play":
                         {
-                            if (client.Player.MapID == "s604")
+                            if (client.Player.MapID == "s604" || client.Player.MapID == "s999")
                             {
                                 client.Player.Map.YouTubeMusicID = joinedArgs;
 
