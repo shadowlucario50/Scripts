@@ -7253,7 +7253,9 @@ namespace Script
                             setup.PacketStack.AddPacketToMap(setup.AttackerMap, PacketBuilder.CreateBattleMsg(setup.Attacker.Name + " used the Tasty Honey!", Text.WhiteSmoke), setup.Attacker.X, setup.Attacker.Y, 10);
                             if (setup.AttackerMap.Moral != Enums.MapMoral.Safe && setup.AttackerMap.Moral != Enums.MapMoral.House)
                             {
-                                for (int i = 0; i < Constants.MAX_MAP_NPCS / 4; i++)
+                                int count = ItemManager.Items[itemNum].Data2;
+                                if (count < 0) count = Constants.MAX_MAP_NPCS / -count;
+                                for (int i = 0; i < count; i++)
                                 {
                                     setup.AttackerMap.SpawnNpc();
                                 }
