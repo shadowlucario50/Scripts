@@ -126,13 +126,32 @@ namespace Script
                             if (SecretBaseManager.HasSecretBase(client))
                             {
                                 SecretBaseManager.DeleteSecretBase(client);
-                                Messenger.PlayerMsg(client, "Your secret base has been removed from the overworld!", Text.BrightRed);
+                                Messenger.PlayerMsg(client, "Your secret base has been removed from the overworld!", Text.BrightGreen);
                             }
                             else
                             {
                                 Messenger.PlayerMsg(client, "You don't have a secret base anywhere!", Text.BrightRed);
                             }
                         }
+                        break;
+                    case "/closeguildbase":
+                        {
+                            if (client.Player.GuildAccess != Enums.GuildRank.Founder)
+                            {
+                                Messenger.PlayerMsg(client, "You can't use this command!", Text.BrightRed);
+                                return;
+                            }
+
+                            if (SecretBaseManager.HasGuildSecretBase(client.Player.GuildId))
+                            {
+                                SecretBaseManager.DeleteGuildSecretBase(client.Player.GuildId);
+                                Messenger.PlayerMsg(client, "Your guild base has been removed from the overworld!", Text.BrightGreen);
+                            } 
+                            else 
+                            {
+                                Messenger.PlayerMsg(client, "You don't have a guild base anywhere!", Text.BrightRed);
+                            }
+                        }   
                         break;
                     case "/play":
                         {
