@@ -3386,18 +3386,43 @@ namespace Script
                 {
                     case "CreateSecretBase":
                         {
-                            if (answer == "Yes")
+                            var x = questionArguments[1].ToInt();
+                            var y = questionArguments[2].ToInt();
+
+                            switch (answer) 
                             {
-                                var x = questionArguments[1].ToInt();
-                                var y = questionArguments[2].ToInt();
+                                case "Personal":
+                                    {
+                                        if (SecretBaseManager.HasSecretBase(client)) 
+                                        {
+                                            return;
+                                        }
 
-                                SecretBaseManager.CreateSecretBase(client, x, y);
+                                        SecretBaseManager.CreateSecretBase(client, x, y);
 
-                                Story story = new Story();
-                                StoryBuilderSegment segment = StoryBuilder.BuildStory();
-                                StoryBuilder.AppendSaySegment(segment, "Your secret base is now ready!", -1, 0, 0);
-                                segment.AppendToStory(story);
-                                StoryManager.PlayStory(client, story);
+                                        Story story = new Story();
+                                        StoryBuilderSegment segment = StoryBuilder.BuildStory();
+                                        StoryBuilder.AppendSaySegment(segment, "Your secret base is now ready!", -1, 0, 0);
+                                        segment.AppendToStory(story);
+                                        StoryManager.PlayStory(client, story);
+                                    }
+                                    break;
+                                case "Guild":
+                                    {
+                                        if (SecretBaseManager.HasGuildSecretBase(client.Player.GuildId) || client.Player.GuildAccess < Enums.GuildRank.Admin)
+                                        {
+                                            return;
+                                        }
+                                        
+                                        SecretBaseManager.CreateGuildSecretBase(client.Player.GuildId, client.Player.Map, x, y);
+
+                                        Story story = new Story();
+                                        StoryBuilderSegment segment = StoryBuilder.BuildStory();
+                                        StoryBuilder.AppendSaySegment(segment, "Your guild base is now ready!", -1, 0, 0);
+                                        segment.AppendToStory(story);
+                                        StoryManager.PlayStory(client, story);
+                                    }
+                                    break;
                             }
                         }
                         break;

@@ -2476,17 +2476,29 @@ namespace Script
 
         public static void SetupSecretBase(Client client, int x, int y) 
         {
-            if (SecretBaseManager.HasSecretBase(client))
+            var baseOptions = new List<string>();
+            if (!SecretBaseManager.HasSecretBase(client)) 
+            {
+                baseOptions.Add("Personal");
+            }
+            if (!SecretBaseManager.HasGuildSecretBase(client.Player.GuildId) && client.Player.GuildAccess >= Enums.GuildRank.Admin) 
+            {
+                baseOptions.Add("Guild");
+            }
+
+            if (baseOptions.Count == 0)
             {
                 Story story = new Story();
                 StoryBuilderSegment segment = StoryBuilder.BuildStory();
-                StoryBuilder.AppendSaySegment(segment, "You already have a secret base somewhere! You can't create another one.", -1, 0, 0);
+                StoryBuilder.AppendSaySegment(segment, "You can't create any secret bases!", -1, 0, 0);
                 segment.AppendToStory(story);
                 StoryManager.PlayStory(client, story);
             }
             else 
             {
-                Messenger.AskQuestion(client, $"CreateSecretBase:{x}:{y}", "You see a small opening... would you like to create a secret base here?", -1);
+                baseOptions.Add("No");
+                
+                Messenger.AskQuestion(client, $"CreateSecretBase:{x}:{y}", "You see a small opening... would you like to create a secret base here?", -1, baseOptions.ToArray());
             }
         }
 
