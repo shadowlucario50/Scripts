@@ -1578,7 +1578,7 @@ namespace Script
                     case "/leavehouse":
                         {
                             IMap map = client.Player.Map;
-                            if (map.MapType == Server.Enums.MapType.House)
+                            if (map.MapType == Server.Enums.MapType.House || map.MapType == Server.Enums.MapType.GuildBase)
                             {
                                 if (!string.IsNullOrEmpty(exPlayer.Get(client).HousingCenterMap))
                                 {
