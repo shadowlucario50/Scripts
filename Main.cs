@@ -7278,7 +7278,9 @@ namespace Script
                             setup.PacketStack.AddPacketToMap(setup.AttackerMap, PacketBuilder.CreateBattleMsg(setup.Attacker.Name + " used the Tasty Honey!", Text.WhiteSmoke), setup.Attacker.X, setup.Attacker.Y, 10);
                             if (setup.AttackerMap.Moral != Enums.MapMoral.Safe && setup.AttackerMap.Moral != Enums.MapMoral.House)
                             {
-                                for (int i = 0; i < Constants.MAX_MAP_NPCS / 4; i++)
+                                int count = ItemManager.Items[itemNum].Data2;
+                                if (count < 0) count = Constants.MAX_MAP_NPCS / -count;
+                                for (int i = 0; i < count; i++)
                                 {
                                     setup.AttackerMap.SpawnNpc();
                                 }
@@ -8761,8 +8763,7 @@ namespace Script
             {
                 AddExclusives(client, map, null);
             }
-
-
+                
             int heldItemNum = -1;
             if (client.Player.GetActiveRecruit().HeldItemSlot > -1)
             {
@@ -8989,6 +8990,27 @@ namespace Script
                     if (client.Player.Map.MapType == Enums.MapType.RDungeonMap)
                     {
 
+                        RDungeonMap currentFloor = (RDungeonMap)map;
+
+
+                        if (HasAbility(client.Player.GetActiveRecruit(), "Frisk"))
+                        {
+                            int revealed = 0;
+                            for (int i = 0; i < Server.Constants.MAX_MAP_ITEMS; i++)
+                            {
+                                if (currentFloor.ActiveItem[i].Num != 0 && currentFloor.ActiveItem[i].Hidden)
+                                {
+                                    currentFloor.SpawnItemSlot(i, currentFloor.ActiveItem[i].Num, currentFloor.ActiveItem[i].Value,
+                                    currentFloor.ActiveItem[i].Sticky, false, currentFloor.ActiveItem[i].Tag, currentFloor.ActiveItem[i].IsSandboxed,
+                                    currentFloor.ActiveItem[i].X, currentFloor.ActiveItem[i].Y, null);
+
+                                    packetList.AddPacketToMap(currentFloor, PacketBuilder.CreateItemSpawnPacket(i, currentFloor.ActiveItem[i].Num, currentFloor.ActiveItem[i].Value, currentFloor.ActiveItem[i].Sticky, currentFloor.ActiveItem[i].X, currentFloor.ActiveItem[i].Y));
+                                    ++revealed;
+                                }
+                            }
+                            if(revealed > 0) packetList.AddPacket(client, PacketBuilder.CreateBattleMsg(client.Player.GetActiveRecruit().Name + " revealed " + revealed + " buried item" + (revealed > 1 ? "s" : "") + " on the floor.", Text.WhiteSmoke));
+                        }
+                            
                         if (HasAbility(client.Player.GetActiveRecruit(), "Honey Gather")
                             && client.Player.FindInvSlot(-1) > -1)
                         {
