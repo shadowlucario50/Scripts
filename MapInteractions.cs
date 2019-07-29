@@ -2481,7 +2481,7 @@ namespace Script
             {
                 baseOptions.Add("Personal");
             }
-            if (!SecretBaseManager.HasGuildSecretBase(client.Player.GuildId) && client.Player.GuildAccess >= Enums.GuildRank.Admin) 
+            if (client.Player.GuildId > 0 && !SecretBaseManager.HasGuildSecretBase(client.Player.GuildId) && client.Player.GuildAccess >= Enums.GuildRank.Admin) 
             {
                 baseOptions.Add("Guild");
             }
