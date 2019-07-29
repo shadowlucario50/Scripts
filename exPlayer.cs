@@ -29,6 +29,7 @@ using Server.Maps;
 using PMDCP.DatabaseConnector.MySql;
 using PMDCP.DatabaseConnector;
 using Server.Database;
+using Server.Fly;
 
 namespace Script
 {
@@ -226,13 +227,37 @@ namespace Script
             if (string.IsNullOrEmpty(mapID)) {
                 return false;
             }
-            IMap map = MapManager.RetrieveMap(mapID);
-            if ((map.MapType == Enums.MapType.House && ((House)map).OwnerID == Client.Player.CharID) || mapID == Main.Crossroads || mapID == MapManager.GenerateMapID(412) || 
-            	mapID == MapManager.GenerateMapID(478) || mapID == MapManager.GenerateMapID(878) || mapID == MapManager.GenerateMapID(1035) /*|| mapID == MapManager.GenerateMapID(1802) || mapID == MapManager.GenerateMapID(1898)*/) {
-                return true;
-            } else {
-                return false;
+            var map = MapManager.RetrieveMap(mapID);
+            switch (map.MapType)
+            {
+                case Enums.MapType.House:
+                    {
+                        var houseMap = (House)map;
+
+                        return houseMap.OwnerID == Client.Player.CharID;
+                    }
+                case Enums.MapType.GuildBase:
+                    {
+                        var guildBaseMap = (GuildBase)map;
+
+                        return Client.Player.GuildId == guildBaseMap.Owner;
+                    }
+                case Enums.MapType.Standard:
+                    {
+                        if (!mapID.StartsWith("s")) 
+                        {
+                            return false;
+                        }
+
+                        var mapNumber = mapID.Substring(1, mapID.Length - 1).ToInt();
+
+                        var flightPoint = FlightManager.FindFlightPoint(mapNumber);
+
+                        return flightPoint != null;
+                    }
             }
+
+            return false;
         }
 
         public void WarpToSpawn(bool playSound) {

@@ -4359,7 +4359,7 @@ namespace Script
                             }
                         }
                         break;
-                    case "/sethouse":
+                    case "/setspawn":
                         {
                             if (exPlayer.Get(client).IsValidPlayerSpawn(client.Player.MapID) == true
                                 && client.Player.Map.Tile[client.Player.X, client.Player.Y].Type != Enums.TileType.Blocked)
