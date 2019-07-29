@@ -35,6 +35,7 @@ namespace Script
             FlightManager.AddFlightPoint(new FlightPoint() { ID = 5, Name = "Moonhaven", MapNumber = 490, ImageName = "moonhaven.png", Description = "A friendly bat town located inside a long-dormant ocean volcano." });
             FlightManager.AddFlightPoint(new FlightPoint() { ID = 6, Name = "Bayside Bazaar", MapNumber = 258, Description = "The bazaar down by the bay!" });
             FlightManager.AddFlightPoint(new FlightPoint() { ID = 7, Name = "Aurora Highland", MapNumber = 246, Description = "The mountains of Aurora." });
+            FlightManager.AddFlightPoint(new FlightPoint() { ID = 8, Name = "Debug", MapNumber = 1, Description = "Test unreleased content here." });
         }
     }
 }
