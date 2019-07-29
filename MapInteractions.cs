@@ -2403,7 +2403,7 @@ namespace Script
             }
             catch (Exception ex)
             {
-                Messenger.AdminMsg("Error: ScriptedSign", Text.Black);
+                Messenger.AdminMsg("Error: ScriptedSign" + ex.ToString(), Text.Black);
             }
         }
 
@@ -2497,7 +2497,7 @@ namespace Script
             else 
             {
                 baseOptions.Add("No");
-                
+
                 Messenger.AskQuestion(client, $"CreateSecretBase:{x}:{y}", "You see a small opening... would you like to create a secret base here?", -1, baseOptions.ToArray());
             }
         }
