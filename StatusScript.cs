@@ -4126,7 +4126,7 @@ namespace Script {
             if (HasAbility(setup.Defender, "Cursed Body") && MoveProcessor.GetMatchupWith(setup.Attacker, setup.Defender) == Enums.CharacterMatchup.Foe) {
                 if (Server.Math.Rand(0, 5) == 0 && setup.moveSlot > -1 && setup.moveSlot < 4) {
                     setup.PacketStack.AddPacketToMap(setup.DefenderMap, PacketBuilder.CreateBattleMsg(setup.Defender.Name + "'s Cursed Body sealed a move!", Text.BrightRed), setup.Defender.X, setup.Defender.Y, 10);
-                    AddExtraStatus(setup.Attacker, setup.AttackerMap, "MoveSeal:" + setup.moveSlot, 0, null, "", setup.PacketStack);
+                    AddExtraStatus(setup.Attacker, setup.AttackerMap, "Disable", setup.moveSlot, null, "", setup.PacketStack);
                 }
             }
             if (HasAbility(setup.Defender, "Cute Charm") && setup.Move.MoveCategory != Enums.MoveCategory.Status
