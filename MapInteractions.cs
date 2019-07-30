@@ -1412,7 +1412,7 @@ namespace Script
                             targets = MoveProcessor.GetTargetsInRange(Enums.MoveRange.Room, 0, map, null, x, y, Enums.Direction.Up, true, true, false);
                             for (int i = 0; i < targets.Count; i++)
                             {
-                                SetStatusAilment(targets[i], MapManager.RetrieveActiveMap(targets[i].MapID), Enums.StatusAilment.Sleep, 8, hitlist);
+                                SetStatusAilment(targets[i], MapManager.RetrieveActiveMap(targets[i].MapID), Enums.StatusAilment.Sleep, 4, hitlist);
                             }
                         }
                         break;
