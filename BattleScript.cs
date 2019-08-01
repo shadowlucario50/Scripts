@@ -6720,7 +6720,7 @@ namespace Script
                         break;
                     case 171:
                         {//Bug Bite/Pluck
-                            if (setup.Hit)
+                            if (setup.Hit && Server.Math.Rand(0,100) < (30 + setup.Attacker.Level - setup.Defender.Level))
                             {
                                 BattleSetup itemSetup = new BattleSetup();
                                 itemSetup.Attacker = setup.Attacker;
