@@ -7443,7 +7443,7 @@ namespace Script
                             || setup.Defender.HasActiveItem(841) && setup.Move.Element == Enums.PokemonType.Fairy)
                         {
                             setup.PacketStack.AddPacketToMap(setup.DefenderMap, PacketBuilder.CreateBattleMsg("Its power rebounded!", Text.BrightRed), setup.Defender.X, setup.Defender.Y, 10);
-                            int recoil = (GetBattleTagArg(setup.BattleTags, "PrevHP", 1).ToInt() - setup.Defender.HP);
+                            int recoil = (GetBattleTagArg(setup.BattleTags, "PrevHP", 1).ToInt() - System.Math.Max(setup.Defender.HP, 0));
                             if (recoil < 0) recoil = 0;
                             if (recoil >= setup.Attacker.HP)
                             {
@@ -7457,11 +7457,12 @@ namespace Script
                         }
 
                         //counter/mirror coat
-                        if (setup.Move.MoveCategory == Enums.MoveCategory.Physical && setup.Defender.VolatileStatus.GetStatus("Counter") != null
+                        if ((setup.Move.MoveCategory == Enums.MoveCategory.Physical && setup.Defender.VolatileStatus.GetStatus("Counter") != null
                             || setup.Move.MoveCategory == Enums.MoveCategory.Special && setup.Defender.VolatileStatus.GetStatus("MirrorCoat") != null)
+                            && !(setup.KnockedOut && setup.Defender.HP <= 0))
                         {
                             setup.PacketStack.AddPacketToMap(setup.DefenderMap, PacketBuilder.CreateBattleMsg("Its power rebounded!", Text.BrightRed), setup.Defender.X, setup.Defender.Y, 10);
-                            int recoil = (GetBattleTagArg(setup.BattleTags, "PrevHP", 1).ToInt() - setup.Defender.HP) * 2;
+                            int recoil = (GetBattleTagArg(setup.BattleTags, "PrevHP", 1).ToInt() - System.Math.Max(setup.Defender.HP, 0)) * 2;
                             if (recoil < 0) recoil = 0;
                             if (recoil >= setup.Attacker.HP)
                             {
@@ -7475,10 +7476,11 @@ namespace Script
                         }
 
                         //metal burst
-                        if (setup.Move.MoveCategory != Enums.MoveCategory.Status && setup.Defender.VolatileStatus.GetStatus("MetalBurst") != null)
+                        if (setup.Move.MoveCategory != Enums.MoveCategory.Status && setup.Defender.VolatileStatus.GetStatus("MetalBurst") != null
+                            && !(setup.KnockedOut && setup.Defender.HP <= 0))
                         {
                             setup.PacketStack.AddPacketToMap(setup.DefenderMap, PacketBuilder.CreateBattleMsg("Its power rebounded to everyone!", Text.BrightRed), setup.Defender.X, setup.Defender.Y, 10);
-                            int dmg = (GetBattleTagArg(setup.BattleTags, "PrevHP", 1).ToInt() - setup.Defender.HP) * 3 / 2;
+                            int dmg = (GetBattleTagArg(setup.BattleTags, "PrevHP", 1).ToInt() - System.Math.Max(setup.Defender.HP, 0)) * 3 / 2;
                             setup.PacketStack.AddPacketToMap(setup.DefenderMap, PacketBuilder.CreateSoundPacket("magic392.wav"), setup.Defender.X, setup.Defender.Y, 10);
                             for (int i = setup.Defender.X - 4; i <= setup.Defender.X + 4; i++)
                             {
@@ -7513,10 +7515,11 @@ namespace Script
 
 
                         //destiny bond
-                        if (setup.Defender.VolatileStatus.GetStatus("DestinyBond") != null)
+                        if (setup.Defender.VolatileStatus.GetStatus("DestinyBond") != null
+                            && !(setup.KnockedOut && setup.Defender.HP <= 0))
                         {
                             setup.PacketStack.AddPacketToMap(setup.DefenderMap, PacketBuilder.CreateBattleMsg(setup.Defender.Name + " is trying to take its foe with it!", Text.BrightRed), setup.Defender.X, setup.Defender.Y, 10);
-                            int recoil = (GetBattleTagArg(setup.BattleTags, "PrevHP", 1).ToInt() - setup.Defender.HP);
+                            int recoil = (GetBattleTagArg(setup.BattleTags, "PrevHP", 1).ToInt() - System.Math.Max(setup.Defender.HP, 0));
                             if (recoil < 0) recoil = 0;
                             if (recoil >= setup.Attacker.HP)
                             {
@@ -7533,7 +7536,7 @@ namespace Script
                         if (setup.Defender.VolatileStatus.GetStatus("Rebound") != null)
                         {
                             setup.PacketStack.AddPacketToMap(setup.DefenderMap, PacketBuilder.CreateBattleMsg("Its power rebounded!", Text.BrightRed), setup.Defender.X, setup.Defender.Y, 10);
-                            int recoil = (GetBattleTagArg(setup.BattleTags, "PrevHP", 1).ToInt() - setup.Defender.HP) / 2;
+                            int recoil = (GetBattleTagArg(setup.BattleTags, "PrevHP", 1).ToInt() - System.Math.Max(setup.Defender.HP, 0)) / 2;
                             if (recoil < 0) recoil = 0;
                             if (recoil >= setup.Attacker.HP)
                             {
@@ -7550,7 +7553,7 @@ namespace Script
                         if (HasActiveBagItem(setup.Defender, 8, 0, 0))
                         {
                             setup.PacketStack.AddPacketToMap(setup.DefenderMap, PacketBuilder.CreateBattleMsg("Its power rebounded!", Text.BrightRed), setup.Defender.X, setup.Defender.Y, 10);
-                            int recoil = (GetBattleTagArg(setup.BattleTags, "PrevHP", 1).ToInt() - setup.Defender.HP) / 4;
+                            int recoil = (GetBattleTagArg(setup.BattleTags, "PrevHP", 1).ToInt() - System.Math.Max(setup.Defender.HP, 0)) / 4;
                             if (recoil < 0) recoil = 0;
                             if (recoil >= setup.Attacker.HP)
                             {
@@ -7569,7 +7572,7 @@ namespace Script
                             if (Server.Math.Rand(0, 4) == 0)
                             {
                                 setup.PacketStack.AddPacketToMap(setup.DefenderMap, PacketBuilder.CreateBattleMsg("Its power rebounded!", Text.BrightRed), setup.Defender.X, setup.Defender.Y, 10);
-                                int recoil = (GetBattleTagArg(setup.BattleTags, "PrevHP", 1).ToInt() - setup.Defender.HP);
+                                int recoil = (GetBattleTagArg(setup.BattleTags, "PrevHP", 1).ToInt() - System.Math.Max(setup.Defender.HP, 0));
                                 if (recoil < 0) recoil = 0;
                                 if (recoil >= setup.Attacker.HP)
                                 {
