@@ -8449,6 +8449,25 @@ namespace Script
                             }
                         }
                         break;
+                    case 102: // Mega Stone
+                        {
+                            if (setup.Attacker.CharacterType == Enums.CharacterType.Recruit) {
+                                Recruit user = (Recruit)setup.Attacker;
+                                int dexNum = ItemManager.Items[itemNum].Data2;
+                                int formNum = ItemManager.Items[itemNum].Data3;
+
+                                if(setup.Attacker.Species == dexNum && setup.Attacker.Form == 0)
+                                {
+                                    user.StartMegaEvolution(Pokedex.GetPokemonForm(dexNum, formNum).FormName);
+                                }
+                                else
+                                {
+                                    setup.PacketStack.AddPacketToMap(setup.AttackerMap, PacketBuilder.CreateBattleMsg("But nothing happened.", Text.WhiteSmoke), setup.Attacker.X, setup.Attacker$
+                                }
+
+                            }
+                        }
+                        break;
 
                 }
                 //if (setup.Attacker.CharacterType == Enums.CharacterType.Recruit) {
