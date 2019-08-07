@@ -8456,9 +8456,12 @@ namespace Script
                                 int dexNum = ItemManager.Items[itemNum].Data2;
                                 int formNum = ItemManager.Items[itemNum].Data3;
 
-                                if(user.Species == dexNum && user.Form == 0)
+                                if(user.Species == dexNum)
                                 {
-                                    user.StartMegaEvolution(Pokedex.GetPokemonForm(dexNum, formNum).FormName);
+                                    if(user.Form == 0)
+                                        user.StartMegaEvolution(Pokedex.GetPokemonForm(dexNum, formNum).FormName);
+                                    else
+                                        user.StopMegaEvolution();
                                 }
                                 else
                                 {
