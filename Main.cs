@@ -8458,7 +8458,7 @@ namespace Script
 
                                 if(user.Species == dexNum)
                                 {
-                                    if(user.Form == 0)
+                                    if(!user.IsMegaEvolved())
                                         user.StartMegaEvolution(formNum);
                                     else
                                         user.EndMegaEvolution();
