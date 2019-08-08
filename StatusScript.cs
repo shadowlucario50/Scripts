@@ -967,6 +967,14 @@ namespace Script {
                             return true;
                         }
 
+                        if(character.Species == 774 && character.Form < 7 && HasAbility(character, "Shields Down")) {
+                            if (msg) {
+                                hitlist.AddPacketToMap(map, PacketBuilder.CreateBattleMsg(character.Name + " is protected by Shields Down!", Text.BrightCyan), character.X, character.Y, 10);
+                            }
+                            PacketHitList.MethodEnded(ref hitlist);
+                            return true;
+                        }
+
                         if (attacker != character && statusParam[0] != "Pause" && statusParam[0] != "Taunt" &&
                             statusParam[0] != "Torment" && statusParam[0] != "Encore" && statusParam[0] != "MoveSeal" &&
                             statusParam[0] != "Disable" && statusParam[0] != "PerishCount" && statusParam[0] != "Curse" &&
@@ -4434,6 +4442,15 @@ namespace Script {
                 if (Server.Math.Rand(0, 3) == 0) {
                     setup.PacketStack.AddPacketToMap(setup.AttackerMap, PacketBuilder.CreateBattleMsg(setup.Attacker.Name + "'s Shed Skin cured its status problem!", Text.WhiteSmoke), setup.Attacker.X, setup.Attacker.Y, 10);
                     SetStatusAilment(setup.Attacker, setup.AttackerMap, Enums.StatusAilment.OK, 0, setup.PacketStack);
+                }
+            }
+            if(character.Species == 774 && HasAbility(character, "Shields Down")) {
+                if(character.Form < 7 && character.HP <= character.MaxHP / 2) {
+                    character.PermanentForm += 7;
+                    RefreshCharacterTraits(setup.Attacker, setup.AttackerMap, setup.PacketStack);
+                } else if(character.Form >= 7 && character.HP > character.MaxHP / 2) {
+                    character.PermanentForm -= 7;
+                    RefreshCharacterTraits(setup.Attacker, setup.AttackerMap, setup.PacketStack);
                 }
             }
         }
