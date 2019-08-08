@@ -2927,7 +2927,7 @@ namespace Script
 
                     //Wide Guard
                     if (setup.Attacker != setup.Defender && (setup.Move.RangeType == Enums.MoveRange.Floor || setup.Move.RangeType == Enums.MoveRange.Room || setup.Move.RangeType == Enums.MoveRange.FrontAndSides)
-                        && setup.Defender.VolatileStatus.GetStatus("WideGuard") != null)
+                        && setup.Move.Range > 2 && setup.Defender.VolatileStatus.GetStatus("WideGuard") != null)
                     {
                         if (setup.Move.AdditionalEffectData1 == 128)
                         {
@@ -2943,7 +2943,7 @@ namespace Script
 
 
                     //Quick Guard
-                    if (setup.Attacker != setup.Defender && (setup.Move.RangeType == Enums.MoveRange.Floor || setup.Move.Range > 2)
+                    if (setup.Attacker != setup.Defender && setup.Move.HitTime < 1000
                         && setup.Defender.VolatileStatus.GetStatus("QuickGuard") != null)
                     {
                         if (setup.Move.AdditionalEffectData1 == 128)
