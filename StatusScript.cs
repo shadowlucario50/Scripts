@@ -4444,12 +4444,12 @@ namespace Script {
                     SetStatusAilment(setup.Attacker, setup.AttackerMap, Enums.StatusAilment.OK, 0, setup.PacketStack);
                 }
             }
-            if(character.Species == 774 && HasAbility(character, "Shields Down")) {
-                if(character.Form < 7 && character.HP <= character.MaxHP / 2) {
-                    character.PermanentForm += 7;
+            if(setup.Attacker.Species == 774 && HasAbility(setup.Attacker, "Shields Down")) {
+                if(setup.Attacker.PermanentForm < 7 && setup.Attacker.HP <= setup.Attacker.MaxHP / 2) {
+                    setup.Attacker.PermanentForm += 7;
                     RefreshCharacterTraits(setup.Attacker, setup.AttackerMap, setup.PacketStack);
-                } else if(character.Form >= 7 && character.HP > character.MaxHP / 2) {
-                    character.PermanentForm -= 7;
+                } else if(setup.Attacker.PermanentForm >= 7 && setup.Attacker.HP > setup.Attacker.MaxHP / 2) {
+                    setup.Attacker.PermanentForm -= 7;
                     RefreshCharacterTraits(setup.Attacker, setup.AttackerMap, setup.PacketStack);
                 }
             }
