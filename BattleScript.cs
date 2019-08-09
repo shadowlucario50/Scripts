@@ -2854,7 +2854,7 @@ namespace Script
 
                     // Stick / Lucky Punch
                     if (setup.Attacker.HasActiveItem(267) && setup.Attacker.Species == 83
-                        || setup.Attacker.HasActiveItem(268) && setup.Attacker.Species == 113)
+                        || setup.Attacker.HasActiveItem(269) && setup.Attacker.Species == 113)
                     {
                         criticalRate *= 4;
                     }
