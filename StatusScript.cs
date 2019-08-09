@@ -4446,11 +4446,9 @@ namespace Script {
             }
             if(setup.Attacker.Species == 774 && HasAbility(setup.Attacker, "Shields Down")) {
                 if(setup.Attacker.PermanentForm < 7 && setup.Attacker.HP <= setup.Attacker.MaxHP / 2) {
-                    setup.Attacker.PermanentForm += 7;
-                    RefreshCharacterTraits(setup.Attacker, setup.AttackerMap, setup.PacketStack);
+                    setup.Attacker.SetOriginalForm(setup.Attacker.PermanentForm + 7, setup.PacketStack);
                 } else if(setup.Attacker.PermanentForm >= 7 && setup.Attacker.HP > setup.Attacker.MaxHP / 2) {
-                    setup.Attacker.PermanentForm -= 7;
-                    RefreshCharacterTraits(setup.Attacker, setup.AttackerMap, setup.PacketStack);
+                    setup.Attacker.SetOriginalForm(setup.Attacker.PermanentForm - 7, setup.PacketStack);
                 }
             }
         }
