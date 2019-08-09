@@ -1749,7 +1749,7 @@ namespace Script
                 }
 
                 // Thick Club
-                if(setup.Attacker.HasActiveItem(268) && (setup.Attacker.Species == 104 || setup.Attacker.Species == 105))
+                if (setup.Attacker.HasActiveItem(268) && (setup.Attacker.Species == 104 || setup.Attacker.Species == 105))
                 {
                     setup.AttackStat *= 2;
                 }
@@ -2850,6 +2850,13 @@ namespace Script
                     if (HasAbility(setup.Attacker, "Super Luck"))
                     {
                         criticalRate *= 2;
+                    }
+
+                    // Stick / Lucky Punch
+                    if (setup.Attacker.HasActiveItem(267) && setup.Attacker.Species == 83
+                        || setup.Attacker.HasActiveItem(268) && setup.Attacker.Species == 113)
+                    {
+                        criticalRate *= 4;
                     }
 
                     //focus energy
