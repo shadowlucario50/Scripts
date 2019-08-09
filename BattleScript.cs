@@ -1748,6 +1748,12 @@ namespace Script
                     setup.AttackStat /= 10;
                 }
 
+                // Thick Club
+                if(setup.Attacker.HasActiveItem(268) && (setup.Attacker.Species == 104 || setup.Attacker.Species == 105))
+                {
+                    setup.AttackStat *= 2;
+                }
+
                 point = 2;
 
                 status = setup.Attacker.VolatileStatus.GetStatus("TypeBoost");
