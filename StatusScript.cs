@@ -4444,6 +4444,13 @@ namespace Script {
                     SetStatusAilment(setup.Attacker, setup.AttackerMap, Enums.StatusAilment.OK, 0, setup.PacketStack);
                 }
             }
+            if(setup.Attacker.Species == 746 && setup.Attacker.Level >= 20 && HasAbility(setup.Attacker, "Schooling")) {
+                if(setup.Attacker.PermanentForm == 0 && setup.Attacker.HP > setup.Attacker.MaxHP / 4) {
+                    setup.Attacker.SetOriginalForm(1, setup.PacketStack);
+                } else if(setup.Attacker.PermanentForm == 1 && setup.Attacker.HP <= setup.Attacker.MaxHP / 4) {
+                    setup.Attacker.SetOriginalForm(0, setup.PacketStack);
+                }
+            }
             if(setup.Attacker.Species == 774 && HasAbility(setup.Attacker, "Shields Down")) {
                 if(setup.Attacker.PermanentForm < 7 && setup.Attacker.HP <= setup.Attacker.MaxHP / 2) {
                     setup.Attacker.SetOriginalForm(setup.Attacker.PermanentForm + 7, setup.PacketStack);
