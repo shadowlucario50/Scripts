@@ -3516,9 +3516,13 @@ namespace Script {
             }
             // Flower Gift
             if (setup.Move.EffectType == Enums.MoveType.SubHP && setup.Move.MoveCategory == Enums.MoveCategory.Physical) {
+                if (setup.Attacker.Species == 421 && setup.Attacker.PermanentForm == 1 && HasAbility(setup.Attacker, "Flower Gift")) {
+                    setup.AttackStat *= 3;
+                    setup.AttackStat /= 2;
+                }
                 TargetCollection targets = MoveProcessor.GetTargetsInRange(Enums.MoveRange.Room, 10, setup.DefenderMap, setup.Defender, setup.Defender.X, setup.Defender.Y, Enums.Direction.Up, false, true, false);
-                foreach (ICharacter friend in targets.Friends) {
-                    if (friend.Species == 421 && friend.Form == 1 && HasAbility(friend, "Flower Gift")) {
+                for (int i = 0; i < targets.Friends.Count; i++) {
+                    if (targets.Friends[i].Species == 421 && targets.Friends[i].PermanentForm == 1 && HasAbility(targets.Friends[i], "Flower Gift")) {
                         setup.AttackStat *= 3;
                         setup.AttackStat /= 2;
                     }
@@ -3939,9 +3943,13 @@ namespace Script {
             // Flower Gift
             if (!HasAbility(setup.Attacker, "Mold Breaker")) {
                 if (setup.Move.EffectType == Enums.MoveType.SubHP && setup.Move.MoveCategory == Enums.MoveCategory.Special) {
+                    if (setup.Defender.Species == 421 && setup.Defender.PermanentForm == 1 && HasAbility(setup.Defender, "Flower Gift")) {
+                        setup.DefenseStat *= 3;
+                        setup.DefenseStat /= 2;
+                    }
                     TargetCollection targets = MoveProcessor.GetTargetsInRange(Enums.MoveRange.Room, 10, setup.DefenderMap, setup.Defender, setup.Defender.X, setup.Defender.Y, Enums.Direction.Up, false, true, false);
-                    foreach (ICharacter friend in targets.Friends) {
-                        if (friend.Species == 421 && friend.Form == 1 && HasAbility(friend, "Flower Gift")) {
+                    for (int i = 0; i < targets.Friends.Count; i++) {
+                        if (targets.Friends[i].Species == 421 && targets.Friends[i].PermanentForm == 1 && HasAbility(targets.Friends[i], "Flower Gift")) {
                             setup.DefenseStat *= 3;
                             setup.DefenseStat /= 2;
                         }
