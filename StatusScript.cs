@@ -4451,6 +4451,14 @@ namespace Script {
                     setup.Attacker.SetOriginalForm(setup.Attacker.PermanentForm - 7, setup.PacketStack);
                 }
             }
+            if(setup.Attacker.Species == 555 && HasAbility(setup.Attacker, "Zen Mode")) {
+                if(setup.Attacker.PermanentForm == 0 && setup.Attacker.HP <= setup.Attacker.MaxHP / 2) {
+                    setup.Attacker.SetOriginalForm(1, setup.PacketStack);
+                } else if(setup.Attacker.PermanentForm == 1 && setup.Attacker.HP > setup.Attacker.MaxHP / 2) {
+                    setup.Attacker.SetOriginalForm(0, setup.PacketStack);
+                }
+            }
+
         }
         
         public static void OnMoveSwapped(Client client, int oldSlot, int newSlot) {
