@@ -3514,6 +3514,16 @@ namespace Script {
                     }
                 }
             }
+            // Flower Gift
+            if (setup.Move.EffectType == Enums.MoveType.SubHP && setup.Move.MoveCategory == Enums.MoveCategory.Physical) {
+                TargetCollection targets = MoveProcessor.GetTargetsInRange(Enums.MoveRange.Room, 10, setup.DefenderMap, setup.Defender, setup.Defender.X, setup.Defender.Y, Enums.Direction.Up, false, true, false);
+                foreach (ICharacter friend in targets.Friends) {
+                    if (friend.Species == 421 && friend.Form == 1 && HasAbility(friend, "Flower Gift")) {
+                        setup.AttackStat *= 3;
+                        setup.AttackStat /= 2;
+                    }
+                }
+            }
             if (HasAbility(setup.Attacker, "Guts")) {
 
                 if (setup.Move.MoveCategory == Enums.MoveCategory.Physical) {
@@ -3923,6 +3933,19 @@ namespace Script {
                 if (setup.Move.Data1 >= 80 && setup.Move.EffectType != Enums.MoveType.SubHP && setup.Move.Accuracy != -1) {
                     setup.Move.Accuracy *= 4;
                     setup.Move.Accuracy /= 5;
+                }
+            }
+
+            // Flower Gift
+            if (!HasAbility(setup.Attacker, "Mold Breaker")) {
+                if (setup.Move.EffectType == Enums.MoveType.SubHP && setup.Move.MoveCategory == Enums.MoveCategory.Special) {
+                    TargetCollection targets = MoveProcessor.GetTargetsInRange(Enums.MoveRange.Room, 10, setup.DefenderMap, setup.Defender, setup.Defender.X, setup.Defender.Y, Enums.Direction.Up, false, true, false);
+                    foreach (ICharacter friend in targets.Friends) {
+                        if (friend.Species == 421 && friend.Form == 1 && HasAbility(friend, "Flower Gift")) {
+                            setup.DefenseStat *= 3;
+                            setup.DefenseStat /= 2;
+                        }
+                    }
                 }
             }
 
@@ -4764,6 +4787,13 @@ namespace Script {
             character.CalculateOriginalForm();
 
             //forme
+            if (character.Species == 421 && HasAbility(character, "Flower Gift")) {
+                if(GetCharacterWeather(character) == Enums.Weather.Sunny && character.Form == 0)
+                    character.SetOriginalForm(1, hitlist);
+                else if(GetCharacterWeather(character) != Enums.Weather.Sunny && character.Form == 1)
+                    character.SetOriginalForm(0, hitlist);
+            }
+
             if (HasAbility(character, "Forecast") && character.Species == 351) {
                 switch (map.Weather) {
                     case Enums.Weather.Sunny: {
