@@ -4802,26 +4802,26 @@ namespace Script {
                     character.SetOriginalForm(0, hitlist);
             }
 
-            if (HasAbility(character, "Forecast") && character.Species == 351) {
-                switch (map.Weather) {
+            if (character.Species == 351 && HasAbility(character, "Forecast")) {
+                switch (GetCharacterWeather(character)) {
                     case Enums.Weather.Sunny: {
-                            character.Form = 1;
+                            character.SetOriginalForm(1, hitlist);
                         }
                         break;
                     case Enums.Weather.Thunder:
                     case Enums.Weather.Raining: {
-                            character.Form = 2;
+                            character.SetOriginalForm(2, hitlist);
                         }
                         break;
                     case Enums.Weather.Snowing:
                     case Enums.Weather.Snowstorm:
                     case Enums.Weather.Hail: {
-                            character.Form = 3;
+                            character.SetOriginalForm(3, hitlist);
                         }
                         break;
                     default: {
 
-                            character.Form = 0;
+                            character.SetOriginalForm(0, hitlist);
                         }
                         break;
                 }
