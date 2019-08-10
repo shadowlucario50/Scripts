@@ -4994,16 +4994,7 @@ namespace Script {
             if (speed > 6) speed = 6;
             if (speed < 1) speed = 1;
 
-            if (map != null
-            && (map.Moral == Enums.MapMoral.None || map.Moral == Enums.MapMoral.NoPenalty
-            || (character.X >= 0 && character.X <= map.MaxX
-            && character.Y >= 0 && character.Y <= map.MaxY
-            && map.Tile[character.X, character.Y].Type == Enums.TileType.Arena))) {
-                character.SpeedLimit = (Enums.Speed)speed;
-
-            } else {
-                character.SpeedLimit = Enums.Speed.Running;
-            }
+            character.SpeedLimit = (Enums.Speed)speed;
 
             if (character.VolatileStatus.GetStatus("Immobilize") != null ||
                 character.VolatileStatus.GetStatus("Ingrain") != null ||
