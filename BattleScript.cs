@@ -957,6 +957,13 @@ namespace Script
                     AddExtraStatus(setup.Attacker, setup.AttackerMap, "Type1", (int)setup.Move.Element, null, "", setup.PacketStack);
                     AddExtraStatus(setup.Attacker, setup.AttackerMap, "Type2", 0, null, "", setup.PacketStack);
                 }
+                if (setup.Attacker.Species == 681 && HasAbility(setup.Attacker, "Stance Change"))
+                {
+                    if(setup.Move.MoveCategory == Enums.MoveCategory.Status && setup.Attacker.Form == 1)
+                        setup.Attacker.SetOriginalForm(0, setup.PacketStack);
+                    else if(setup.Move.MoveCategory != Enums.MoveCategory.Status && setup.Attacker.Form == 0)
+                        setup.Attacker.SetOriginalForm(1, setup.PacketStack);
+                }
             }
             catch (Exception ex)
             {
