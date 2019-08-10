@@ -3520,7 +3520,7 @@ namespace Script {
                     setup.AttackStat *= 3;
                     setup.AttackStat /= 2;
                 }
-                TargetCollection targets = MoveProcessor.GetTargetsInRange(Enums.MoveRange.Room, 10, setup.DefenderMap, setup.Defender, setup.Defender.X, setup.Defender.Y, Enums.Direction.Up, false, true, false);
+                TargetCollection targets = MoveProcessor.GetTargetsInRange(Enums.MoveRange.Room, 10, setup.AttackerMap, setup.Attacker, setup.Attacker.X, setup.Attacker.Y, Enums.Direction.Up, false, true, false);
                 for (int i = 0; i < targets.Friends.Count; i++) {
                     if (targets.Friends[i].Species == 421 && targets.Friends[i].PermanentForm == 1 && HasAbility(targets.Friends[i], "Flower Gift")) {
                         setup.AttackStat *= 3;
