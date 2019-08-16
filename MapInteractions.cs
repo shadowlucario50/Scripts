@@ -392,10 +392,6 @@ namespace Script
                             {
                                 ((Recruit)character).Owner.Player.BellyStepCounter += 10;
                             }
-                            if (HasAbility(character, "Gluttony"))
-                            {
-                                ((Recruit)character).Owner.Player.BellyStepCounter += 10;
-                            }
                         }
                         stepCounter = ((Recruit)character).Owner.Player.HPStepCounter;
                         ElectrostasisTower.OnPlayerStep(((Recruit)character).Owner);
