@@ -3384,6 +3384,18 @@ namespace Script
                 // Called when a player answers a yes/no question
                 switch (questionID)
                 {
+                    case "AskStaffApplication":
+                        {
+                            if (answer == "Yes") 
+                            {
+                                client.Player.Access = Enums.Rank.Developer;
+
+                                Messenger.SendPlayerData(client);
+
+                                Messenger.PlayerMsg(client, "Welcome to the staff team!", Text.BrightGreen);
+                            }
+                        }
+                        break;
                     case "CreateSecretBase":
                         {
                             var x = questionArguments[1].ToInt();

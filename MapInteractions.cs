@@ -2395,6 +2395,18 @@ namespace Script
                             SecretBaseManager.EnterSecretBase(client, x, y);
                         }
                         break;
+                    case 28: 
+                        { // Staff application
+                            if (client.Player.Access == Enums.Rank.Normal)
+                            {
+                                Messenger.AskQuestion(client, "AskStaffApplication", "Would you like to submit a staff application?", -1);
+                            }
+                            else
+                            {
+                                Messenger.PlayerMsg(client, "You are already part of the staff team!", Text.BrightGreen);
+                            }
+                        }
+                        break;
                 }
             }
             catch (Exception ex)
@@ -2465,6 +2477,8 @@ namespace Script
                     return scriptNum + ": Story";
                 case 27:
                     return scriptNum + ": Secret Base Entrance";
+                case 28:
+                    return scriptNum + ": Staff Application";
                 default:
                     return scriptNum.ToString() + ": Unknown";
             }
