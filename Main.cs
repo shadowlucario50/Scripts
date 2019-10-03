@@ -451,6 +451,10 @@ namespace Script
                         var replacementString = new string('*', triggerWords[i].Length);
                         message = message.Replace(triggerWords[i], replacementString, StringComparison.OrdinalIgnoreCase);
 
+                        // Sailor Mouth
+                        client.Player.UnlockAchievement(6);
+
+
                         //string locationMsg = "";
                         //if (msgType == Enums.ChatMessageType.Map) {
                         //	locationMsg = "on map " + client.Player.MapID + " (" + client.Player.Map.Name + ")";
