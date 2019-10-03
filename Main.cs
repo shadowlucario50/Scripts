@@ -2417,6 +2417,8 @@ namespace Script
         {
             try
             {
+                client.Player.UnlockAchievement(3);
+
                 PacketHitList.MethodStart(ref hitlist);
                 for (int i = 0; i < Constants.MAX_ACTIVETEAM; i++)
                 {
