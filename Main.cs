@@ -105,8 +105,6 @@ namespace Script
                 if (client.ClientEdition == Constants.ALTERNATE_CLIENT_EDITION)
                 {
                     Messenger.GlobalMsg($"[Crow] {client.Player.Name} has joined {Settings.GameName}!", Text.BrightGreen);
-
-                    client.Player.UnlockAchievement(0);
                 }
                 else
                 {
@@ -466,6 +464,11 @@ namespace Script
                         //   Messenger.AdminMsg("[Staff] Word Filter: " + client.Player.Name + " " + locationMsg + " said:\n\"" + message + "\"", System.Drawing.Color.Orange);
                         //   break;
                     }
+                }
+
+                if (client.ClientEdition == Constants.ALTERNATE_CLIENT_EDITION)
+                {
+                    client.Player.UnlockAchievement(0);
                 }
 
             }
