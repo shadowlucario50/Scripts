@@ -3110,6 +3110,7 @@ namespace Script
             }
             else
             {
+                client.Player.UnlockAchievement(5);
 
                 Messenger.MapMsg(client.Player.MapID, client.Player.Name + " escaped!", Text.Yellow);
                 Messenger.SendDataToMap(client.Player.MapID, PacketBuilder.CreateBattleMsg(client.Player.Name + " escaped from the dungeon!", Text.Yellow));
