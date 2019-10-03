@@ -67,6 +67,7 @@ namespace Script
             DatabaseManager.InitOptionsDB();
 
             InitializeFlyPoints();
+            InitializeAchievements();
         }
 
         public static void JoinGame(Client client)
@@ -104,6 +105,8 @@ namespace Script
                 if (client.ClientEdition == Constants.ALTERNATE_CLIENT_EDITION)
                 {
                     Messenger.GlobalMsg($"[Crow] {client.Player.Name} has joined {Settings.GameName}!", Text.BrightGreen);
+
+                    client.Player.UnlockAchievement(0);
                 }
                 else
                 {
