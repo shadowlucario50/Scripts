@@ -474,6 +474,9 @@ namespace Script
                 if (message.Contains(":poop:")) {
                     client.Player.UnlockAchievement(1);
                 }
+                if (message.Contains(":eyes:")) {
+                    client.Player.UnlockAchievement(2);
+                }
 
             }
             catch (Exception ex)
