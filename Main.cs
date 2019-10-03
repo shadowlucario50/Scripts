@@ -471,6 +471,10 @@ namespace Script
                     client.Player.UnlockAchievement(0);
                 }
 
+                if (message.Contains(":poop:")) {
+                    client.Player.UnlockAchievement(1);
+                }
+
             }
             catch (Exception ex)
             {

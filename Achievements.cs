@@ -28,6 +28,7 @@ namespace Script
             AchievementManager.ClearAchievements();
 
             AchievementManager.AddAchievement(new Achievement() { ID = 0, Name = "Be the Crow!", Description = "Use the Crow client for the first time." });
+            AchievementManager.AddAchievement(new Achievement() { ID = 1, Name = "Poopy", Description = "Use a poop emoji for the first time." });
         }
     }
 }
