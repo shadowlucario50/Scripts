@@ -31,6 +31,7 @@ namespace Script
             AchievementManager.AddAchievement(new Achievement() { ID = 1, Name = "Poopy", Description = "Use a poop emoji for the first time." });
             AchievementManager.AddAchievement(new Achievement() { ID = 2, Name = "Eye Spy", Description = "Use an eyes emoji for the first time." });
             AchievementManager.AddAchievement(new Achievement() { ID = 3, Name = "Level Up!", Description = "Gain your first level." });
+            AchievementManager.AddAchievement(new Achievement() { ID = 4, Name = "Farewell!", Description = "Release your first recruit." });
         }
     }
 }

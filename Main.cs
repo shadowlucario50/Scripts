@@ -2582,7 +2582,7 @@ namespace Script
 
         public static void RecruitReleased(Client client, int recruitIndex)
         {
-
+            client.Player.UnlockAchievement(4);
         }
 
         public static void BeforeRecruitActiveCharSwap(Client client, int oldSlot, int newSlot)
