@@ -7647,6 +7647,8 @@ namespace Script
                         {//scanner orb
                             TakeItemSlotFromCharacter(setup.Attacker, invNum, 1);
                             setup.PacketStack.AddPacketToMap(setup.AttackerMap, PacketBuilder.CreateSoundPacket("Magic322.wav"), setup.Attacker.X, setup.Attacker.Y, 50);
+
+                            int revealed = 0;
                             for (int i = 0; i < Server.Constants.MAX_MAP_ITEMS; i++)
                             {
                                 if (setup.AttackerMap.ActiveItem[i].Num != 0 && setup.AttackerMap.ActiveItem[i].Hidden)
@@ -7654,9 +7656,10 @@ namespace Script
                                     setup.AttackerMap.SpawnItemSlot(i, setup.AttackerMap.ActiveItem[i].Num, setup.AttackerMap.ActiveItem[i].Value,
                                     setup.AttackerMap.ActiveItem[i].Sticky, false, setup.AttackerMap.ActiveItem[i].Tag, setup.AttackerMap.ActiveItem[i].IsSandboxed,
                                     setup.AttackerMap.ActiveItem[i].X, setup.AttackerMap.ActiveItem[i].Y, null);
+                                    ++revealed;
                                 }
                             }
-                            setup.PacketStack.AddPacketToMap(setup.AttackerMap, PacketBuilder.CreateBattleMsg("All hidden items on the floor were revealed!", Text.WhiteSmoke), setup.Attacker.X, setup.Attacker.Y, 10);
+                            if(revealed > 0) setup.PacketStack.AddPacketToMap(setup.AttackerMap, PacketBuilder.CreateBattleMsg(setup.Attacker.Name + " revealed " + revealed + " buried item" + (revealed != 1 ? "s" : "") + " on the floor.", Text.WhiteSmoke), setup.Attacker.X, setup.Attacker.Y, 10);
 
                         }
                         break;
@@ -9063,7 +9066,7 @@ namespace Script
                                     ++revealed;
                                 }
                             }
-                            if(revealed > 0) packetList.AddPacket(client, PacketBuilder.CreateBattleMsg(client.Player.GetActiveRecruit().Name + " revealed " + revealed + " buried item" + (revealed > 1 ? "s" : "") + " on the floor.", Text.WhiteSmoke));
+                            if(revealed > 0) packetList.AddPacketToMap(client.Player.Map, PacketBuilder.CreateBattleMsg(client.Player.GetActiveRecruit().Name + " revealed " + revealed + " buried item" + (revealed != 1 ? "s" : "") + " on the floor.", Text.WhiteSmoke), client.Player.X, client.Player.Y, 10);
                         }
                             
                         if (HasAbility(client.Player.GetActiveRecruit(), "Honey Gather")
