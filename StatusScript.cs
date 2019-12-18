@@ -870,89 +870,10 @@ namespace Script {
                         }
 
                         //Type Gems
-                        if (character.HasActiveItem(595) && GetCharacterWeather(character) == Enums.Weather.Cloudy) {
+                        string activeGem = GetCharacterActiveGem(character);
+                        if (!String.IsNullOrEmpty(activeGem)) {
                             if (msg) {
-                                hitlist.AddPacketToMap(map, PacketBuilder.CreateBattleMsg(character.Name + " is protected by the White Gem!", Text.BrightCyan), character.X, character.Y, 10);
-                            }
-                            PacketHitList.MethodEnded(ref hitlist);
-                            return true;
-
-                        }
-                        if (character.HasActiveItem(596) && GetCharacterWeather(character) == Enums.Weather.Sunny) {
-                            if (msg) {
-                                hitlist.AddPacketToMap(map, PacketBuilder.CreateBattleMsg(character.Name + " is protected by the Fiery Gem!", Text.BrightCyan), character.X, character.Y, 10);
-                            }
-                            PacketHitList.MethodEnded(ref hitlist);
-                            return true;
-
-                        }
-                        if (character.HasActiveItem(597) && (GetCharacterWeather(character) == Enums.Weather.Raining || GetCharacterWeather(character) == Enums.Weather.Thunder)) {
-                            if (msg) {
-                                hitlist.AddPacketToMap(map, PacketBuilder.CreateBattleMsg(character.Name + " is protected by the Aqua Gem!", Text.BrightCyan), character.X, character.Y, 10);
-                            }
-                            PacketHitList.MethodEnded(ref hitlist);
-                            return true;
-
-                        }
-                        if (character.HasActiveItem(600) && GetCharacterWeather(character) == Enums.Weather.Hail) {
-                            if (msg) {
-                                hitlist.AddPacketToMap(map, PacketBuilder.CreateBattleMsg(character.Name + " is protected by the Icy Gem!", Text.BrightCyan), character.X, character.Y, 10);
-                            }
-                            PacketHitList.MethodEnded(ref hitlist);
-                            return true;
-
-                        }
-                        if (character.HasActiveItem(602) && GetCharacterWeather(character) == Enums.Weather.Cloudy) {
-                            if (msg) {
-                                hitlist.AddPacketToMap(map, PacketBuilder.CreateBattleMsg(character.Name + " is protected by the Poison Gem!", Text.BrightCyan), character.X, character.Y, 10);
-                            }
-                            PacketHitList.MethodEnded(ref hitlist);
-                            return true;
-
-                        }
-                        if (character.HasActiveItem(603) && GetCharacterWeather(character) == Enums.Weather.Sandstorm) {
-                            if (msg) {
-                                hitlist.AddPacketToMap(map, PacketBuilder.CreateBattleMsg(character.Name + " is protected by the Earth Gem!", Text.BrightCyan), character.X, character.Y, 10);
-                            }
-                            PacketHitList.MethodEnded(ref hitlist);
-                            return true;
-
-                        }
-                        if (character.HasActiveItem(605) && GetCharacterWeather(character) == Enums.Weather.Fog) {
-                            if (msg) {
-                                hitlist.AddPacketToMap(map, PacketBuilder.CreateBattleMsg(character.Name + " is protected by the Psyche Gem!", Text.BrightCyan), character.X, character.Y, 10);
-                            }
-                            PacketHitList.MethodEnded(ref hitlist);
-                            return true;
-
-                        }
-                        if (character.HasActiveItem(606) && (GetCharacterWeather(character) == Enums.Weather.None || GetCharacterWeather(character) == Enums.Weather.Ambiguous)) {
-                            if (msg) {
-                                hitlist.AddPacketToMap(map, PacketBuilder.CreateBattleMsg(character.Name + " is protected by the Guard Gem!", Text.BrightCyan), character.X, character.Y, 10);
-                            }
-                            PacketHitList.MethodEnded(ref hitlist);
-                            return true;
-
-                        }
-                        if (character.HasActiveItem(609) && (GetCharacterWeather(character) == Enums.Weather.None || GetCharacterWeather(character) == Enums.Weather.Ambiguous)) {
-                            if (msg) {
-                                hitlist.AddPacketToMap(map, PacketBuilder.CreateBattleMsg(character.Name + " is protected by the Dragon Gem!", Text.BrightCyan), character.X, character.Y, 10);
-                            }
-                            PacketHitList.MethodEnded(ref hitlist);
-                            return true;
-
-                        }
-                        if (character.HasActiveItem(610) && GetCharacterWeather(character) == Enums.Weather.Fog) {
-                            if (msg) {
-                                hitlist.AddPacketToMap(map, PacketBuilder.CreateBattleMsg(character.Name + " is protected by the Dark Gem!", Text.BrightCyan), character.X, character.Y, 10);
-                            }
-                            PacketHitList.MethodEnded(ref hitlist);
-                            return true;
-
-                        }
-                        if (character.HasActiveItem(611) && GetCharacterWeather(character) == Enums.Weather.Sandstorm) {
-                            if (msg) {
-                                hitlist.AddPacketToMap(map, PacketBuilder.CreateBattleMsg(character.Name + " is protected by the Metal Gem!", Text.BrightCyan), character.X, character.Y, 10);
+                                hitlist.AddPacketToMap(map, PacketBuilder.CreateBattleMsg(character.Name + " is protected by the " + activeGem + "!", Text.BrightCyan), character.X, character.Y, 10);
                             }
                             PacketHitList.MethodEnded(ref hitlist);
                             return true;
@@ -4683,6 +4604,47 @@ namespace Script {
 			
         }
 
+        public static String GetCharacterActiveGem(ICharacter character) {
+            switch(GetCharacterWeather(character))
+            {
+                case Enums.Weather.None:
+                case Enums.Weather.Ambiguous: {
+                    if (character.HasActiveItem(595)) return "White Gem";
+                    if (character.HasActiveItem(601)) return "Fight Gem";
+                    if (character.HasActiveItem(604)) return "Sky Gem";
+                    if (character.HasActiveItem(606)) return "Guard Gem";
+                    if (character.HasActiveItem(609)) return "Dragon Gem";
+                    } break;
+                case Enums.Weather.Cloudy: {
+                    if (character.HasActiveItem(599)) return "Thunder Gem";
+                    if (character.HasActiveItem(602)) return "Poison Gem";
+                    if (character.HasActiveItem(838)) return "Fairy Gem";
+                    } break;
+                case Enums.Weather.Fog: {
+                    if (character.HasActiveItem(605)) return "Psyche Gem";
+                    if (character.HasActiveItem(608)) return "Psyche Gem";
+                    if (character.HasActiveItem(610)) return "Dark Gem";
+                    } break;
+                case Enums.Weather.Hail: {
+                    if (character.HasActiveItem(600)) return "Icy Gem";
+                    } break;
+                case Enums.Weather.Raining:
+                case Enums.Weather.Thunder: {
+                    if (character.HasActiveItem(597)) return "Aqua Gem";
+                    } break;
+                case Enums.Weather.Sandstorm: {
+                    if (character.HasActiveItem(603)) return "Earth Gem";
+                    if (character.HasActiveItem(607)) return "Stone Gem";
+                    if (character.HasActiveItem(611)) return "Metal Gem";
+                    } break;
+                case Enums.Weather.Sunny: {
+                    if (character.HasActiveItem(596)) return "Fiery Gem";
+                    if (character.HasActiveItem(598)) return "Grass Gem";
+                    } break;
+            }
+            return null;
+        }
+
         public static List<ExtraStatus> GetTeamStatus(ICharacter character) {
             
             return character.VolatileStatus.GetStatuses("LightScreen", "Reflect", "Mist", "Safeguard",
@@ -5004,22 +4966,7 @@ namespace Script {
             }
 
             //Type Gems
-            if (character.HasActiveItem(598) && GetCharacterWeather(character) == Enums.Weather.Sunny) {
-                speed++;
-            }
-            if (character.HasActiveItem(599) && GetCharacterWeather(character) == Enums.Weather.Cloudy) {
-                speed++;
-            }
-            if (character.HasActiveItem(601) && (GetCharacterWeather(character) == Enums.Weather.None || GetCharacterWeather(character) == Enums.Weather.Ambiguous)) {
-                speed++;
-            }
-            if (character.HasActiveItem(604) && (GetCharacterWeather(character) == Enums.Weather.None || GetCharacterWeather(character) == Enums.Weather.Ambiguous)) {
-                speed++;
-            }
-            if (character.HasActiveItem(607) && GetCharacterWeather(character) == Enums.Weather.Sandstorm) {
-                speed++;
-            }
-            if (character.HasActiveItem(608) && GetCharacterWeather(character) == Enums.Weather.Fog) {
+            if(!String.IsNullOrEmpty(GetCharacterActiveGem(character))) {
                 speed++;
             }
 
