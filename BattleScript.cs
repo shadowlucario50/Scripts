@@ -9977,23 +9977,12 @@ namespace Script
                 {
                     if (map.Weather == Enums.Weather.Ambiguous || map.Weather == Enums.Weather.None)
                     {
-                        if (character.HasActiveItem(302))
-                        {
-                            return Enums.Weather.Sunny;
-                        }
-                        else if (character.HasActiveItem(301))
-                        {
-                            return Enums.Weather.Raining;
-                        }
-                        else if (character.HasActiveItem(300))
-                        {
-                            return Enums.Weather.Sandstorm;
-                        }
-                        else if (character.HasActiveItem(299))
-                        {
-                            return Enums.Weather.Hail;
-                        }
-
+                        if (character.HasActiveItem(302)) return Enums.Weather.Sunny;
+                        if (character.HasActiveItem(301)) return Enums.Weather.Raining;
+                        if (character.HasActiveItem(300)) return Enums.Weather.Sandstorm;
+                        if (character.HasActiveItem(299)) return Enums.Weather.Hail;
+                        if (character.HasActiveItem(785)) return Enums.Weather.Cloudy;
+                        if (character.HasActiveItem(786)) return Enums.Weather.Fog;
                     }
 
                     return map.Weather;
