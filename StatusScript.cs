@@ -4609,20 +4609,20 @@ namespace Script {
             {
                 case Enums.Weather.None:
                 case Enums.Weather.Ambiguous: {
-                    if (character.HasActiveItem(595)) return "White Gem";
                     if (character.HasActiveItem(601)) return "Fight Gem";
                     if (character.HasActiveItem(604)) return "Sky Gem";
                     if (character.HasActiveItem(606)) return "Guard Gem";
                     if (character.HasActiveItem(609)) return "Dragon Gem";
                     } break;
                 case Enums.Weather.Cloudy: {
+                    if (character.HasActiveItem(595)) return "White Gem";
                     if (character.HasActiveItem(599)) return "Thunder Gem";
                     if (character.HasActiveItem(602)) return "Poison Gem";
                     if (character.HasActiveItem(838)) return "Fairy Gem";
                     } break;
                 case Enums.Weather.Fog: {
                     if (character.HasActiveItem(605)) return "Psyche Gem";
-                    if (character.HasActiveItem(608)) return "Psyche Gem";
+                    if (character.HasActiveItem(608)) return "Shadow Gem";
                     if (character.HasActiveItem(610)) return "Dark Gem";
                     } break;
                 case Enums.Weather.Hail: {
