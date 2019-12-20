@@ -7709,7 +7709,7 @@ namespace Script
                     if (setup.Attacker.HasActiveItem(174) && setup.Damage > 0)
                     {
 
-                        int heal = setup.Damage / 20;
+                        int heal = setup.Damage / 8;
                         if (heal > 0)
                         {
                             HealCharacter(setup.Attacker, setup.AttackerMap, heal, setup.PacketStack);
