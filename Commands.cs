@@ -102,6 +102,17 @@ namespace Script
 
         public static List<Tuple<string, int, int>> positions = new List<Tuple<string, int, int>>();
 
+        public static bool IsValidDeathCommand(Client client, Command command)
+        {
+            switch (command[0]) 
+            {
+                case "/g":
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
         public static void Commands(Client client, Command command)
         {
             try
