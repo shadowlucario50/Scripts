@@ -5572,7 +5572,7 @@ namespace Script
 
                             Messenger.PlayerMsg(client, "Poof!", Text.BrightGreen);
                             Messenger.PlaySound(client, "magic22.wav");
-                            Messenger.SpellAnim(504, client.Player.MapID, client.Player.X, client.Player.Y);
+                            //Messenger.SpellAnim(504, client.Player.MapID, client.Player.X, client.Player.Y);
                             if (eggMoves.Count > 0)
                             {
                                 client.Player.GetActiveRecruit().LearnNewMove(eggMoves[Server.Math.Rand(0, eggMoves.Count)]);
