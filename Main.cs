@@ -3036,7 +3036,7 @@ namespace Script
             }
             else if (map.MapType == Enums.MapType.Instanced || map.Moral == Enums.MapMoral.None)
             {
-                Messenger.AskQuestion(client, "GiveUp", "Are you sure you want to give up?  It will count as a defeat.", -1);
+                Messenger.AskQuestion(client, "GiveUp", "Are you sure you want to give up? It will count as a defeat.", -1, new string[] { "No", "Yes" });
             }
             else
             {
