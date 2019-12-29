@@ -1242,6 +1242,25 @@ namespace Script
                                                 client.Player.WarpToRDungeon(((RDungeonMap)map).RDungeonIndex, ((RDungeonMap)map).RDungeonFloor + 1);
                                             }
                                         }
+                                        else if (!string.IsNullOrEmpty(map.Tile[x, y].String2))
+                                        {
+                                            var dungeonData = map.Tile[x, y].String2.Split(';');
+
+                                            var rdungeonIndex = dungeonData[0].ToInt();
+                                            var dungeonFloor = dungeonData[1].ToInt();
+
+                                            if (rdungeonIndex > 0 && dungeonFloor > 0)
+                                            {
+                                                if (RDungeonManager.RDungeons[rdungeonIndex - 1].Direction == Enums.Direction.Up)
+                                                {//fall down a level
+                                                    client.Player.WarpToRDungeon(rdungeonIndex - 1, dungeonFloor - 1);
+                                                }
+                                                else
+                                                {//fall up a level
+                                                    client.Player.WarpToRDungeon(rdungeonIndex - 1, dungeonFloor + 1);
+                                                }
+                                            }
+                                        }
                                         else
                                         {//fall down specific coordinates
                                             hitlist.AddPacketToMap(MapManager.RetrieveActiveMap(targets[i].MapID), PacketBuilder.CreateBattleMsg(targets[i].Name + " fell through!", Text.BrightRed), x, y, 10);
