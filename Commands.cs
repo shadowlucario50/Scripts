@@ -124,6 +124,32 @@ namespace Script
 
                 switch (command[0])
                 {
+                    case "/srnew":
+                        {
+                            var chapter = command[1].ToInt() - 1;
+                            
+                            var recordingStarted = client.Player.StoryRecorder.StartNewRecording(chapter, StoryRecorderMode.Create);
+                            if (!recordingStarted)
+                            {
+                                Messenger.PlayerMsg(client, "Unable to start recording.", Text.BrightRed);
+                                return;
+                            }
+
+                            Messenger.PlayerMsg(client, "Recording started.", Text.BrightGreen);
+                        }
+                        break;
+                    case "/srsave":
+                        {
+                            if (!client.Player.StoryRecorder.IsRunning)
+                            {
+                                Messenger.PlayerMsg(client, "Recording not running.", Text.BrightRed);
+                                return;
+                            }
+
+                            client.Player.StoryRecorder.SaveRecording();
+                            Messenger.PlayerMsg(client, "Recording saved!", Text.BrightGreen);
+                        }
+                        break;
                     case "/setupfly":
                         {
                             if (Ranks.IsAllowed(client, Enums.Rank.Scripter))
