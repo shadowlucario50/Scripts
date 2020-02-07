@@ -36,6 +36,7 @@ namespace Script
             FlightManager.AddFlightPoint(new FlightPoint() { ID = 6, Name = "Bayside Bazaar", MapNumber = 258, Description = "The bazaar down by the bay!" });
             FlightManager.AddFlightPoint(new FlightPoint() { ID = 7, Name = "Aurora Highland", MapNumber = 246, Description = "The mountains of Aurora." });
             FlightManager.AddFlightPoint(new FlightPoint() { ID = 8, Name = "Debug", MapNumber = 1, Description = "Test unreleased content here." });
+            FlightManager.AddFlightPoint(new FlightPoint() { ID = 9, Name = "Isle of Life", MapNumber = 477, Description = "A sacred island known to hold mythical powers." });
         }
     }
 }
