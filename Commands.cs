@@ -2892,6 +2892,20 @@ namespace Script
                             }
                         }
                         break;
+                    case "/p":
+                        {
+                            if (!string.IsNullOrEmpty(client.Player.PartyID))
+                            {
+                                var message = joinedArgs = OnChatMessageRecieved(client, joinedArgs, Enums.ChatMessageType.Guild);
+
+                                var party = PartyManager.FindPlayerParty(client);
+                                foreach (var member in party.GetOnlineMemberClients())
+                                {
+                                    Messenger.PlayerMsg(member, $"[Party] {client.Player.DisplayName}: {message}", System.Drawing.Color.MediumSpringGreen);
+                                }
+                            }
+                        }
+                        break;
                     case "/g":
                         {
                             if (!string.IsNullOrEmpty(client.Player.GuildName) && !string.IsNullOrEmpty(joinedArgs) && client.Player.Muted == false)
