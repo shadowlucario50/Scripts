@@ -2903,6 +2903,7 @@ namespace Script
                             recruit.Sex = Enums.Sex.Genderless;
                             recruit.Name = Pokedex.GetPokemon(292).Name;
                             recruit.NpcBase = 0;
+                            recruit.Shiny = client.Player.GetActiveRecruit().Shiny;
 
                             for (int i = 0; i < Constants.MAX_PLAYER_MOVES; i++)
                             {
