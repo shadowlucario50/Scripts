@@ -4698,6 +4698,17 @@ namespace Script
                             PacketBuilder.AppendEmote(client, 10, 2, 1, hitlist);
                         }
                         break;
+                    case "/lvl":
+                        {
+                            if (client.Player.Muted)
+                            {
+                                Messenger.PlayerMsg(client, "You are muted!", Text.BrightRed);
+                                return;
+                            }
+                            hitlist.AddPacketToMap(client.Player.Map, PacketBuilder.CreateSoundPacket("Magic674.wav"), client.Player.X, client.Player.Y, 10);
+                            PacketBuilder.AppendEmote(client, 97, 2, 1, hitlist);
+                        }
+                        break;
                     case "/testailment":
                         {
                             if (Ranks.IsAllowed(client, Enums.Rank.Scripter))
