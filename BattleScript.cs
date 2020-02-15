@@ -5791,7 +5791,7 @@ namespace Script
             }
             catch (Exception ex)
             {
-                Messenger.AdminMsg("Error: ScriptedMoveHitCharacter", Text.Black);
+                Messenger.AdminMsg("Error: ScriptedMoveHitCharacter, " + ex.ToString(), Text.Black);
             }
         }
 
