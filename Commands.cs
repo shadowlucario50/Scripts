@@ -2429,7 +2429,7 @@ namespace Script
                                 {
                                     //	i.Player.GiveItem(746, 1);
                                     i.Player.GiveItem(133, 3);
-                                    Messenger.PlayerMsg(i, "You have been awarded three event tokens for participating!", Text.BrightGreen);
+                                    Messenger.PlayerMsg(i, "You have been awarded three Arcade Tokens for participating!", Text.BrightGreen);
                                 }
                             }
                         }
@@ -2443,8 +2443,8 @@ namespace Script
                                 int numTokens = command[2].ToInt();
 
                                 n.Player.GiveItem(133, numTokens);
-                                Messenger.PlayerMsg(n, client.Player.Name + " has awarded you " + numTokens + " event tokens!", Text.BrightGreen);
-                                Messenger.AdminMsg("[Staff] " + client.Player.Name + " has given " + n.Player.Name + " " + numTokens + " event tokens!", Text.BrightBlue);
+                                Messenger.PlayerMsg(n, client.Player.Name + " has awarded you " + numTokens + " Arcade Tokens!", Text.BrightGreen);
+                                Messenger.AdminMsg("[Staff] " + client.Player.Name + " has given " + n.Player.Name + " " + numTokens + " Arcade Tokens!", Text.BrightBlue);
                             }
                         }
                         break;
