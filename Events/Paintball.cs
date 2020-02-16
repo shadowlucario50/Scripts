@@ -44,11 +44,11 @@ namespace Script.Events
 
             int availableTeams = 2;
 
-            if (registeredClients.Count >= 12)
+            if (registeredClients.Count >= 4)
             {
                 availableTeams++;
             }
-            if (registeredClients.Count >= 16)
+            if (registeredClients.Count >= 8)
             {
                 availableTeams++;
             }
