@@ -17,6 +17,7 @@ namespace Script.Events
         public override string Identifier => "paintball";
         public override string Name => "Paintball";
         public override string IntroductionMessage => "Splash your enemies!";
+        public override TimeSpan? Duration => new TimeSpan(0, 10, 0);
 
         public enum Team
         {

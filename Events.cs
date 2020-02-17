@@ -11,6 +11,10 @@ namespace Script
 {
     public partial class Main
     {
+        public static readonly int EventHubMap = 152;
+        public static readonly int EventHubMapX = 15;
+        public static readonly int EventHubMapY = 16;
+
         public static IEvent ActiveEvent { get; set; }
 
         public static IEvent BuildEvent(string identifier)

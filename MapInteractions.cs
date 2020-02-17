@@ -137,6 +137,10 @@ namespace Script
                 PacketHitList hitlist = null;
                 PacketHitList.MethodStart(ref hitlist);
 
+                if (ActiveEvent != null)
+                {
+                    ActiveEvent.OnMapTick(map);
+                }
 
                 MapStatus status;
                 if (!map.ProcessingPaused)

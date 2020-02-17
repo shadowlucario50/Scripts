@@ -61,6 +61,7 @@ namespace Script.Events
         public override string Name => "Werewolf";
 
         public override string IntroductionMessage => "...";
+        public override TimeSpan? Duration => null;
 
         public override void ConfigurePlayer(Client client)
         {

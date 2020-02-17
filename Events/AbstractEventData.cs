@@ -18,6 +18,9 @@ namespace Script.Events
         public Dictionary<string, TPlayerData> PlayerData { get; set; }
         public List<string> RegisteredCharacters { get; set; }
 
+        public DateTime? CompletionTime { get; set; }
+
+
         public AbstractEventData()
         {
             this.PlayerData = new Dictionary<string, TPlayerData>();

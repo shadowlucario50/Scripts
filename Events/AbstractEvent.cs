@@ -24,6 +24,7 @@ namespace Script.Events
         public abstract string Name { get; }
 
         public abstract string IntroductionMessage { get; }
+        public abstract TimeSpan? Duration { get; }
 
         public TData Data { get; private set; }
 
@@ -80,7 +81,6 @@ namespace Script.Events
                     if (!string.IsNullOrEmpty(rewards[1]))
                     {
                         StoryBuilder.AppendSaySegment(segment, $"They recieved {rewards[1]}!", -1, 0, 0);
-
                     }
                 }
 
@@ -127,7 +127,7 @@ namespace Script.Events
 
             foreach (var client in GetRegisteredClients())
             {
-                Messenger.PlayerWarp(client, 152, 15, 16);
+                Messenger.PlayerWarp(client, Main.EventHubMap, Main.EventHubMapX, Main.EventHubMapY);
             }
         }
 
@@ -139,6 +139,11 @@ namespace Script.Events
             foreach (var client in EventManager.GetRegisteredClients()) {
                 Data.RegisteredCharacters.Add(client.Player.CharID);
             }
+
+            if (Duration.HasValue)
+            {
+                Data.CompletionTime = DateTime.UtcNow.Add(Duration.Value);
+            }
         }
 
         public void Load(string data)
@@ -149,6 +154,14 @@ namespace Script.Events
         public string Save()
         {
             return JsonConvert.SerializeObject(Data);
+        }
+
+        public virtual void OnServerTick(TickCount tickCount)
+        {
+        }
+
+        public virtual void OnMapTick(IMap map)
+        {
         }
 
         public virtual void OnActivateMap(IMap map)

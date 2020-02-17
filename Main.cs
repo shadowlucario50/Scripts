@@ -10678,5 +10678,9 @@ namespace Script
             return story;
         }
 
+        public static void OnServerTick(TickCount tickCount) 
+        {
+        }
+
     }
 }

@@ -41,6 +41,7 @@ namespace Script.Events
         public override string Name => "Shiny Spectacular";
 
         public override string IntroductionMessage => "Swarms of shiny Pokemon have been spotted in dungeons! Defeat the most to win!";
+        public override TimeSpan? Duration => new TimeSpan(0, 30, 0);
 
         protected override List<EventRanking> DetermineRankings()
         {

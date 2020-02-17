@@ -33,6 +33,7 @@ namespace Script.Events
         public override string Name => "Treasure Hunt";
 
         public override string IntroductionMessage => "Treasure has been scattered throughout the overworld! Find it all!";
+        public override TimeSpan? Duration => new TimeSpan(1, 0, 0);
 
         public static readonly int TreasureItemID = 980;
 
