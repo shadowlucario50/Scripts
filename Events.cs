@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using Script.Events;
 using Server;
+using Server.Discord;
 using Server.Events;
 using Server.Network;
 using Server.Stories;
@@ -37,6 +39,7 @@ namespace Script
         public static void EndEvent()
         {
             ActiveEvent.End();
+            Task.Run(() => DiscordManager.Instance.SendAnnouncement($"{ActiveEvent.Name} has started!"));
             Messenger.GlobalMsg($"{ActiveEvent.Name} has finished!", Text.BrightGreen);
 
             foreach (var registeredClient in EventManager.GetRegisteredClients())

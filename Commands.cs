@@ -46,6 +46,8 @@ namespace Script
     using DataManager.Players;
     using PMDCP.DatabaseConnector;
     using Server.SecretBases;
+    using Server.Discord;
+    using System.Threading.Tasks;
 
     public partial class Main
     {
@@ -389,6 +391,7 @@ namespace Script
                                 }
 
                                 ActiveEvent.Start();
+                                Task.Run(() => DiscordManager.Instance.SendAnnouncement($"{ActiveEvent.Name} has started!"));
                                 Messenger.GlobalMsg($"{ActiveEvent.Name} has started!", Text.BrightGreen);
 
                                 foreach (var registeredClient in EventManager.GetRegisteredClients())
