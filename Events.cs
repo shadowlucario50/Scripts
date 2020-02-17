@@ -39,7 +39,7 @@ namespace Script
         public static void EndEvent()
         {
             ActiveEvent.End();
-            Task.Run(() => DiscordManager.Instance.SendAnnouncement($"{ActiveEvent.Name} has started!"));
+            Task.Run(() => DiscordManager.Instance.SendAnnouncement($"{ActiveEvent.Name} has finished!"));
             Messenger.GlobalMsg($"{ActiveEvent.Name} has finished!", Text.BrightGreen);
 
             foreach (var registeredClient in EventManager.GetRegisteredClients())
