@@ -2532,6 +2532,9 @@ namespace Script
                             client.Player.Team[i].CalculateOriginalStats();
                             PacketBuilder.AppendStats(client, hitlist);
                             hitlist.AddPacket(client, PacketBuilder.CreateBattleMsg(client.Player.Team[i].Name + " grew to level " + client.Player.Team[i].Level + "!", Text.BrightGreen));
+
+                            PacketBuilder.AppendEmote(client, 97, 2, 1, hitlist);
+
                             //Messenger.PlayerMsg(client, "You grew to level " + client.Player.Team[i].Level + "!", Text.BrightGreen);
                             if (client.Player.GetActiveRecruit() == client.Player.Team[i] &&
                                 Pokedex.GetPokemonForm(client.Player.Team[i].Species).HasLevelUpMove(client.Player.Team[i].Level)
