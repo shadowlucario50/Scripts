@@ -10680,6 +10680,10 @@ namespace Script
 
         public static void OnServerTick(TickCount tickCount) 
         {
+            if (ActiveEvent != null)
+            {
+                ActiveEvent.OnServerTick(tickCount);
+            }
         }
 
     }
