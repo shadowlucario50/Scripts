@@ -4706,7 +4706,7 @@ namespace Script
                                 return;
                             }
                             hitlist.AddPacketToMap(client.Player.Map, PacketBuilder.CreateSoundPacket("Magic674.wav"), client.Player.X, client.Player.Y, 10);
-                            PacketBuilder.AppendEmote(client, 97, 2, 1, hitlist);
+                            PacketBuilder.AppendEmote(client, 97, 2, 2, hitlist);
                         }
                         break;
                     case "/testailment":

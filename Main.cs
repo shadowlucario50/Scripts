@@ -2533,7 +2533,7 @@ namespace Script
                             PacketBuilder.AppendStats(client, hitlist);
                             hitlist.AddPacket(client, PacketBuilder.CreateBattleMsg(client.Player.Team[i].Name + " grew to level " + client.Player.Team[i].Level + "!", Text.BrightGreen));
 
-                            PacketBuilder.AppendEmote(client, 97, 2, 1, hitlist);
+                            PacketBuilder.AppendEmote(client, 97, 2, 2, hitlist);
 
                             //Messenger.PlayerMsg(client, "You grew to level " + client.Player.Team[i].Level + "!", Text.BrightGreen);
                             if (client.Player.GetActiveRecruit() == client.Player.Team[i] &&
