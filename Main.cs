@@ -10384,7 +10384,10 @@ namespace Script
                     }
                     else
                     {
-                        client.Player.Inventory[i].Tag = eggArgs[0] + ";" + (step - 1).ToString();
+                        int distance = 1;
+                        if(HasAbility(client.Player.GetActiveRecruit(), "Flame Body") || HasAbility(client.Player.GetActiveRecruit(), "Magma Armor"))
+                            ++distance;
+                        client.Player.Inventory[i].Tag = eggArgs[0] + ";" + (step - distance).ToString();
                     }
                     break;
                 }
