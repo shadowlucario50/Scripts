@@ -126,6 +126,14 @@ namespace Script
 
                 switch (command[0])
                 {
+                    case "/dmsg":
+                        {
+                            if (Ranks.IsAllowed(client, Enums.Rank.Scripter))
+                            {
+                                Task.Run(() => DiscordManager.Instance.SendAnnouncement(joinedArgs));
+                            }
+                        }
+                        break;
                     case "/srnew":
                         {
                             var chapter = command[1].ToInt() - 1;
