@@ -126,6 +126,17 @@ namespace Script
 
                 switch (command[0])
                 {
+                    case "/announce":
+                        {
+                            if (Ranks.IsAllowed(client, Enums.Rank.Scripter))
+                            {
+                                Task.Run(() => DiscordManager.Instance.SendAnnouncement($"**ANNOUNCEMENT**: {joinedArgs}"));
+
+                                Messenger.SendAnnouncement("Announcement", joinedArgs);
+                                Messenger.GlobalMsg($"ANNOUNCEMENT: {joinedArgs}", Text.BrightGreen);
+                            }
+                        }   
+                        break;
                     case "/dmsg":
                         {
                             if (Ranks.IsAllowed(client, Enums.Rank.Scripter))
