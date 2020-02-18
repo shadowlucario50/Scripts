@@ -9470,70 +9470,46 @@ namespace Script
             }
         }
 
-        public static void RemoveInvOnDeath(Client client)
-        {
-            if (client.Player.HasItem(1) > 1)
-            {
-                if (client.Player.GetActiveRecruit().HeldItemSlot > -1)
-                {
-                    if (client.Player.GetActiveRecruit().HeldItem.Num == 225)
-                    { //Holiday Ribbon
-
-                    }
-                    else
-                    {
-                        client.Player.TakeItem(1, client.Player.HasItem(1));
-                    }
-                }
-                else
-                {
-                    client.Player.TakeItem(1, client.Player.HasItem(1));
-                }
+        public static void RemoveInvOnDeath(Client client) {
+            if (client.Player.HasItem(1) > 1 && (client.Player.GetActiveRecruit().HeldItemSlot == -1 || client.Player.GetActiveRecruit().HeldItem.Num != 225)) { // Holiday Ribbon
+                client.Player.TakeItem(1, client.Player.HasItem(1));
             }
 
-            if (client.Player.GetActiveRecruit().HeldItemSlot > -1)
-            {
-                if (ItemManager.Items[client.Player.GetActiveRecruit().HeldItem.Num].Loseable)
-                {
-                    client.Player.TakeItem(client.Player.GetActiveRecruit().HeldItem.Num, 1);
-                    client.Player.GetActiveRecruit().HeldItemSlot = -1;
-                }
-            }
-
-            // First get a list of all item slots
+            // Collect potential items for loss
             List<int> itemsToRemove = new List<int>();
-            for (int i = 1; i <= client.Player.MaxInv; i++)
-            {
-                if (client.Player.Inventory[i].Num > 0)
-                {
-                    if (ItemManager.Items[client.Player.Inventory[i].Num].StackCap > 0 && ItemManager.Items[client.Player.Inventory[i].Num].Loseable)
-                    {
-                        client.Player.TakeItem(client.Player.Inventory[i].Num, client.Player.Inventory[i].Amount);
-                    }
-                    else
-                    {
-                        itemsToRemove.Add(i);
-                    }
+            for (int i = 1; i <= client.Player.MaxInv; ++i) {
+                if (client.Player.Inventory[i].Num > 1) { // exclude money, it's already checked above
+                    itemsToRemove.Add(client.Player.Inventory[i].Num);
                 }
             }
-
-            int count = itemsToRemove.Count;
+            
+            int total = itemsToRemove.Count, count = total / 2, lost = 0;
             if (itemsToRemove.Count == 1) count = 1;
-            for (int i = 0; i < count; i++)
-            {
-                int rand = Server.Math.Rand(0, itemsToRemove.Count);
-                if (client.Player.Inventory[itemsToRemove[rand]].Num > 0)
-                {
-                    if (ItemManager.Items[client.Player.Inventory[itemsToRemove[rand]].Num].Loseable)
-                    {
-                        client.Player.TakeItem(client.Player.Inventory[itemsToRemove[rand]].Num, 1);
+            for (int i = 0; i < count; ++i) {
+                int item = itemsToRemove[Server.Math.Rand(0, itemsToRemove.Count)];
+                if (ItemManager.Items[item].Loseable == true) {
+                    int amount = 1;
+                    if(ItemManager.Items[item].StackCap > 0) {
+                        amount = client.Player.HasItem(item) / 2;
+                        if(amount < 1) {
+                            amount = 1;
+                        }
                     }
+                    client.Player.TakeItem(item, amount);
+                    ++lost;
                 }
-                itemsToRemove.RemoveAt(rand);
+                itemsToRemove.Remove(item);
             }
             Messenger.SendInventory(client);
-            Messenger.PlayerMsg(client, "You dropped some of the items in your inventory!", Text.BrightRed);
-
+            if(lost > 0) {
+                if (lost == total) {
+                    Messenger.PlayerMsg(client, "You dropped your sole item in your inventory!", Text.BrightRed);
+                } else if (lost == 1) {
+                    Messenger.PlayerMsg(client, "You dropped one of the items in your inventory!", Text.BrightRed);
+                } else {
+                    Messenger.PlayerMsg(client, "You dropped some of the items in your inventory!", Text.BrightRed);
+                }
+            }
         }
 
         public static void RemoveSandboxedInventoryItems(Client client)
