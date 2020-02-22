@@ -5492,6 +5492,8 @@ namespace Script
                                 if (Server.Math.Rand(0, 4096) == 0)
                                 {
                                     recruit.Shiny = Enums.Coloration.Shiny;
+
+                                    client.Player.UnlockAchievement(7);
                                 }
                                 recruit.NpcBase = 0;
 

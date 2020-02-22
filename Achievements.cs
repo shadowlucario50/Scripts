@@ -34,6 +34,7 @@ namespace Script
             AchievementManager.AddAchievement(new Achievement() { ID = 4, Name = "Farewell!", Description = "Release your first recruit." });
             AchievementManager.AddAchievement(new Achievement() { ID = 5, Name = "Quitter", Description = "Escape from a dungeon." });
             AchievementManager.AddAchievement(new Achievement() { ID = 6, Name = "Sailor Mouth", Description = "Arrgh! Use inappropriate language." });
+            AchievementManager.AddAchievement(new Achievement() { ID = 7, Name = "Eggcited Shiny", Description = "Hatch a shiny egg!" });
         }
     }
 }
