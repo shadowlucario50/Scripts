@@ -7609,22 +7609,35 @@ namespace Script
                         break;
                     case 44:
                         {
-                            //Gracidea
-                            TakeItemSlotFromCharacter(setup.Attacker, invNum, 1);
-                            if (setup.Attacker.Species == 492 && setup.Attacker.Form == 0)
-                            {
-                                setup.Attacker.PermanentForm = 1;
-                                setup.Attacker.Form = 1;
-                                setup.PacketStack.AddPacketToMap(setup.AttackerMap, PacketBuilder.CreateSoundPacket("Magic838.wav"), setup.Attacker.X, setup.Attacker.Y, 10);
-                                setup.PacketStack.AddPacketToMap(setup.AttackerMap, PacketBuilder.CreateSpellAnim(502, setup.Attacker.X, setup.Attacker.Y));
-                                setup.PacketStack.AddPacketToMap(setup.AttackerMap, PacketBuilder.CreateBattleMsg(setup.Attacker.Name + " changed forme!", Text.BrightGreen), setup.Attacker.X, setup.Attacker.Y, 10);
-                                RefreshCharacterTraits(setup.Attacker, setup.AttackerMap, setup.PacketStack);
-                            }
-                            else
-                            {
-                                setup.PacketStack.AddPacketToMap(setup.AttackerMap, PacketBuilder.CreateBattleMsg("But nothing happened.", Text.WhiteSmoke), setup.Attacker.X, setup.Attacker.Y, 10);
-                            }
+                            //Forme change - toggle
+                            if (setup.Attacker.CharacterType == Enums.CharacterType.Recruit) {
+                                Recruit user = (Recruit)setup.Attacker;
+                                int dexNum = ItemManager.Items[itemNum].Data2;
+                                int formNum = ItemManager.Items[itemNum].Data3;
+                                bool changed = false;
 
+                                if(user.Species == dexNum)
+                                {
+                                    if(user.PermanentForm == 0)
+                                    {
+                                        user.SetOriginalForm(formNum, setup.PacketStack);
+                                        changed = true;
+                                    }
+                                    else if(user.PermanentForm == formNum)
+                                    {
+                                        user.SetOriginalForm(0, setup.PacketStack);
+                                        changed = true;
+                                    }
+
+                                }
+
+                                if(!changed)
+                                {
+                                    setup.PacketStack.AddPacketToMap(setup.AttackerMap, PacketBuilder.CreateBattleMsg("But nothing happened.", Text.WhiteSmoke), setup.Attacker.X, setup.Atta$
+
+                                }
+
+                            }
                         }
                         break;
                     case 45:
