@@ -7633,7 +7633,7 @@ namespace Script
 
                                 if(!changed)
                                 {
-                                    setup.PacketStack.AddPacketToMap(setup.AttackerMap, PacketBuilder.CreateBattleMsg("But nothing happened.", Text.WhiteSmoke), setup.Attacker.X, setup.Atta$
+                                    setup.PacketStack.AddPacketToMap(setup.AttackerMap, PacketBuilder.CreateBattleMsg("But nothing happened.", Text.WhiteSmoke), setup.Attacker.X, setup.Attacker.Y, 10);
 
                                 }
 
