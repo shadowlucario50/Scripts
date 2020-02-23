@@ -100,6 +100,12 @@ namespace Script.Events
                     StoryBuilder.AppendSaySegment(segment, "...no one. Strange?", -1, 0, 0);
                 }
 
+                if (!Main.IsTestingEvent)
+                {
+                    client.Player.GiveItem(133, 1);
+                    StoryBuilder.AppendSaySegment(segment, "You were given 1 Arcade Token for participating!", -1, 0, 0);
+                }
+
                 segment.AppendToStory(story);
                 StoryManager.PlayStory(client, story);
             }

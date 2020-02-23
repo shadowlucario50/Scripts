@@ -42,7 +42,7 @@ namespace Script.Events
 
         public override string IntroductionMessage => "Swarms of shiny Pokemon have been spotted in dungeons! Defeat the most to win!";
         public override string RewardMessage => "The top three players with the most points will receive one of the shiny Pokemon they defeated.";
-        
+
         public override TimeSpan? Duration => new TimeSpan(0, 30, 0);
 
         protected override List<EventRanking> DetermineRankings()
