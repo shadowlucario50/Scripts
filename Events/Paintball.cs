@@ -214,25 +214,34 @@ namespace Script.Events
             return false;
         }
 
-        public override string HandoutReward(EventRanking eventRanking, int position)
+        public override string HandoutReward(EventRanking eventRanking, int position, bool isTesting)
         {
-            base.HandoutReward(eventRanking, position);
+            base.HandoutReward(eventRanking, position, isTesting);
 
             switch (position)
             {
                 case 1:
                     {
-                        eventRanking.Client.Player.GiveItem(133, 10);
+                        if (!isTesting)
+                        {
+                            eventRanking.Client.Player.GiveItem(133, 10);
+                        }
                         return "10 Arcade Tokens";
                     }
                 case 2:
                     {
-                        eventRanking.Client.Player.GiveItem(133, 5);
+                        if (!isTesting)
+                        {
+                            eventRanking.Client.Player.GiveItem(133, 5);
+                        }
                         return "5 Arcade Tokens";
                     }
                 case 3:
                     {
-                        eventRanking.Client.Player.GiveItem(133, 3);
+                        if (!isTesting)
+                        {
+                            eventRanking.Client.Player.GiveItem(133, 3);
+                        }
                         return "3 Arcade Tokens";
                     }
             }

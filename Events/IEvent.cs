@@ -15,6 +15,8 @@ namespace Script.Events
         string Name { get; }
 
         string IntroductionMessage { get; }
+        string RewardMessage { get; }
+        TimeSpan? Duration { get; }
 
         void ConfigurePlayer(Client client);
         void DeconfigurePlayer(Client client);

@@ -379,18 +379,15 @@ namespace Script
                         {
                             if (Ranks.IsAllowed(client, Enums.Rank.Scripter))
                             {
-                                var eventInstance = BuildEvent(joinedArgs);
-
-                                if (eventInstance == null)
-                                {
-                                    Messenger.PlayerMsg(client, $"Invalid event type: {joinedArgs}", Text.BrightRed);
-                                    return;
-                                }
-
-                                EventManager.ActiveEventIdentifier = eventInstance.Identifier;
-                                ActiveEvent = eventInstance;
-
-                                Messenger.PlayerMsg(client, $"The event has been set to {ActiveEvent.Name}!", Text.BrightGreen);
+                                Main.SetEvent(client, joinedArgs, false);
+                            }
+                        }
+                        break;
+                    case "/testevent":
+                        {
+                            if (Ranks.IsAllowed(client, Enums.Rank.Scripter))
+                            {
+                                Main.SetEvent(client, joinedArgs, true);
                             }
                         }
                         break;

@@ -41,6 +41,8 @@ namespace Script.Events
         public override string Name => "Shiny Spectacular";
 
         public override string IntroductionMessage => "Swarms of shiny Pokemon have been spotted in dungeons! Defeat the most to win!";
+        public override string RewardMessage => "The top three players with the most points will receive one of the shiny Pokemon they defeated.";
+        
         public override TimeSpan? Duration => new TimeSpan(0, 30, 0);
 
         protected override List<EventRanking> DetermineRankings()
@@ -58,9 +60,9 @@ namespace Script.Events
             return rankings;
         }
 
-        public override string HandoutReward(EventRanking eventRanking, int position)
+        public override string HandoutReward(EventRanking eventRanking, int position, bool isTesting)
         {
-            base.HandoutReward(eventRanking, position);
+            base.HandoutReward(eventRanking, position, isTesting);
 
             if (!Data.Scores.TryGetValue(eventRanking.Client.Player.CharID, out var userScore))
             {
@@ -71,20 +73,23 @@ namespace Script.Events
             var selectedIndex = Server.Math.Rand(0, availableSpecies.Count);
             var selectedSpecies = Pokedex.GetPokemon(availableSpecies[selectedIndex]);
 
-            var recruit = new Recruit(eventRanking.Client);
-            //recruit.SpriteOverride = -1;
-            recruit.Level = 1;
-            recruit.Species = selectedSpecies.ID;
-            recruit.Sex = Pokedex.GetPokemonForm(selectedSpecies.ID).GenerateLegalSex();
-            recruit.Name = Pokedex.GetPokemon(selectedSpecies.ID).Name;
-            recruit.Shiny = Enums.Coloration.Shiny;
-            recruit.NpcBase = 0;
-
-            recruit.GenerateMoveset();
-
-            using (var dbConnection = new DatabaseConnection(DatabaseID.Players))
+            if (!isTesting) 
             {
-                eventRanking.Client.Player.AddToRecruitmentBank(dbConnection, recruit);
+                var recruit = new Recruit(eventRanking.Client);
+                //recruit.SpriteOverride = -1;
+                recruit.Level = 1;
+                recruit.Species = selectedSpecies.ID;
+                recruit.Sex = Pokedex.GetPokemonForm(selectedSpecies.ID).GenerateLegalSex();
+                recruit.Name = Pokedex.GetPokemon(selectedSpecies.ID).Name;
+                recruit.Shiny = Enums.Coloration.Shiny;
+                recruit.NpcBase = 0;
+
+                recruit.GenerateMoveset();
+
+                using (var dbConnection = new DatabaseConnection(DatabaseID.Players))
+                {
+                    eventRanking.Client.Player.AddToRecruitmentBank(dbConnection, recruit);
+                }
             }
 
             return $"a shiny {selectedSpecies.Name}";

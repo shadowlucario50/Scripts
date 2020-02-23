@@ -24,6 +24,7 @@ namespace Script.Events
         public abstract string Name { get; }
 
         public abstract string IntroductionMessage { get; }
+        public virtual string RewardMessage { get; }
         public abstract TimeSpan? Duration { get; }
 
         public TData Data { get; private set; }
@@ -45,15 +46,15 @@ namespace Script.Events
 
             if (sortedRankings.Count >= 3)
             {
-                rewards[2] = HandoutReward(sortedRankings[2], 3);
+                rewards[2] = HandoutReward(sortedRankings[2], 3, Main.IsTestingEvent);
             }
             if (sortedRankings.Count >= 2)
             {
-                rewards[1] = HandoutReward(sortedRankings[1], 2);
+                rewards[1] = HandoutReward(sortedRankings[1], 2, Main.IsTestingEvent);
             }
             if (sortedRankings.Count >= 1)
             {
-                rewards[0] = HandoutReward(sortedRankings[0], 1);
+                rewards[0] = HandoutReward(sortedRankings[0], 1, Main.IsTestingEvent);
             }
 
             foreach (var client in GetRegisteredClients())
@@ -104,7 +105,7 @@ namespace Script.Events
             }
         }
 
-        public virtual string HandoutReward(EventRanking eventRanking, int position)
+        public virtual string HandoutReward(EventRanking eventRanking, int position, bool isTesting)
         {
             return "";
         }
