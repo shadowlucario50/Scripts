@@ -398,25 +398,7 @@ namespace Script
                         {
                             if (Ranks.IsAllowed(client, Enums.Rank.Scripter))
                             {
-                                foreach (var registeredClient in EventManager.GetRegisteredClients())
-                                {
-                                    Story story = new Story(Guid.NewGuid().ToString());
-                                    StoryBuilderSegment segment = StoryBuilder.BuildStory();
-                                    StoryBuilder.AppendSaySegment(segment, $"This event is... {ActiveEvent.Name}!", -1, 0, 0);
-                                    StoryBuilder.AppendSaySegment(segment, ActiveEvent.IntroductionMessage, -1, 0, 0);
-                                    StoryBuilder.AppendSaySegment(segment, "The event has now begun!", -1, 0, 0);
-                                    segment.AppendToStory(story);
-                                    StoryManager.PlayStory(registeredClient, story);
-                                }
-
-                                ActiveEvent.Start();
-                                Task.Run(() => DiscordManager.Instance.SendAnnouncement($"{ActiveEvent.Name} has started!"));
-                                Messenger.GlobalMsg($"{ActiveEvent.Name} has started!", Text.BrightGreen);
-
-                                foreach (var registeredClient in EventManager.GetRegisteredClients())
-                                {
-                                    ActiveEvent.ConfigurePlayer(registeredClient);
-                                }
+                                Main.StartEvent();
                             }
                         }
                         break;

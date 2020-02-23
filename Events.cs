@@ -36,6 +36,34 @@ namespace Script
             }
         }
 
+        public static void StartEvent() 
+        {
+            if (ActiveEvent == null) 
+            {
+                return;
+            }
+
+            foreach (var registeredClient in EventManager.GetRegisteredClients())
+            {
+                Story story = new Story(Guid.NewGuid().ToString());
+                StoryBuilderSegment segment = StoryBuilder.BuildStory();
+                StoryBuilder.AppendSaySegment(segment, $"This event is... {ActiveEvent.Name}!", -1, 0, 0);
+                StoryBuilder.AppendSaySegment(segment, ActiveEvent.IntroductionMessage, -1, 0, 0);
+                StoryBuilder.AppendSaySegment(segment, "The event has now begun!", -1, 0, 0);
+                segment.AppendToStory(story);
+                StoryManager.PlayStory(registeredClient, story);
+            }
+
+            ActiveEvent.Start();
+            Task.Run(() => DiscordManager.Instance.SendAnnouncement($"{ActiveEvent.Name} has started! {ActiveEvent.IntroductionMessage}"));
+            Messenger.SendAnnouncement("Weekly Event", $"{ActiveEvent.Name} has started!");
+
+            foreach (var registeredClient in EventManager.GetRegisteredClients())
+            {
+                ActiveEvent.ConfigurePlayer(registeredClient);
+            }
+        }
+
         public static void EndEvent()
         {
             ActiveEvent.End();
