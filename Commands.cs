@@ -359,6 +359,27 @@ namespace Script
                             }
                         }
                         break;
+                    case "/warneventstart":
+                        {
+                            if (Ranks.IsAllowed(client, Enums.Rank.Scripter))
+                            {
+                                if (ActiveEvent != null)
+                                {
+                                    var eventMessage = new StringBuilder();
+
+                                    eventMessage.AppendLine($"An event will be starting shortly! This event is {ActiveEvent.Name}.");
+                                    eventMessage.AppendLine();
+                                    eventMessage.AppendLine($"**Event rules**: {ActiveEvent.IntroductionMessage}");
+                                    if (!string.IsNullOrEmpty(ActiveEvent.RewardMessage)) 
+                                    {
+                                        eventMessage.AppendLine($"**Prizes**: {ActiveEvent.RewardMessage}");
+                                    }
+
+                                    Task.Run(() => DiscordManager.Instance.SendAnnouncement(eventMessage.ToString()));
+                                }
+                            }
+                        }
+                        break;
                     case "/finishevent":
                         {
                             if (Ranks.IsAllowed(client, Enums.Rank.Scripter))
