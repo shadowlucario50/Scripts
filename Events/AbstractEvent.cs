@@ -116,7 +116,7 @@ namespace Script.Events
             announcementMessage.AppendLine("The winners are...");
             for (var i = 0; i < System.Math.Min(3, sortedRankings.Count); i++)
             {
-                announcementMessage.Append($"{i + 1}. {sortedRankings[i].Client.Player.DisplayName} with a score of {sortedRankings[0].Score}!");
+                announcementMessage.Append($"{i + 1}. {sortedRankings[i].Client.Player.DisplayName} with a score of {sortedRankings[i].Score}!");
                 if (!string.IsNullOrEmpty(rewards[i]))
                 {
                     announcementMessage.Append($" They received {rewards[i]}!");
