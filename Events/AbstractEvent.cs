@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Server;
 using Server.Combat;
+using Server.Discord;
 using Server.Events;
 using Server.Maps;
 using Server.Network;
@@ -71,7 +73,7 @@ namespace Script.Events
                     StoryBuilder.AppendSaySegment(segment, $"{sortedRankings[2].Client.Player.DisplayName}, with a score of {sortedRankings[2].Score}!", -1, 0, 0);
                     if (!string.IsNullOrEmpty(rewards[2]))
                     {
-                        StoryBuilder.AppendSaySegment(segment, $"They recieved {rewards[2]}!", -1, 0, 0);
+                        StoryBuilder.AppendSaySegment(segment, $"They received {rewards[2]}!", -1, 0, 0);
                     }
                 }
 
@@ -81,7 +83,7 @@ namespace Script.Events
                     StoryBuilder.AppendSaySegment(segment, $"{sortedRankings[1].Client.Player.DisplayName}, with a score of {sortedRankings[1].Score}!", -1, 0, 0);
                     if (!string.IsNullOrEmpty(rewards[1]))
                     {
-                        StoryBuilder.AppendSaySegment(segment, $"They recieved {rewards[1]}!", -1, 0, 0);
+                        StoryBuilder.AppendSaySegment(segment, $"They received {rewards[1]}!", -1, 0, 0);
                     }
                 }
 
@@ -91,7 +93,7 @@ namespace Script.Events
                     StoryBuilder.AppendSaySegment(segment, $"{sortedRankings[0].Client.Player.DisplayName}, with a score of {sortedRankings[0].Score}!", -1, 0, 0);
                     if (!string.IsNullOrEmpty(rewards[0]))
                     {
-                        StoryBuilder.AppendSaySegment(segment, $"They recieved {rewards[0]}!", -1, 0, 0);
+                        StoryBuilder.AppendSaySegment(segment, $"They received {rewards[0]}!", -1, 0, 0);
                     }
                 }
 
@@ -109,6 +111,20 @@ namespace Script.Events
                 segment.AppendToStory(story);
                 StoryManager.PlayStory(client, story);
             }
+
+            var announcementMessage = new StringBuilder();
+            announcementMessage.AppendLine("The winners are...");
+            for (var i = 0; i < System.Math.Min(3, sortedRankings.Count); i++)
+            {
+                announcementMessage.Append($"{i + 1}. {sortedRankings[i].Client.Player.DisplayName} with a score of {sortedRankings[0].Score}!");
+                if (!string.IsNullOrEmpty(rewards[i]))
+                {
+                    announcementMessage.Append($" They received {rewards[i]}!");
+                }
+                announcementMessage.AppendLine();
+            }
+
+            Task.Run(() => DiscordManager.Instance.SendAnnouncement(announcementMessage.ToString()));
         }
 
         public virtual string HandoutReward(EventRanking eventRanking, int position, bool isTesting)
