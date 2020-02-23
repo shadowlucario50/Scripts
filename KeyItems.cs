@@ -44,7 +44,7 @@ namespace Script
                         if (client.Player.Map.Indoors || client.Player.Map.MapType != Enums.MapType.Standard) {
                             var story = new Story();
                             var segment = StoryBuilder.BuildStory();
-                            StoryBuilder.AppendSaySegment(segment, "Oak's words echoed... There's a time and place for everything, but not now.", -1, 0, 0);
+                            StoryBuilder.AppendSaySegment(segment, "It's probably a bad idea to use that here.", client.Player.GetActiveRecruit().Species, 0, 0);
                             segment.AppendToStory(story);
                             StoryManager.PlayStory(client, story);
 
