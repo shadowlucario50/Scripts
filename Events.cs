@@ -150,7 +150,7 @@ namespace Script
             StoryBuilder.AppendSpeechBubbleSegment(segment, 1, "Owooooo!!!!");
             StoryBuilder.AppendSpeechBubbleSegment(segment, 0, "Yes, well, that's worrying.");
             StoryBuilder.AppendChangeFNPCDirAction(segment, "0", Enums.Direction.Down);
-            StoryBuilder.AppendSpeechBubbleSegment(segment, 0, "Now, lets get this event started!");
+            StoryBuilder.AppendSpeechBubbleSegment(segment, 0, "Lets start the first portion of our event...");
             StoryBuilder.AppendSpeechBubbleSegment(segment, 0, "We'll be checking the leaderboards and handing out prizes.");
             StoryBuilder.AppendSpeechBubbleSegment(segment, 0, "First place in each category will receive 3 Arcade Tokens.");
             StoryBuilder.AppendSpeechBubbleSegment(segment, 0, "Second will receive 2 Arcade Tokens.");
@@ -177,6 +177,7 @@ namespace Script
             }
 
             StoryBuilder.AppendSpeechBubbleSegment(segment, 0, "That's every category!");
+            StoryBuilder.AppendSpeechBubbleSegment(segment, 1, "Owooooo!!!!");
             StoryBuilder.AppendSpeechBubbleSegment(segment, 0, "Now let the event begin!");
 
             segment.AppendToStory(story);
@@ -191,6 +192,36 @@ namespace Script
                 var story = BuildEventIntroStory();
                 
                 StoryManager.PlayStory(registeredClient, story);
+            }
+
+            foreach (var leaderboard in LeaderBoardManager.ListLeaderboards()) 
+            {
+                var leaderboardItems = LeaderBoardManager.LoadLeaderboard(leaderboard.Counter).OrderByDescending(x => x.Value).ToList();
+
+                if (leaderboardItems.Count > 0)
+                {
+                    var client = ClientManager.FindClient(leaderboardItems[0].Name);
+                    if (client != null)
+                    {
+                        client.Player.GiveItem(133, 3);
+                    }
+                }
+                if (leaderboardItems.Count > 1)
+                {
+                    var client = ClientManager.FindClient(leaderboardItems[1].Name);
+                    if (client != null)
+                    {
+                        client.Player.GiveItem(133, 2);
+                    }
+                }
+                if (leaderboardItems.Count > 2)
+                {
+                    var client = ClientManager.FindClient(leaderboardItems[2].Name);
+                    if (client != null)
+                    {
+                        client.Player.GiveItem(133, 2);
+                    }
+                }
             }
         }
     }
