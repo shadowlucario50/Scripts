@@ -148,7 +148,16 @@ namespace Script.Events
                 case "/walive":
                     Messenger.PlayerMsg(client, "The following players are alive:", Text.BrightGreen);
                     foreach (var eventClient in GetRegisteredClients().Where(x => !Data.ExtendPlayer(x).IsDead)) {
-                        Messenger.PlayerMsg(client, eventClient.Player.DisplayName, Text.BrightGreen);
+                        if (!Ranks.IsAllowed(client, Enums.Rank.Scripter))
+                        {
+                            Messenger.PlayerMsg(client, eventClient.Player.DisplayName, Text.BrightGreen);
+                        } 
+                        else 
+                        {
+                            var eventPlayerData = Data.ExtendPlayer(eventClient);
+
+                            Messenger.PlayerMsg(client, $"{eventClient.Player.DisplayName} - {eventPlayerData.Role}", Text.BrightGreen);
+                        }
                     }
                     return true;
                 case "/wchoose":
