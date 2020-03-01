@@ -614,7 +614,7 @@ namespace Script.Events
                 }
                 else
                 {
-                    StoryBuilder.AppendSaySegment(segment, $"{chosenUser.Player.DisplayName} was hanged! Hopefully they were a werewolf...", -1, 0, 0);
+                    StoryBuilder.AppendSaySegment(segment, $"{chosenUser.Player.DisplayName} was hanged! They were a {Data.ExtendPlayer(chosenUser).Role}!", -1, 0, 0);
                 }
 
                 if (werewolfCount == 0)
