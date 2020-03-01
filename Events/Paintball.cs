@@ -85,7 +85,7 @@ namespace Script.Events
 
                 if (client.Player.HasItem(446) == 0)
                 {
-                    client.Player.GiveItem(446, 999);
+                    client.Player.GiveItem(446, 99999);
                     Messenger.PlayerMsg(client, "You were given some snowballs!", Text.BrightGreen);
                 }
             }
