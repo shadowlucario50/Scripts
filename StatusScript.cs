@@ -1076,6 +1076,13 @@ namespace Script {
                                 PacketHitList.MethodEnded(ref hitlist);
                                 return true;
                             }
+                            if (character.Type1 == Enums.PokemonType.Electric || character.Type2 == Enums.PokemonType.Electric) {
+                                if (msg) {
+                                    hitlist.AddPacketToMap(map, PacketBuilder.CreateBattleMsg(character.Name + "'s type doesn't get paralyzed!", Text.BrightRed), character.X, character.Y, 10);
+                                }
+                                PacketHitList.MethodEnded(ref hitlist);
+                                return true;
+                            }
                         } else if (character.StatusAilment == Enums.StatusAilment.Paralyze) {
                             if (msg) {
                                 hitlist.AddPacketToMap(map, PacketBuilder.CreateBattleMsg(character.Name + " is already paralyzed!", Text.BrightRed), character.X, character.Y, 10);
