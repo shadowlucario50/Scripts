@@ -428,6 +428,14 @@ namespace Script
                             }
                         }
                         break;
+                    case "/introevent":
+                        {
+                            if (Ranks.IsAllowed(client, Enums.Rank.Scripter))
+                            {
+                                Main.RunEventIntro();
+                            }
+                        }       
+                        break;
                     case "/transferzone":
                         {
                             if (Ranks.IsAllowed(client, Enums.Rank.Scripter))
