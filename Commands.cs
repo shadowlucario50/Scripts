@@ -48,6 +48,8 @@ namespace Script
     using Server.SecretBases;
     using Server.Discord;
     using System.Threading.Tasks;
+    using Script.Models;
+    using Server.Events.World;
 
     public partial class Main
     {
@@ -128,7 +130,13 @@ namespace Script
                 {
                     case "/countdown":
                         {
-                            Messenger.DisplayCountdown(client, "The event starts in...", DateTime.UtcNow.AddMinutes(1));
+                            var targetTime = DateTime.UtcNow.AddMinutes(1);
+
+                            Messenger.DisplayCountdown(client, "The event starts in...", targetTime);
+
+                            GlobalCountdown = new Countdown("The event starts in...", targetTime);
+
+                            TimedEventManager.CreateTimer("countdown", targetTime, null);
                         }
                         break;
                     case "/announce":

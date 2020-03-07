@@ -48,6 +48,7 @@ namespace Script
 
     using DataManager.Players;
     using Server.Database;
+    using Script.Models;
 
     public partial class Main
     {
@@ -60,6 +61,8 @@ namespace Script
         public static PMDCP.Core.ListPair<string, SnowballGame> ActiveSnowballGames = new PMDCP.Core.ListPair<string, SnowballGame>();
 
         public static int ExpBonus = 0;
+
+        public static Countdown GlobalCountdown { get; set; }
 
         public static void ServerInit()
         {
@@ -228,6 +231,11 @@ namespace Script
                 }
 
                 PacketHitList.MethodEnded(ref hitlist);
+
+                if (GlobalCountdown != null)
+                {
+                    Messenger.DisplayCountdown(client, GlobalCountdown.Text, GlobalCountdown.TargetTime);
+                }
             }
             catch (Exception ex)
             {
@@ -10712,6 +10720,15 @@ namespace Script
             if (ActiveEvent != null)
             {
                 ActiveEvent.OnScriptTimer(identifier, arguments);
+            }
+
+            switch (identifier)
+            {
+                case "countdown":
+                    {
+                        Messenger.GlobalMsg("Countdown complete!", Text.BrightGreen);
+                    }   
+                    break;
             }
         }
 
