@@ -126,6 +126,11 @@ namespace Script
 
                 switch (command[0])
                 {
+                    case "/countdown":
+                        {
+                            Messenger.DisplayCountdown(client, "The event starts in...", DateTime.UtcNow.AddMinutes(1));
+                        }
+                        break;
                     case "/announce":
                         {
                             if (Ranks.IsAllowed(client, Enums.Rank.Scripter))

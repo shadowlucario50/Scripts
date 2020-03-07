@@ -10707,5 +10707,13 @@ namespace Script
             }
         }
 
+        public static void ScriptTimer(string identifier, string arguments)
+        {
+            if (ActiveEvent != null)
+            {
+                ActiveEvent.OnScriptTimer(identifier, arguments);
+            }
+        }
+
     }
 }

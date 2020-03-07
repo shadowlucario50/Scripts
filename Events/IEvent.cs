@@ -22,6 +22,7 @@ namespace Script.Events
         void DeconfigurePlayer(Client client);
 
         void OnServerTick(TickCount tickCount);
+        void OnScriptTimer(string identifier, string arguments);
         void OnMapTick(IMap map);
         void OnActivateMap(IMap map);
         void OnPickupItem(ICharacter character, int itemSlot, InventoryItem invItem);

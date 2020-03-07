@@ -183,6 +183,10 @@ namespace Script.Events
         {
         }
 
+        public virtual void OnScriptTimer(string identifier, string arguments)
+        {
+        }
+
         public virtual void OnMapTick(IMap map)
         {
         }
