@@ -64,6 +64,16 @@ namespace Script
 
         public static Countdown GlobalCountdown { get; set; }
 
+        public static void SetGlobalCountdown(Countdown countdown)
+        {
+            GlobalCountdown = countdown;
+
+            foreach (var client in ClientManager.GetClients())
+            {
+                Messenger.DisplayCountdown(client, countdown.Text, countdown.TargetTime);
+            }
+        }
+
         public static void ServerInit()
         {
 
@@ -10728,6 +10738,11 @@ namespace Script
                     {
                         Messenger.GlobalMsg("Countdown complete!", Text.BrightGreen);
                     }   
+                    break;
+                case "endevent":
+                    {
+                        Main.EndEvent();
+                    }
                     break;
             }
         }

@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Script.Events;
+using Script.Models;
 using Server;
 using Server.Discord;
 using Server.Events;
+using Server.Events.World;
 using Server.Leaderboards;
 using Server.Network;
 using Server.Stories;
@@ -110,6 +112,14 @@ namespace Script
             foreach (var registeredClient in EventManager.GetRegisteredClients())
             {
                 ActiveEvent.ConfigurePlayer(registeredClient);
+            }
+
+            if (ActiveEvent.Duration.HasValue) 
+            {
+                var endTime = DateTime.UtcNow.Add(ActiveEvent.Duration.Value);
+
+                SetGlobalCountdown(new Countdown("The event ends in...", endTime));
+                TimedEventManager.CreateTimer("endevent", endTime, null);
             }
         }
 
