@@ -1700,6 +1700,20 @@ namespace Script
                     }
                 }
 
+
+                //Galvanize
+                //Turns Normal type moves into Electric. Attack power becomes 1.3x.
+                if (HasAbility(setup.Attacker, "Galvanize"))
+                {
+                    if (setup.Move.Element == Enums.PokemonType.Normal)
+                    {
+                        setup.Move.Element = Enums.PokemonType.Electric;
+                        setup.AttackerMultiplier *= 13;
+                        setup.AttackerMultiplier /= 10;
+                    }
+                }
+
+
                 //apply STAB
                 if (setup.Move.EffectType == Enums.MoveType.SubHP && setup.Move.Element != Enums.PokemonType.None && (setup.Move.Element == setup.Attacker.Type1 || setup.Move.Element == setup.Attacker.Type2))
                 {
