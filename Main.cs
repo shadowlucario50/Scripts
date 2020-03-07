@@ -49,6 +49,7 @@ namespace Script
     using DataManager.Players;
     using Server.Database;
     using Script.Models;
+    using Server.Events.World;
 
     public partial class Main
     {
@@ -10742,7 +10743,17 @@ namespace Script
                 case "endevent":
                     {
                         Main.EndEvent();
+
+                        var targetTime = DateTime.UtcNow.AddMinutes(2);
+
+                        SetGlobalCountdown(new Countdown("Winners will be announced in...", targetTime));
+                        TimedEventManager.CreateTimer("finishevent", targetTime, null);
                     }
+                    break;
+                case "finishevent":
+                    {   
+                        Main.FinishEvent();
+                    }   
                     break;
             }
         }

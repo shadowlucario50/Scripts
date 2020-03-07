@@ -397,15 +397,7 @@ namespace Script
                         {
                             if (Ranks.IsAllowed(client, Enums.Rank.Scripter))
                             {
-                                if (ActiveEvent != null)
-                                {
-                                    ActiveEvent.AnnounceWinner();
-
-                                    ActiveEvent = null;
-                                    EventManager.ActiveEventIdentifier = null;
-                                }
-
-                                EventManager.RegisteredCharacters.Clear();
+                                Main.FinishEvent();
                             }
                         }
                         break;

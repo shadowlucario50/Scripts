@@ -142,6 +142,19 @@ namespace Script
             }
         }
 
+        public static void FinishEvent()
+        {
+            if (ActiveEvent != null)
+            {
+                ActiveEvent.AnnounceWinner();
+
+                ActiveEvent = null;
+                EventManager.ActiveEventIdentifier = null;
+            }
+
+            EventManager.RegisteredCharacters.Clear();
+        }
+
         public static Story BuildEventIntroStory()
         {
             Story story = new Story(Guid.NewGuid().ToString());
