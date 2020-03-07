@@ -1659,7 +1659,7 @@ namespace Script
                 if (HasAbility(setup.Attacker, "Normalize"))
                 {
                     setup.Move.Element = Enums.PokemonType.Normal;
-
+                    setup.AttackerMultiplier *= 2;
                 }
 
                 //Refrigerate
