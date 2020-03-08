@@ -376,11 +376,11 @@ namespace Script
                         {
                             if (Ranks.IsAllowed(client, Enums.Rank.Scripter))
                             {
-                                var startTime = DateTime.UtcNow.AddMinutes(6);
+                                var startTime = new DateTime(DateTime.UtcNow.Year, 3, 8, 17, 0, 0, DateTimeKind.Utc);
 
-                                if (Main.SetEvent(client, joinedArgs, true))
+                                if (Main.SetEvent(client, joinedArgs, false))
                                 {
-                                    TimedEventManager.CreateTimer("eventreminder", startTime.AddMinutes(-5), null);
+                                    TimedEventManager.CreateTimer("eventreminder", startTime.AddMinutes(-15), null);
                                     TimedEventManager.CreateTimer("eventintro", startTime, null);
                                 }
                             }

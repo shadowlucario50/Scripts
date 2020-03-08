@@ -203,7 +203,7 @@ namespace Script
 
             StoryBuilder.AppendSpeechBubbleSegment(segment, 0, "That's every category!");
             StoryBuilder.AppendSpeechBubbleSegment(segment, 1, "Owooooo!!!!");
-            StoryBuilder.AppendSpeechBubbleSegment(segment, 0, "Now let the event begin!");
+            StoryBuilder.AppendSpeechBubbleSegment(segment, 0, $"Enjoy {ActiveEvent.Name}!");
 
             segment.AppendToStory(story);
 
