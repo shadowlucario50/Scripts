@@ -372,24 +372,25 @@ namespace Script
                             }
                         }
                         break;
+                    case "/scheduleweeklyevent":
+                        {
+                            if (Ranks.IsAllowed(client, Enums.Rank.Scripter))
+                            {
+                                var startTime = DateTime.UtcNow.AddMinutes(6);
+
+                                if (Main.SetEvent(client, joinedArgs, true))
+                                {
+                                    TimedEventManager.CreateTimer("eventreminder", startTime.AddMinutes(-5), null);
+                                    TimedEventManager.CreateTimer("eventintro", startTime, null);
+                                }
+                            }
+                        }   
+                        break;
                     case "/warneventstart":
                         {
                             if (Ranks.IsAllowed(client, Enums.Rank.Scripter))
                             {
-                                if (ActiveEvent != null)
-                                {
-                                    var eventMessage = new StringBuilder();
-
-                                    eventMessage.AppendLine($"An event will be starting shortly! This event is {ActiveEvent.Name}.");
-                                    eventMessage.AppendLine();
-                                    eventMessage.AppendLine($"**Event rules**: {ActiveEvent.IntroductionMessage}");
-                                    if (!string.IsNullOrEmpty(ActiveEvent.RewardMessage)) 
-                                    {
-                                        eventMessage.AppendLine($"**Prizes**: {ActiveEvent.RewardMessage}");
-                                    }
-
-                                    Task.Run(() => DiscordManager.Instance.SendAnnouncement(eventMessage.ToString()));
-                                }
+                                Main.RunEventReminder();
                             }
                         }
                         break;

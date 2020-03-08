@@ -41,12 +41,12 @@ namespace Script
             }
         }
 
-        public static void SetEvent(Client client, string identifier, bool isTesting)
+        public static bool SetEvent(Client client, string identifier, bool isTesting)
         {
             if (ActiveEvent != null)
             {
                 Messenger.PlayerMsg(client, "An event has already been set.", Text.BrightRed);
-                return;
+                return false;
             }
 
             Main.IsTestingEvent = isTesting;
@@ -56,13 +56,15 @@ namespace Script
             if (eventInstance == null)
             {
                 Messenger.PlayerMsg(client, $"Invalid event type: {identifier}", Text.BrightRed);
-                return;
+                return false;
             }
 
             EventManager.ActiveEventIdentifier = eventInstance.Identifier;
             ActiveEvent = eventInstance;
 
             Messenger.PlayerMsg(client, $"The event has been set to {ActiveEvent.Name}!", Text.BrightGreen);
+
+            return true;
         }
 
         public static void StartEvent() 
@@ -217,34 +219,55 @@ namespace Script
                 StoryManager.PlayStory(registeredClient, story);
             }
 
-            foreach (var leaderboard in LeaderBoardManager.ListLeaderboards()) 
+            if (!Main.IsTestingEvent) 
             {
-                var leaderboardItems = LeaderBoardManager.LoadLeaderboard(leaderboard.Counter).OrderByDescending(x => x.Value).ToList();
+                foreach (var leaderboard in LeaderBoardManager.ListLeaderboards()) 
+                {
+                    var leaderboardItems = LeaderBoardManager.LoadLeaderboard(leaderboard.Counter).OrderByDescending(x => x.Value).ToList();
 
-                if (leaderboardItems.Count > 0)
-                {
-                    var client = ClientManager.FindClient(leaderboardItems[0].Name);
-                    if (client != null)
+                    if (leaderboardItems.Count > 0)
                     {
-                        client.Player.GiveItem(133, 3);
+                        var client = ClientManager.FindClient(leaderboardItems[0].Name);
+                        if (client != null)
+                        {
+                            client.Player.GiveItem(133, 3);
+                        }
+                    }
+                    if (leaderboardItems.Count > 1)
+                    {
+                        var client = ClientManager.FindClient(leaderboardItems[1].Name);
+                        if (client != null)
+                        {
+                            client.Player.GiveItem(133, 2);
+                        }
+                    }
+                    if (leaderboardItems.Count > 2)
+                    {
+                        var client = ClientManager.FindClient(leaderboardItems[2].Name);
+                        if (client != null)
+                        {
+                            client.Player.GiveItem(133, 2);
+                        }
                     }
                 }
-                if (leaderboardItems.Count > 1)
+            }
+        }
+
+        public static void RunEventReminder()
+        {
+            if (ActiveEvent != null)
+            {
+                var eventMessage = new StringBuilder();
+
+                eventMessage.AppendLine($"An event will be starting shortly! This event is {ActiveEvent.Name}.");
+                eventMessage.AppendLine();
+                eventMessage.AppendLine($"**Event rules**: {ActiveEvent.IntroductionMessage}");
+                if (!string.IsNullOrEmpty(ActiveEvent.RewardMessage)) 
                 {
-                    var client = ClientManager.FindClient(leaderboardItems[1].Name);
-                    if (client != null)
-                    {
-                        client.Player.GiveItem(133, 2);
-                    }
+                    eventMessage.AppendLine($"**Prizes**: {ActiveEvent.RewardMessage}");
                 }
-                if (leaderboardItems.Count > 2)
-                {
-                    var client = ClientManager.FindClient(leaderboardItems[2].Name);
-                    if (client != null)
-                    {
-                        client.Player.GiveItem(133, 2);
-                    }
-                }
+
+                Task.Run(() => DiscordManager.Instance.SendAnnouncement(eventMessage.ToString()));
             }
         }
     }

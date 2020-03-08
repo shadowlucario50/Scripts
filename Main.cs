@@ -10829,6 +10829,29 @@ namespace Script
                         Main.FinishEvent();
                     }   
                     break;
+                case "eventreminder":
+                    {
+                        Main.RunEventReminder();
+                    }       
+                    break;
+                case "eventintro":
+                    {
+                        if (ActiveEvent != null)
+                        {
+                            Main.RunEventIntro();
+
+                            var eventStartTime = DateTime.UtcNow.AddMinutes(5);
+
+                            SetGlobalCountdown(new Countdown($"{ActiveEvent.Name} will start in...", eventStartTime));
+                            TimedEventManager.CreateTimer("startevent", eventStartTime, null);
+                        }
+                    }
+                    break;
+                case "startevent":
+                    {
+                        Main.StartEvent();
+                    }
+                    break;
             }
         }
 
