@@ -3042,8 +3042,8 @@ namespace Script
                                     else if (x == 3 && y == 3)
                                     {
                                         map.Tile[room.StartX + x, room.StartY + y].Type = Enums.TileType.NPCAvoid;
-                                        map.Tile[room.StartX + x, room.StartY + y].Mask2 = 67;
-                                        map.Tile[room.StartX + x, room.StartY + y].Mask2Set = 0;
+                                        map.Tile[room.StartX + x, room.StartY + y].Mask5 = 162;
+                                        map.Tile[room.StartX + x, room.StartY + y].Mask5Set = 5;
                                         arrayFloor.MapArray[room.StartX + x, room.StartY + y] = 1027;
                                         MapNpcPreset npc = new MapNpcPreset();
                                         npc.SpawnX = room.StartX + x;
