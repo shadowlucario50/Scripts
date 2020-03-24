@@ -128,6 +128,34 @@ namespace Script
 
                 switch (command[0])
                 {
+                    case "/copymissionclients":
+                        {
+                            if (Ranks.IsAllowed(client, Enums.Rank.Scripter))
+                            {
+                                var missionPool = WonderMailManager.Missions[(int)Enums.JobDifficulty.S - 1];
+
+                                var initial = (int)Enums.JobDifficulty.Star;
+                                var final = (int)Enums.JobDifficulty.NineStar;
+
+                                for (var i = initial; i <= final; i++)
+                                {
+                                    var secondMissionPool = WonderMailManager.Missions[initial - 1];
+
+                                    secondMissionPool.MissionClients.Clear();
+                                    foreach (var missionClient in missionPool.MissionClients)
+                                    {
+                                        secondMissionPool.MissionClients.Add(new MissionClientData()
+                                        {
+                                            Species = missionClient.Species,
+                                            Form = missionClient.Form
+                                        });
+                                    }
+                                }
+
+                                Messenger.PlayerMsg(client, "Done", Text.BrightGreen);
+                            }
+                        }
+                        break;
                     case "/countdown":
                         {
                             var targetTime = DateTime.UtcNow.AddMinutes(1);
