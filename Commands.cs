@@ -139,7 +139,7 @@ namespace Script
 
                                 for (var i = initial; i <= final; i++)
                                 {
-                                    var secondMissionPool = WonderMailManager.Missions[initial - 1];
+                                    var secondMissionPool = WonderMailManager.Missions[i - 1];
 
                                     secondMissionPool.MissionClients.Clear();
                                     foreach (var missionClient in missionPool.MissionClients)
@@ -149,6 +149,11 @@ namespace Script
                                             Species = missionClient.Species,
                                             Form = missionClient.Form
                                         });
+                                    }
+
+                                    using (var databaseConnection = new DatabaseConnection(DatabaseID.Data))
+                                    {
+                                        WonderMailManager.SaveMissionPool(databaseConnection, i - 1);
                                     }
                                 }
 
