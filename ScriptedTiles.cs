@@ -1474,6 +1474,11 @@ namespace Script
                             }
                         }
                         break;
+                    case 84:
+                        { // Warp to spawn
+                            exPlayer.Get(client).WarpToSpawn(false);
+                        }
+                        break;
                 }
                 PacketHitList.MethodEnded(ref hitlist);
             }
@@ -1656,6 +1661,8 @@ namespace Script
                     return scriptNum + ": Pokemon Trading";
                 case 83:
                     return scriptNum + ": Story Block";
+                case 84:
+                    return scriptNum + ": Warp To Spawn";
                 default:
                     return scriptNum.ToString() + ": Unknown";
             }
