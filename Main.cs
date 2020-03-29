@@ -9393,7 +9393,7 @@ namespace Script
                         var legendary = LegendaryManager.Instance.Resources.Where(x => x.Id == dungeon.LegendaryId - 1).FirstOrDefault();
                         if (legendary != null && legendary.FragmentItemId > 0)
                         {
-                            if (Server.Math.Rand(0, 1024) == 0)
+                            if (Server.Math.Rand(0, 100) <= 10)
                             {
                                 RandomItemSpawn(map, legendary.FragmentItemId, 1, false, false, string.Empty);
                                 Messenger.PlayerMsg(client, "You feel a strange force on this floor...", Text.BrightGreen);
