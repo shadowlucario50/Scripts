@@ -2891,6 +2891,23 @@ namespace Script
                             }
                         }
                         break;
+				
+			/*case 8:
+			{//meltan
+				if(client.Player.GetActiveRecruit().Meltan >= 99)
+				{
+				    return true;
+				}
+			}
+			break;
+			
+			//To evolve Meltan, defeat 99 enemy Meltan.
+			for (int i = 0; i < targets.Count; i++)
+                            {	
+				if (targets[i].Species == 808 && client.Player.GetActiveRecruit().Species == 808) {
+					client.Player.GetActiveRecruit().Meltan++;
+				}
+			}*/
                 }
 
                 return false;
