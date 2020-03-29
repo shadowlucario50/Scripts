@@ -50,6 +50,7 @@ namespace Script
     using Server.Database;
     using Script.Models;
     using Server.Events.World;
+    using Server.Legendaries;
 
     public partial class Main
     {
@@ -8932,6 +8933,8 @@ namespace Script
             if (client.Player.LoggedIn)
             {
                 AddExclusives(client, map, null);
+
+                AddLegendaryFragments(client, map, null);
             }
                 
             int heldItemNum = -1;
@@ -9371,6 +9374,29 @@ namespace Script
                 {
                     map.ActiveNpc[i].CalculateOriginalStats();
                     RefreshCharacterTraits(map.ActiveNpc[i], map, null);
+                }
+            }
+        }
+
+        public static void AddLegendaryFragments(Client client, IMap map, PacketHitList packetList)
+        {
+            if (map.MapType == Enums.MapType.RDungeonMap)
+            {
+                var rdungeonNum = ((RDungeonMap)map).RDungeonIndex;
+                var floor = ((RDungeonMap)map).RDungeonFloor;
+
+                var dungeon = DungeonManager.Dungeons.Dungeons.Values.Where(x => x.RandomMaps.Where(y => y.RDungeonIndex == rdungeonNum && y.RDungeonFloor == floor).Any()).FirstOrDefault();
+                if (dungeon != null)
+                {
+                    if (dungeon.LegendaryId > 0)
+                    {
+                        var legendary = LegendaryManager.Instance.Resources.Where(x => x.Id == dungeon.LegendaryId - 1).FirstOrDefault();
+                        if (legendary != null && legendary.FragmentItemId > 0)
+                        {
+                            RandomItemSpawn(map, legendary.FragmentItemId, 1, false, false, string.Empty);
+                            Messenger.PlayerMsg(client, "A fragment was spawned!", Text.BrightGreen);
+                        }
+                    }
                 }
             }
         }
