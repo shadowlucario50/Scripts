@@ -2344,30 +2344,7 @@ namespace Script
                             }
                             else
                             {
-                                Server.CustomMenus.CustomMenu menu = client.Player.CustomMenuManager.CreateMenu("Credits", "", true);
-                                menu.UpdateSize(300, 350);
-                                menu.AddLabel(0, 30, 15, 268, 40, "Zone Credits", "PMDCP.ttf", 32, Text.WhiteSmoke);
-
-                                var zone = ZoneManager.Zones[zoneID];
-
-                                var offsetY = 60;
-                                var offsetIndex = 1;
-                                using (var dbConnection = new DatabaseConnection(DatabaseID.Players))
-                                {
-                                    for (var i = 0; i < zone.Members.Count; i++)
-                                    {
-                                        var member = zone.Members[i];
-
-                                        // TODO: This is **REALLY** inefficient. Improve this later
-                                        var name = DataManager.Players.PlayerDataManager.GetCharacterName(dbConnection.Database, member.CharacterID);
-
-                                        menu.AddLabel(offsetIndex++, 30, offsetY, 270, 30, $"{i + 1}. {name} - {member.Access}", "PMDCP.ttf", 20, Text.WhiteSmoke);
-
-                                        offsetY += 30;
-                                    }
-                                }
-                                client.Player.CustomMenuManager.AddMenu(menu);
-                                client.Player.CustomMenuManager.SendMenu(menu.MenuName);
+                                Messenger.SendZoneCreditsTo(client, zoneID);
                             }
                         }
                         break;
