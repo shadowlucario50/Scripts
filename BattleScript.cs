@@ -9231,10 +9231,14 @@ namespace Script
                     Messenger.MapMsg(client.Player.MapID, client.Player.Name + " was eliminated from the arena!", Text.Black);
                 }
 
+                client.Player.OutlawRole = Enums.OutlawRole.None;
+                client.Player.PlayerData.PendingOutlawPoints = 0;
+
                 client.Player.Dead = false;
                 PacketHitList hitlist = null;
                 PacketHitList.MethodStart(ref hitlist);
                 PacketBuilder.AppendDead(client, hitlist);
+                PacketBuilder.AppendPlayerData(client, hitlist);
                 PacketHitList.MethodEnded(ref hitlist);
             }
             catch (Exception ex)
