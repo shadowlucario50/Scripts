@@ -128,11 +128,32 @@ namespace Script
 
                 switch (command[0])
                 {
+                    case "/myoutlawpoints":
+                        {
+                            Messenger.PlayerMsg(client, $"You have {client.Player.PlayerData.LockedOutlawPoints} outlaw points locked.", Text.BrightGreen);
+                            Messenger.PlayerMsg(client, $"You have {client.Player.PlayerData.PendingOutlawPoints} outlaw points pending.", Text.BrightGreen);
+                        }
+                        break;
+                    case "/makemehunter":
+                        {
+                            if (client.Player.OutlawRole == Enums.OutlawRole.None)
+                            {
+                                client.Player.OutlawRole = Enums.OutlawRole.Hunter;
+                                client.Player.KillableAnywhere = true;
+
+                                Messenger.SendPlayerData(client);
+                            }
+                        }
+                        break;
                     case "/makemeoutlaw":
                         {
-                            client.Player.OutlawRole = Enums.OutlawRole.Outlaw;
+                            if (client.Player.OutlawRole == Enums.OutlawRole.None)
+                            {
+                                client.Player.OutlawRole = Enums.OutlawRole.Outlaw;
+                                client.Player.KillableAnywhere = true;
 
-                            Messenger.SendPlayerData(client);
+                                Messenger.SendPlayerData(client);
+                            }
                         }
                         break;
                     case "/copymissionclients":

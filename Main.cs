@@ -10827,6 +10827,17 @@ namespace Script
             {
                 ActiveEvent.OnServerTick(tickCount);
             }
+
+            foreach (var client in ClientManager.GetClients())
+            {
+                if (client.IsPlaying()) 
+                {
+                    if (client.Player.Map.MapType == Enums.MapType.Standard)
+                    {
+                        client.Player.PlayerData.PendingOutlawPoints += 1;
+                    }
+                }
+            }
         }
 
         public static void ScriptTimer(string identifier, string arguments)
