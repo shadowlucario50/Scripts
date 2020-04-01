@@ -44,7 +44,7 @@ namespace Script
 
         public static void HandoutOutlawPoints(TickCount tickCount)
         {
-            if (tickCount.Elapsed(lastOutlawPointsTick, OutlawPointRewardTimeInterval))
+            if (tickCount.Elapsed(lastOutlawPointsTick, OutlawPointRewardTimeInterval) || lastOutlawPointsTick == 0)
             {
                 lastOutlawPointsTick = tickCount.Tick;
 
