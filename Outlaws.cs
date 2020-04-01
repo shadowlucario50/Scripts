@@ -44,8 +44,7 @@ namespace Script
 
         public static void HandoutOutlawPoints(TickCount tickCount)
         {
-            Messenger.GlobalMsg($"{tickCount.Tick}, {lastOutlawPointsTick}", Text.BrightGreen, x => x.Player.Name == "Blaze");
-            if (tickCount.Tick > lastOutlawPointsTick + OutlawPointRewardTimeInterval)
+            if (tickCount.Elapsed(lastOutlawPointsTick, OutlawPointRewardTimeInterval))
             {
                 lastOutlawPointsTick = tickCount.Tick;
 
