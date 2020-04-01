@@ -37,9 +37,44 @@ namespace Script
 
     public partial class Main
     {
+        public static readonly int OutlawPointInterval = 4000;
+        public static readonly int OutlawPointRewardTimeInterval = 1000;
+
+        private static int lastOutlawPointsTick = 0;
+
+        public static void HandoutOutlawPoints(TickCount tickCount)
+        {
+            if (tickCount.Tick > lastOutlawPointsTick + OutlawPointRewardTimeInterval)
+            {
+                lastOutlawPointsTick = tickCount.Tick;
+
+                foreach (var client in ClientManager.GetClients())
+                {
+                    if (client.IsPlaying() && client.Player.OutlawRole == Enums.OutlawRole.Outlaw) 
+                    {
+                        if (client.Player.Map.MapType == Enums.MapType.Standard)
+                        {
+                            client.Player.PlayerData.PendingOutlawPoints += 1;
+                        }
+                    }
+                }
+            }
+           
+        }
+
         public static void HandleOutlawGameOver(Client client, ref PacketHitList hitList)
         {
             PacketHitList.MethodStart(ref hitList);
+
+            if (client.Player.OutlawRole == Enums.OutlawRole.Outlaw)
+            {
+                var lostPoints = client.Player.PlayerData.PendingOutlawPoints % OutlawPointInterval;
+                var gainedPoints = client.Player.PlayerData.PendingOutlawPoints - lostPoints;
+
+                client.Player.PlayerData.LockedOutlawPoints += gainedPoints;
+
+                Messenger.PlayerMsg(client, $"You have been defeated! You gained {gainedPoints} from this round!", Text.BrightGreen);
+            }
 
             client.Player.OutlawRole = Enums.OutlawRole.None;
             client.Player.PlayerData.PendingOutlawPoints = 0;
