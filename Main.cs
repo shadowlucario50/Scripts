@@ -3105,6 +3105,9 @@ namespace Script
 
                 client.Player.Dead = false;
                 PacketHitList hitlist = null;
+
+                HandleOutlawGameOver(client, ref hitlist);
+
                 PacketHitList.MethodStart(ref hitlist);
                 PacketBuilder.AppendDead(client, hitlist);
                 PacketHitList.MethodEnded(ref hitlist);
