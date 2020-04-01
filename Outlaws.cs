@@ -95,7 +95,7 @@ namespace Script
 
                 Messenger.PlayerMsg(client, $"You have been defeated! You gained {gainedPoints} points from this round!", Text.BrightGreen);
 
-                GlobalMessage($"Outlaw {client.Player.DisplayName} has been defeated!", Text.BrightGreen);
+                GlobalMessage($"{client.Player.DisplayName} has been defeated!", Text.BrightGreen);
             }
 
             client.Player.OutlawRole = Enums.OutlawRole.None;
