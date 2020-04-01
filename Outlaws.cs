@@ -37,10 +37,18 @@ namespace Script
 
     public partial class Main
     {
-        public static readonly int OutlawPointInterval = 4000;
+        public static readonly int OutlawPointInterval = 2000;
         public static readonly int OutlawPointRewardTimeInterval = 1000;
 
         private static int lastOutlawPointsTick = 0;
+
+        public static void OutlawDefeated(Client attacker, Client defender)
+        {
+            if (attacker.Player.OutlawRole != Enums.OutlawRole.Hunter)
+            {
+                Messenger.PlayerMsg(attacker, $"You defeated an outlaw! However, as you were not a hunter, you did not earn any points.", Text.BrightGreen);
+            }
+        }
 
         public static void HandoutOutlawPoints(TickCount tickCount)
         {
@@ -59,7 +67,6 @@ namespace Script
                     }
                 }
             }
-           
         }
 
         public static void HandleOutlawGameOver(Client client, ref PacketHitList hitList)

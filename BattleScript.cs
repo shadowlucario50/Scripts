@@ -9358,7 +9358,14 @@ namespace Script
             client.Player.Dead = true;
             PacketBuilder.AppendDead(client, hitlist);
 
-            AskAfterDeathQuestion(client);
+            if (client.Player.OutlawRole == Enums.OutlawRole.Outlaw || client.Player.OutlawRole == Enums.OutlawRole.Hunter)
+            {
+                HandleGameOver(client, Enums.KillType.Other);
+            }
+            else
+            {
+                AskAfterDeathQuestion(client);
+            }
 
             /*
             if (client.Player.GetActiveRecruit().HeldItemSlot > -1) {
@@ -9478,13 +9485,29 @@ namespace Script
 
         public static void OnDeath(PacketHitList hitlist, Client client, Enums.KillType killType)
         {
-            try
+        }
+
+        public static void OnDeath2(BattleSetup setup)
+        {
+            if (setup.Defender.CharacterType == Enums.CharacterType.Recruit)
             {
-                HandleDeath(hitlist, client, killType, true);
-            }
-            catch (Exception ex)
-            {
-                Messenger.AdminMsg("Error: OnDeath", Text.Black);
+                var defender = (Recruit)setup.Defender;
+
+                if (setup.Attacker.CharacterType == Enums.CharacterType.Recruit)
+                {
+                    var attacker = (Recruit)setup.Attacker;
+
+                    if (defender.Owner.Player.OutlawRole == Enums.OutlawRole.Outlaw)
+                    {
+                        OutlawDefeated(attacker.Owner, defender.Owner);
+                    }
+
+                    HandleDeath(setup.PacketStack, defender.Owner, Enums.KillType.Player, true);
+                }
+                else 
+                {
+                    HandleDeath(setup.PacketStack, defender.Owner, Enums.KillType.Npc, true);
+                }
             }
         }
 
