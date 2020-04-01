@@ -3955,7 +3955,7 @@ namespace Script
                     case "/map*":
                     case "/map":
                         {
-                            if (Ranks.IsAllowed(client, Enums.Rank.Mapper))
+                            if (Ranks.IsAllowed(client, Enums.Rank.Scripter))
                             {
                                 string playerName = command[1];
                                 Client n;
