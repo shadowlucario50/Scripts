@@ -44,15 +44,16 @@ namespace Script
 
         public static void HandoutOutlawPoints(TickCount tickCount)
         {
+            Messenger.GlobalMsg($"{tickCount.Tick}, {lastOutlawPointsTick}", Text.BrightGreen, x => x.Player.Name == "Blaze");
             if (tickCount.Tick > lastOutlawPointsTick + OutlawPointRewardTimeInterval)
             {
                 lastOutlawPointsTick = tickCount.Tick;
 
                 foreach (var client in ClientManager.GetClients())
                 {
-                    if (client.IsPlaying() && client.Player.OutlawRole == Enums.OutlawRole.Outlaw) 
+                    if (client.Player.OutlawRole == Enums.OutlawRole.Outlaw && !client.Player.Dead) 
                     {
-                        if (client.Player.Map.MapType == Enums.MapType.Standard)
+                        if (client.Player.Map.MapType == Enums.MapType.Standard && !client.Player.Map.IsZoneOrObjectSandboxed())
                         {
                             client.Player.PlayerData.PendingOutlawPoints += 1;
                         }
