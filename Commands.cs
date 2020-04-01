@@ -128,6 +128,13 @@ namespace Script
 
                 switch (command[0])
                 {
+                    case "/makemeoutlaw":
+                        {
+                            client.Player.OutlawRole = Enums.OutlawRole.Outlaw;
+
+                            Messenger.SendPlayerData(client);
+                        }
+                        break;
                     case "/copymissionclients":
                         {
                             if (Ranks.IsAllowed(client, Enums.Rank.Scripter))
