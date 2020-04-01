@@ -164,6 +164,8 @@ namespace Script
                                 client.Player.KillableAnywhere = true;
 
                                 Messenger.SendPlayerData(client);
+
+                                Messenger.MapMsg(client.Player.MapID, $"{client.Player.DisplayName} became an outlaw!", Text.BrightRed);
                             }
                         }
                         break;

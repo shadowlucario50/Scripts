@@ -44,17 +44,17 @@ namespace Script
 
         public static void OutlawDefeated(Client attacker, Client defender)
         {
-            if (attacker.Player.OutlawRole != Enums.OutlawRole.Hunter)
-            {
-                Messenger.PlayerMsg(attacker, $"You defeated an outlaw! However, as you were not a hunter, you did not earn any points.", Text.BrightGreen);
-            } 
-            else
+            if (attacker.Player.OutlawRole == Enums.OutlawRole.Hunter)
             {
                 var gainedPoints = defender.Player.PlayerData.PendingOutlawPoints;
 
                 attacker.Player.PlayerData.LockedOutlawPoints += gainedPoints;
 
                 Messenger.PlayerMsg(attacker, $"You defeated an outlaw! You earned {gainedPoints}!", Text.BrightGreen);
+            } 
+            else
+            {
+                Messenger.PlayerMsg(attacker, $"You defeated an outlaw! However, as you were not a hunter, you did not earn any points.", Text.BrightGreen);
             }
         }
 
@@ -93,7 +93,8 @@ namespace Script
 
                 client.Player.PlayerData.LockedOutlawPoints += gainedPoints;
 
-                Messenger.PlayerMsg(client, $"You have been defeated! You gained {gainedPoints} from this round!", Text.BrightGreen);
+                Messenger.PlayerMsg(client, $"You have been defeated! You gained {gainedPoints} points from this round!", Text.BrightGreen);
+                Messenger.MapMsg(client.Player.MapID, $"Outlaw {client.Player.DisplayName} has been defeated!", Text.BrightGreen);
             }
 
             client.Player.OutlawRole = Enums.OutlawRole.None;
