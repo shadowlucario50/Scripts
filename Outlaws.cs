@@ -47,7 +47,20 @@ namespace Script
             if (attacker.Player.OutlawRole != Enums.OutlawRole.Hunter)
             {
                 Messenger.PlayerMsg(attacker, $"You defeated an outlaw! However, as you were not a hunter, you did not earn any points.", Text.BrightGreen);
+            } 
+            else
+            {
+                var gainedPoints = defender.Player.PlayerData.PendingOutlawPoints;
+
+                attacker.Player.PlayerData.LockedOutlawPoints += gainedPoints;
+
+                Messenger.PlayerMsg(attacker, $"You defeated an outlaw! You earned {gainedPoints}!", Text.BrightGreen);
             }
+        }
+
+        public static void HunterDefeated(Client attacker, Client defender)
+        {
+            Messenger.PlayerMsg(attacker, "You defeated a hunter!", Text.BrightGreen);
         }
 
         public static void HandoutOutlawPoints(TickCount tickCount)

@@ -134,6 +134,17 @@ namespace Script
                             Messenger.PlayerMsg(client, $"You have {client.Player.PlayerData.PendingOutlawPoints} outlaw points pending.", Text.BrightGreen);
                         }
                         break;
+                    case "/makemenormal":
+                        {
+                            if (client.Player.OutlawRole == Enums.OutlawRole.Hunter)
+                            {
+                                client.Player.OutlawRole = Enums.OutlawRole.None;
+                                client.Player.KillableAnywhere = false;
+
+                                Messenger.SendPlayerData(client);
+                            }
+                        }   
+                        break;
                     case "/makemehunter":
                         {
                             if (client.Player.OutlawRole == Enums.OutlawRole.None)
