@@ -160,12 +160,12 @@ namespace Script
                         {
                             if (client.Player.OutlawRole == Enums.OutlawRole.None)
                             {
+                                GlobalMessage($"{client.Player.DisplayName} became an outlaw!", Text.BrightRed);
+
                                 client.Player.OutlawRole = Enums.OutlawRole.Outlaw;
                                 client.Player.KillableAnywhere = true;
 
                                 Messenger.SendPlayerData(client);
-
-                                GlobalMessage($"{client.Player.DisplayName} became an outlaw!", Text.BrightRed);
                             }
                         }
                         break;
