@@ -51,6 +51,8 @@ namespace Script
     using Script.Models;
     using Server.Events.World;
     using Server.Legendaries;
+    using System.Threading.Tasks;
+    using Server.Discord;
 
     public partial class Main
     {
@@ -10887,6 +10889,12 @@ namespace Script
                     }
                     break;
             }
+        }
+
+        public static void GlobalMessage(string message, System.Drawing.Color color)
+        {
+            Task.Run(() => DiscordManager.Instance.SendAnnouncement(message));
+            Messenger.GlobalMsg(message, color);
         }
 
     }

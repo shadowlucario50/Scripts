@@ -165,7 +165,7 @@ namespace Script
 
                                 Messenger.SendPlayerData(client);
 
-                                Messenger.MapMsg(client.Player.MapID, $"{client.Player.DisplayName} became an outlaw!", Text.BrightRed);
+                                GlobalMessage($"{client.Player.DisplayName} became an outlaw!", Text.BrightRed);
                             }
                         }
                         break;

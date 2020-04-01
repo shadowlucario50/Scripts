@@ -94,7 +94,8 @@ namespace Script
                 client.Player.PlayerData.LockedOutlawPoints += gainedPoints;
 
                 Messenger.PlayerMsg(client, $"You have been defeated! You gained {gainedPoints} points from this round!", Text.BrightGreen);
-                Messenger.MapMsg(client.Player.MapID, $"Outlaw {client.Player.DisplayName} has been defeated!", Text.BrightGreen);
+
+                GlobalMessage($"Outlaw {client.Player.DisplayName} has been defeated!", Text.BrightGreen);
             }
 
             client.Player.OutlawRole = Enums.OutlawRole.None;
