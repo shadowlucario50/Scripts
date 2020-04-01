@@ -40,9 +40,10 @@ namespace Script
         public static void HandleOutlawGameOver(Client client, ref PacketHitList hitList)
         {
             PacketHitList.MethodStart(ref hitList);
-            
+
             client.Player.OutlawRole = Enums.OutlawRole.None;
             client.Player.PlayerData.PendingOutlawPoints = 0;
+            client.Player.KillableAnywhere = false;
 
             PacketBuilder.AppendPlayerData(client, hitList);
 
