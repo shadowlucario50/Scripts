@@ -1072,7 +1072,7 @@ namespace Script
                         break;
                     case "/activemaps":
                         {
-                            if (Ranks.IsAllowed(client, Enums.Rank.Monitor))
+                            if (Ranks.IsAllowed(client, Enums.Rank.Scripter))
                             {
                                 IMap[] activeMaps = MapManager.ToArray();
                                 Messenger.PlayerMsg(client, "Active Maps: " + activeMaps.Length.ToString(), Text.BrightGreen);
@@ -3942,7 +3942,7 @@ namespace Script
                     case "/map*":
                     case "/map":
                         {
-                            if (Ranks.IsAllowed(client, Enums.Rank.Mapper))
+                            if (Ranks.IsAllowed(client, Enums.Rank.Scripter))
                             {
                                 string playerName = command[1];
                                 Client n;
