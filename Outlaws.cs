@@ -95,7 +95,7 @@ namespace Script
 
                 Messenger.PlayerMsg(client, $"You have been defeated! You gained {gainedPoints} points from this round!", Text.BrightGreen);
 
-                GlobalMessage($"{client.Player.DisplayName} has been defeated!", Text.BrightGreen);
+                Messaging.SendGlobalMessage($"{client.Player.DisplayName} has been captured!", Settings.DiscordOutlawChannel, Text.BrightGreen);
             }
 
             client.Player.OutlawRole = Enums.OutlawRole.None;
