@@ -51,6 +51,13 @@ namespace Script
                             return;
                         }
 
+                        if (client.Player.OutlawRole == Enums.OutlawRole.Outlaw && IsHunterInRange(client))
+                        {
+                            Messenger.StoryMessage(client, "It's not safe to use that now! A hunter is nearby!");
+
+                            return;
+                        }
+
                         Messenger.SendAvailableFlyPoints(client);
                     }
                     break;

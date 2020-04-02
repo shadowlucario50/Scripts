@@ -105,5 +105,12 @@ namespace Script
 
             PacketHitList.MethodEnded(ref hitList);
         }
+
+        public static bool IsHunterInRange(Client client)
+        {
+            var targets = MoveProcessor.GetTargetsInRange(Enums.MoveRange.Room, 30, client.Player.Map, client.Player.GetActiveRecruit(), client.Player.X, client.Player.Y, Enums.Direction.Up, true, true, false);
+
+            return targets.Foes.OfType<Recruit>().Where(x => x.Owner.Player.OutlawRole == Enums.OutlawRole.Hunter).Any();
+        }
     }
 }
