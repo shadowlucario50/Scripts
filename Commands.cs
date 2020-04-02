@@ -130,8 +130,10 @@ namespace Script
                 {
                     case "/myoutlawpoints":
                         {
+                            var lockedPoints = client.Player.PlayerData.PendingOutlawPoints - (client.Player.PlayerData.PendingOutlawPoints % OutlawPointInterval);
+
                             Messenger.PlayerMsg(client, $"You have {client.Player.PlayerData.LockedOutlawPoints} outlaw points locked.", Text.BrightGreen);
-                            Messenger.PlayerMsg(client, $"You have {client.Player.PlayerData.PendingOutlawPoints} outlaw points pending.", Text.BrightGreen);
+                            Messenger.PlayerMsg(client, $"You have {client.Player.PlayerData.PendingOutlawPoints} outlaw points this round. ({lockedPoints} will be locked)", Text.BrightGreen);
                         }
                         break;
                     case "/makemenormal":
@@ -139,7 +141,6 @@ namespace Script
                             if (client.Player.OutlawRole == Enums.OutlawRole.Hunter)
                             {
                                 client.Player.OutlawRole = Enums.OutlawRole.None;
-                                client.Player.KillableAnywhere = false;
 
                                 Messenger.SendPlayerData(client);
                             }
@@ -150,20 +151,6 @@ namespace Script
                             if (client.Player.OutlawRole == Enums.OutlawRole.None)
                             {
                                 client.Player.OutlawRole = Enums.OutlawRole.Hunter;
-                                client.Player.KillableAnywhere = true;
-
-                                Messenger.SendPlayerData(client);
-                            }
-                        }
-                        break;
-                    case "/makemeoutlaw":
-                        {
-                            if (client.Player.OutlawRole == Enums.OutlawRole.None)
-                            {
-                                GlobalMessage($"{client.Player.DisplayName} became an outlaw!", Text.BrightRed);
-
-                                client.Player.OutlawRole = Enums.OutlawRole.Outlaw;
-                                client.Player.KillableAnywhere = true;
 
                                 Messenger.SendPlayerData(client);
                             }

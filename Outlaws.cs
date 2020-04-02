@@ -37,7 +37,7 @@ namespace Script
 
     public partial class Main
     {
-        public static readonly int OutlawPointInterval = 2000;
+        public static readonly int OutlawPointInterval = 4000;
         public static readonly int OutlawPointRewardTimeInterval = 1000;
 
         private static int lastOutlawPointsTick = 0;
@@ -50,7 +50,7 @@ namespace Script
 
                 attacker.Player.PlayerData.LockedOutlawPoints += gainedPoints;
 
-                Messenger.PlayerMsg(attacker, $"You defeated an outlaw! You earned {gainedPoints}!", Text.BrightGreen);
+                Messenger.PlayerMsg(attacker, $"You defeated an outlaw! You earned {gainedPoints} points!", Text.BrightGreen);
             } 
             else
             {
@@ -100,7 +100,6 @@ namespace Script
 
             client.Player.OutlawRole = Enums.OutlawRole.None;
             client.Player.PlayerData.PendingOutlawPoints = 0;
-            client.Player.KillableAnywhere = false;
 
             PacketBuilder.AppendPlayerData(client, hitList);
 
