@@ -426,6 +426,8 @@ namespace Script
                                     RemoveExtraStatus(outlawCharacter, map, "Invisible", hitlist);
 
                                     Messenger.PlayerMsg(outlaw, "You have been discovered by a hunter!", Text.BrightRed);
+
+                                    foundOutlaw = true;
                                 }
                             }
                             if (foundOutlaw)
