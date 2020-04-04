@@ -9233,7 +9233,10 @@ namespace Script
 
                 PacketHitList hitlist = null;
 
-                HandleOutlawGameOver(client, ref hitlist);
+                if (killType == Enums.KillType.Player)
+                {
+                    HandleOutlawGameOver(client, ref hitlist);
+                }
 
                 client.Player.Dead = false;
                 PacketHitList.MethodStart(ref hitlist);
@@ -9359,9 +9362,9 @@ namespace Script
             PacketBuilder.AppendDead(client, hitlist);
 
             // If playing the outlaw game, immediately kill them - no switching out allowed!
-            if (client.Player.OutlawRole == Enums.OutlawRole.Outlaw || client.Player.OutlawRole == Enums.OutlawRole.Hunter)
+            if (killType == Enums.KillType.Player && (client.Player.OutlawRole == Enums.OutlawRole.Outlaw || client.Player.OutlawRole == Enums.OutlawRole.Hunter))
             {
-                HandleGameOver(client, Enums.KillType.Other);
+                HandleGameOver(client, killType);
             }
             else
             {
