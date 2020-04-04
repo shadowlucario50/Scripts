@@ -376,6 +376,7 @@ namespace Script
                     int stepCounter;
                     if (character.CharacterType == Enums.CharacterType.Recruit)
                     {
+                        var client = ((Recruit)character).Owner;
 
                         ((Recruit)character).Owner.Player.HPStepCounter++;
                         if (((Recruit)character).Owner.Player.Map.HungerEnabled)
@@ -402,7 +403,7 @@ namespace Script
 
                         if (stepCounter % 5 == 0)
                         {
-                            if (map.MapID == MapManager.GenerateMapID(737))
+                            if (map.MapID == MapManager.GenerateMapID(5))
                             {
                                 bool hasBeenWelcomed = ((Recruit)character).Owner.Player.StoryHelper.ReadSetting("[Gameplay]-HasBeenWelcomed").ToBool();
                                 if (!hasBeenWelcomed)
@@ -412,6 +413,27 @@ namespace Script
                                 }
                             }
                         }
+
+                        if (client.Player.OutlawRole == Enums.OutlawRole.Hunter) {
+                            var foundOutlaw = false;
+                            foreach (var outlaw in GetOutlawPlayersInRange(client, 30, Enums.OutlawRole.Outlaw))
+                            {
+                                var outlawCharacter = outlaw.Player.GetActiveRecruit();
+
+                                status = outlawCharacter.VolatileStatus.GetStatus("Invisible");
+                                if (status != null)
+                                {
+                                    RemoveExtraStatus(outlawCharacter, map, "Invisible", hitlist);
+
+                                    Messenger.PlayerMsg(outlaw, "You have been discovered by a hunter!", Text.BrightRed);
+                                }
+                            }
+                            if (foundOutlaw)
+                            {
+                                Messenger.PlayerMsg(client, "You have discovered an invisible outlaw nearby!", Text.BrightGreen);
+                            }
+                        }
+                        
                     }
                     else
                     {

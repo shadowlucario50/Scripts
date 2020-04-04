@@ -106,11 +106,16 @@ namespace Script
             PacketHitList.MethodEnded(ref hitList);
         }
 
-        public static bool IsHunterInRange(Client client)
+        public static bool IsOutlawPlayerInRange(Client client, int range, Enums.OutlawRole outlawRole)
         {
-            var targets = MoveProcessor.GetTargetsInRange(Enums.MoveRange.Room, 30, client.Player.Map, client.Player.GetActiveRecruit(), client.Player.X, client.Player.Y, Enums.Direction.Up, true, true, false);
+            return GetOutlawPlayersInRange(client, range, outlawRole).Any();
+        }
 
-            return targets.Foes.OfType<Recruit>().Where(x => x.Owner.Player.OutlawRole == Enums.OutlawRole.Hunter).Any();
+        public static IEnumerable<Client> GetOutlawPlayersInRange(Client client, int range, Enums.OutlawRole outlawRole)
+        {
+            var targets = MoveProcessor.GetTargetsInRange(Enums.MoveRange.Room, range, client.Player.Map, client.Player.GetActiveRecruit(), client.Player.X, client.Player.Y, Enums.Direction.Up, true, true, false);
+
+            return targets.Foes.OfType<Recruit>().Where(x => x.Owner.Player.OutlawRole == outlawRole).Select(x => x.Owner);
         }
     }
 }
