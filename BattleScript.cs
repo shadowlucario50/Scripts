@@ -9233,7 +9233,7 @@ namespace Script
 
                 PacketHitList hitlist = null;
 
-                if (killType == Enums.KillType.Player)
+                if (killType == Enums.KillType.Player && IsValidOutlawMap(client.Player.Map))
                 {
                     HandleOutlawGameOver(client, ref hitlist);
                 }
@@ -9362,7 +9362,7 @@ namespace Script
             PacketBuilder.AppendDead(client, hitlist);
 
             // If playing the outlaw game, immediately kill them - no switching out allowed!
-            if (killType == Enums.KillType.Player && (client.Player.OutlawRole == Enums.OutlawRole.Outlaw || client.Player.OutlawRole == Enums.OutlawRole.Hunter))
+            if (killType == Enums.KillType.Player && IsValidOutlawMap(client.Player.Map) && (client.Player.OutlawRole == Enums.OutlawRole.Outlaw || client.Player.OutlawRole == Enums.OutlawRole.Hunter))
             {
                 HandleGameOver(client, killType);
             }
@@ -9501,13 +9501,16 @@ namespace Script
                 {
                     var attacker = (Recruit)setup.Attacker;
 
-                    if (defender.Owner.Player.OutlawRole == Enums.OutlawRole.Outlaw)
+                    if (IsValidOutlawMap(setup.AttackerMap) && IsValidOutlawMap(setup.DefenderMap))
                     {
-                        OutlawDefeated(attacker.Owner, defender.Owner);
-                    } 
-                    else if (defender.Owner.Player.OutlawRole == Enums.OutlawRole.Hunter)
-                    {
-                        HunterDefeated(attacker.Owner, defender.Owner);
+                        if (defender.Owner.Player.OutlawRole == Enums.OutlawRole.Outlaw)
+                        {
+                            OutlawDefeated(attacker.Owner, defender.Owner);
+                        } 
+                        else if (defender.Owner.Player.OutlawRole == Enums.OutlawRole.Hunter)
+                        {
+                            HunterDefeated(attacker.Owner, defender.Owner);
+                        }
                     }
 
                     HandleDeath(setup.PacketStack, defender.Owner, Enums.KillType.Player, true);

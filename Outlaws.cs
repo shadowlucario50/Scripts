@@ -117,5 +117,10 @@ namespace Script
 
             return targets.Foes.OfType<Recruit>().Where(x => x.Owner.Player.OutlawRole == outlawRole).Select(x => x.Owner);
         }
+
+        public static bool IsValidOutlawMap(IMap map)
+        {
+            return map.Moral == Enums.MapMoral.Safe;
+        }
     }
 }
