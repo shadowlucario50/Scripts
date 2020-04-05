@@ -2431,6 +2431,11 @@ namespace Script
                             }
                         }
                         break;
+                    case 29:
+                        { // Outlaw Most Wanted
+                            Messenger.SendOutlawBoardTo(client);
+                        }
+                        break;
                 }
             }
             catch (Exception ex)
@@ -2503,6 +2508,8 @@ namespace Script
                     return scriptNum + ": Secret Base Entrance";
                 case 28:
                     return scriptNum + ": Staff Application";
+                case 29:
+                    return scriptNum + ": Outlaw Board";
                 default:
                     return scriptNum.ToString() + ": Unknown";
             }
