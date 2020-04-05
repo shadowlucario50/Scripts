@@ -622,7 +622,7 @@ namespace Script.Events
                     StoryBuilder.AppendSaySegment(segment, $"The villagers win! All the werewolves have been killed!", -1, 0, 0);
                     gameOver = true;
                 }
-                else if (werewolfCount == aliveVillagersCount)
+                else if (werewolfCount >= aliveVillagersCount)
                 {
                     StoryBuilder.AppendSaySegment(segment, $"The werewolves win!", -1, 0, 0);
                     gameOver = true;
