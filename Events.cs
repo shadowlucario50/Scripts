@@ -223,7 +223,7 @@ namespace Script
             {
                 foreach (var leaderboard in LeaderBoardManager.ListLeaderboards()) 
                 {
-                    var leaderboardItems = LeaderBoardManager.LoadLeaderboard(leaderboard.Counter).OrderByDescending(x => x.Value).ToList();
+                    var leaderboardItems = leaderboard.Load().OrderByDescending(x => x.Value).ToList();
 
                     if (leaderboardItems.Count > 0)
                     {
