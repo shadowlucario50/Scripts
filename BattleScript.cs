@@ -9238,6 +9238,8 @@ namespace Script
                     HandleOutlawGameOver(client, ref hitlist);
                 }
 
+                client.Player.IncrementCounter("mostdefeats", 1);
+
                 client.Player.Dead = false;
                 PacketHitList.MethodStart(ref hitlist);
                 PacketBuilder.AppendDead(client, hitlist);
