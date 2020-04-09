@@ -159,13 +159,21 @@ namespace Script.Events
             Data.Started = true;
 
             Data.RegisteredCharacters.Clear();
-            foreach (var client in EventManager.GetRegisteredClients()) {
+            foreach (var client in EventManager.GetRegisteredClients())
+            {
                 Data.RegisteredCharacters.Add(client.Player.CharID);
             }
 
             if (Duration.HasValue)
             {
                 Data.CompletionTime = DateTime.UtcNow.Add(Duration.Value);
+            }
+
+            PrepareData();
+
+            foreach (var client in GetRegisteredClients())
+            {
+                OnboardNewPlayer(client);
             }
         }
 
@@ -177,6 +185,14 @@ namespace Script.Events
         public string Save()
         {
             return JsonConvert.SerializeObject(Data);
+        }
+
+        protected virtual void PrepareData()
+        {
+        }
+
+        protected virtual void OnboardNewPlayer(Client client)
+        {
         }
 
         public virtual void OnServerTick(TickCount tickCount)

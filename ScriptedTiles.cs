@@ -1479,6 +1479,14 @@ namespace Script
                             exPlayer.Get(client).WarpToSpawn(false);
                         }
                         break;
+                    case 85:
+                        { // Boss rush room complete
+                            if (Main.ActiveEvent is Events.BossRushEvent bossRushEvent)
+                            {
+                                bossRushEvent.CompleteRoom(client);
+                            }
+                        }
+                        break;
                 }
                 PacketHitList.MethodEnded(ref hitlist);
             }
@@ -1663,6 +1671,8 @@ namespace Script
                     return scriptNum + ": Story Block";
                 case 84:
                     return scriptNum + ": Warp To Spawn";
+                case 85:
+                    return scriptNum + ": Boss Rush Room Complete";
                 default:
                     return scriptNum.ToString() + ": Unknown";
             }

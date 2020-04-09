@@ -36,6 +36,8 @@ namespace Script
                     return new Paintball();
                 case "werewolf":
                     return new WerewolfEvent();
+                case "bossrush":
+                    return new BossRushEvent();
                 default:
                     return null;
             }
