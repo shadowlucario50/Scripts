@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using Server;
+using Server.Combat;
 using Server.Events;
 using Server.Maps;
 using Server.Network;
@@ -15,6 +16,10 @@ namespace Script.Events
     {
         private readonly int MaxRoomCount = 200;
 
+        private readonly int MinionCount = 1;
+
+        private readonly int StartTileX = 12;
+        private readonly int StartTileY = 15;
         private readonly int CompleteTileX = 12;
         private readonly int CompleteTileY = 0;
 
@@ -23,7 +28,13 @@ namespace Script.Events
         public override string IntroductionMessage => "Defeat the bosses and reach the end!";
         public override TimeSpan? Duration => new TimeSpan(0, 10, 0);
 
-        private readonly Dictionary<Enums.PokemonType, int> typeMappings = new Dictionary<Enums.PokemonType, int>() {
+        private readonly List<int> minionNpcs = new List<int>() 
+        {
+            3941
+        };
+
+        private readonly Dictionary<Enums.PokemonType, int> typeMappings = new Dictionary<Enums.PokemonType, int>() 
+        {
             { Enums.PokemonType.Normal, 1301 },
             { Enums.PokemonType.Grass, 1302 },
             { Enums.PokemonType.Water, 1303 },
@@ -97,10 +108,25 @@ namespace Script.Events
 
         public override void OnActivateMap(IMap map)
         {
-            if (!map.ActiveNpc.Enumerate().Where(x => x.Num > 0).Any())
+            for (var i = 0; i < MinionCount; i++)
             {
-                SetCompletionTile(map);
+                var minionSlot = Server.Math.Rand(0, minionNpcs.Count);
+                var minion = minionNpcs[minionSlot];
+
+                var npc = new MapNpcPreset();
+                npc.SpawnX = 9;
+                npc.SpawnY = 9;
+                npc.NpcNum = minion;
+                npc.MaxLevel = 1;
+                npc.MinLevel = 1;
+
+                map.SpawnNpc(npc);
             }
+        }
+
+        public override void OnNpcDeath(PacketHitList hitlist, ICharacter attacker, MapNpc npc)
+        {
+            SetCompletionTile(MapManager.RetrieveActiveMap(attacker.MapID));
         }
 
         private void SetCompletionTile(IMap map)
@@ -127,7 +153,7 @@ namespace Script.Events
 
             var currentRoomMapId = typeMappings[Data.SelectedTypes[playerData.CurrentRoom]];
 
-            Messenger.PlayerWarp(client, currentRoomMapId, 12, 14);
+            Messenger.PlayerWarp(client, currentRoomMapId, StartTileX, StartTileY);
             Messenger.PlayerMsg(client, $"Welcome to room {playerData.CurrentRoom + 1}!", Text.BrightGreen);
         }
 
