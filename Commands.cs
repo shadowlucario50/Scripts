@@ -553,7 +553,7 @@ namespace Script
 
                                     if (rdungeon.IsZoneOrObjectSandboxed() && client.Player.CanViewZone(rdungeon.ZoneID))
                                     {
-                                        client.Player.BeginTempStatMode(level, false);
+                                        client.Player.BeginTempStatMode(level, true);
                                         client.Player.WarpToRDungeon(command[1].ToInt() - 1, floor - 1);
                                     }
                                 }
