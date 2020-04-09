@@ -408,7 +408,7 @@ namespace Script
                                 bool hasBeenWelcomed = ((Recruit)character).Owner.Player.StoryHelper.ReadSetting("[Gameplay]-HasBeenWelcomed").ToBool();
                                 if (!hasBeenWelcomed)
                                 {
-                                    hitlist.AddPacketToMap(map, PacketBuilder.CreateChatMsg(((Recruit)character).Owner.Player.Name + " is new to " + Settings.GameNameShort + "! Welcome!", Text.BrightGreen));
+                                    hitlist.AddPacketToMap(map, PacketBuilder.CreateChatMsg(((Recruit)character).Owner.Player.Name + " is new to " + Settings.GameName + "! Welcome!", Text.BrightGreen));
                                     ((Recruit)character).Owner.Player.StoryHelper.SaveSetting("[Gameplay]-HasBeenWelcomed", "True");
                                 }
                             }
