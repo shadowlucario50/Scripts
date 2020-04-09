@@ -10251,5 +10251,34 @@ namespace Script
             }
             return false;
         }
+
+        public static void HealParty(PacketHitList hitlist, Client client)
+        {
+            for (int i = 0; i < Constants.MAX_ACTIVETEAM; i++)
+            {
+                if (client.Player.Team[i].Loaded)
+                { // Yes, there needs to be a check
+                    client.Player.Team[i].HP = client.Player.Team[i].MaxHP;
+                    client.Player.Team[i].RestoreBelly();
+                    client.Player.Team[i].StatusAilment = Enums.StatusAilment.OK;
+                    client.Player.Team[i].StatusAilmentCounter = 0;
+
+                    for (int j = 0; j < 4; j++)
+                    {
+                        if (client.Player.GetActiveRecruit().Moves[i].MoveNum != 0)
+                        {
+
+                            client.Player.Team[i].Moves[j].CurrentPP = client.Player.Team[i].Moves[j].MaxPP;
+                        }
+                    }
+                }
+            }
+
+            hitlist.AddPacket(client, PacketBuilder.CreateBattleMsg("The entire party was fully healed!", Text.BrightGreen));
+            hitlist.AddPacket(client, PacketBuilder.CreateSoundPacket("magic25.wav"));
+            PacketBuilder.AppendPlayerMoves(client, hitlist);
+            PacketBuilder.AppendActiveTeamNum(client, hitlist);
+            PacketBuilder.AppendStatusAilment(client, hitlist);
+        }
     }
 }

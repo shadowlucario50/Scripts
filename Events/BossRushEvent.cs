@@ -16,6 +16,8 @@ namespace Script.Events
     {
         private readonly int MaxRoomCount = 200;
 
+        private readonly int CheckpointInterval = 5;
+
         private readonly int MinionCount = 1;
 
         private readonly int StartTileX = 12;
@@ -25,7 +27,12 @@ namespace Script.Events
 
         public override string Identifier => "bossrush";
         public override string Name => "Boss Rush";
-        public override string IntroductionMessage => "Defeat the bosses and reach the end!";
+        public override string IntroductionMessage => "Bosses have appeared in an endless labyrinth! Defeat the most bosses to win!";
+        public override string[] Rules => new string[] 
+        {
+            $"Your team will be fully healed every {CheckpointInterval} rooms that are completed."
+        };
+
         public override TimeSpan? Duration => new TimeSpan(0, 10, 0);
 
         private readonly List<int> bossNpcs = new List<int>()
@@ -128,8 +135,8 @@ namespace Script.Events
                 var minion = minionNpcs[minionSlot];
 
                 var npc = new MapNpcPreset();
-                npc.SpawnX = 9;
-                npc.SpawnY = 9;
+                npc.SpawnX = 12;
+                npc.SpawnY = 6;
                 npc.NpcNum = minion;
                 npc.MaxLevel = 1;
                 npc.MinLevel = 1;
@@ -146,9 +153,9 @@ namespace Script.Events
         private void SetCompletionTile(IMap map)
         {
             Messenger.MapMsg(map.MapID, "The pathway has opened!", Text.BrightGreen);
-            
+
             map.SetAttribute(CompleteTileX, CompleteTileY, Enums.TileType.Scripted, 85, 0, 0, "", "", "");
-            Messenger.SendTile(13, 18, map);
+            Messenger.SendTile(CompleteTileX, CompleteTileY, map);
         }
 
         private void WarpToCurrentRoom(Client client) 
@@ -164,6 +171,15 @@ namespace Script.Events
         public void CompleteRoom(Client client)
         {
             var playerData = Data.ExtendPlayer(client);
+
+            if (playerData.CurrentRoom % CheckpointInterval == 0)
+            {
+                PacketHitList hitlist = null;
+
+                PacketHitList.MethodStart(ref hitlist);
+                Main.HealParty(hitlist, client);
+                PacketHitList.MethodEnded(ref hitlist);
+            }
 
             playerData.CurrentRoom++;
             playerData.RoomsCleared++;

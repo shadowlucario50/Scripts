@@ -15,6 +15,7 @@ namespace Script.Events
         string Name { get; }
 
         string IntroductionMessage { get; }
+        string[] Rules { get; }
         string RewardMessage { get; }
         TimeSpan? Duration { get; }
 

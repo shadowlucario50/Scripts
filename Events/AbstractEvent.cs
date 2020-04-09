@@ -26,6 +26,7 @@ namespace Script.Events
         public abstract string Name { get; }
 
         public abstract string IntroductionMessage { get; }
+        public virtual string[] Rules { get; }
         public virtual string RewardMessage { get; }
         public abstract TimeSpan? Duration { get; }
 
@@ -34,6 +35,7 @@ namespace Script.Events
         public AbstractEvent()
         {
             this.Data = new TData();
+            this.Rules = Array.Empty<string>();
         }
 
         protected abstract List<EventRanking> DetermineRankings();

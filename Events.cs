@@ -17,9 +17,9 @@ namespace Script
 {
     public partial class Main
     {
-        public static readonly int EventHubMap = 152;
-        public static readonly int EventHubMapX = 15;
-        public static readonly int EventHubMapY = 16;
+        public static readonly int EventHubMap = 153;
+        public static readonly int EventHubMapX = 27;
+        public static readonly int EventHubMapY = 14;
 
         public static IEvent ActiveEvent { get; set; }
         public static bool IsTestingEvent { get; set; }
@@ -82,6 +82,11 @@ namespace Script
                 StoryBuilderSegment segment = StoryBuilder.BuildStory();
                 StoryBuilder.AppendSaySegment(segment, $"This event is... {ActiveEvent.Name}!", -1, 0, 0);
                 StoryBuilder.AppendSaySegment(segment, ActiveEvent.IntroductionMessage, -1, 0, 0);
+
+                foreach (var rule in ActiveEvent.Rules)
+                {
+                    StoryBuilder.AppendSaySegment(segment, rule, -1, 0, 0);
+                }
 
                 if (ActiveEvent.Duration.HasValue) 
                 {
@@ -264,6 +269,10 @@ namespace Script
                 eventMessage.AppendLine($"An event will be starting shortly! This event is {ActiveEvent.Name}.");
                 eventMessage.AppendLine();
                 eventMessage.AppendLine($"**Event rules**: {ActiveEvent.IntroductionMessage}");
+                foreach (var rule in ActiveEvent.Rules)
+                {
+                    eventMessage.AppendLine(rule);
+                }
                 if (!string.IsNullOrEmpty(ActiveEvent.RewardMessage)) 
                 {
                     eventMessage.AppendLine($"**Prizes**: {ActiveEvent.RewardMessage}");
