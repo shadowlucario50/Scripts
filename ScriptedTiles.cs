@@ -1481,9 +1481,12 @@ namespace Script
                         break;
                     case 85:
                         { // Boss rush room complete
-                            if (Main.ActiveEvent is Events.BossRushEvent bossRushEvent)
+                            if (client != null)
                             {
-                                bossRushEvent.CompleteRoom(client);
+                                if (Main.ActiveEvent is Events.BossRushEvent bossRushEvent)
+                                {
+                                    bossRushEvent.CompleteRoom(client);
+                                }
                             }
                         }
                         break;

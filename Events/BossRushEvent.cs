@@ -28,6 +28,11 @@ namespace Script.Events
         public override string IntroductionMessage => "Defeat the bosses and reach the end!";
         public override TimeSpan? Duration => new TimeSpan(0, 10, 0);
 
+        private readonly List<int> bossNpcs = new List<int>()
+        {
+            3941
+        };
+
         private readonly List<int> minionNpcs = new List<int>() 
         {
             3941
@@ -85,6 +90,10 @@ namespace Script.Events
             {
                 var playerData = Data.ExtendPlayer(client);
 
+                if (!client.Player.IsInTempStatMode()) 
+                {
+                    client.Player.BeginTempStatMode(50, true);
+                }
             }
         }
 
@@ -93,6 +102,11 @@ namespace Script.Events
             base.DeconfigurePlayer(client);
 
             var playerData = Data.ExtendPlayer(client);
+
+            if (client.Player.IsInTempStatMode())
+            {
+                client.Player.EndTempStatMode();
+            }
         }
 
         protected override void OnboardNewPlayer(Client client) 
@@ -131,20 +145,10 @@ namespace Script.Events
 
         private void SetCompletionTile(IMap map)
         {
-            Tile tile = new Tile(new DataManager.Maps.Tile());
-            MapCloner.CloneTile(map, CompleteTileX, CompleteTileY, tile);
-            tile.Data1 = 85;
-            tile.Type = Enums.TileType.Scripted;
-
-            var hitlist = new PacketHitList();
-            PacketHitList.MethodStart(ref hitlist);
-
-            foreach (var client in map.GetClients())
-            {
-                Messenger.SendTemporaryTileTo(hitlist, client, CompleteTileX, CompleteTileY, tile);
-            }
-
-            PacketHitList.MethodEnded(ref hitlist);
+            Messenger.MapMsg(map.MapID, "The pathway has opened!", Text.BrightGreen);
+            
+            map.SetAttribute(CompleteTileX, CompleteTileY, Enums.TileType.Scripted, 85, 0, 0, "", "", "");
+            Messenger.SendTile(13, 18, map);
         }
 
         private void WarpToCurrentRoom(Client client) 
