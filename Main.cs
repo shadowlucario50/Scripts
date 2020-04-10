@@ -2423,6 +2423,7 @@ namespace Script
                             rec.Exp += expShared;
                             hitlist.AddPacket(client, PacketBuilder.CreateBattleMsg(rec.Name + " gained " + expShared + " experience.", Text.BrightCyan));
                         }
+			if (rec.Level == 100) rec.Exp;
                     }
                 }
                 else
