@@ -2427,8 +2427,11 @@ namespace Script
                 }
                 else
                 {
-                    client.Player.GetActiveRecruit().Exp += exp;
-                    hitlist.AddPacket(client, PacketBuilder.CreateBattleMsg(client.Player.GetActiveRecruit().Name + " gained " + exp + " experience.", Text.BrightCyan));
+                    if (client.Player.GetActiveRecruit().Level < 100)
+                    {
+                        client.Player.GetActiveRecruit().Exp += exp;
+                        hitlist.AddPacket(client, PacketBuilder.CreateBattleMsg(client.Player.GetActiveRecruit().Name + " gained " + exp + " experience.", Text.BrightCyan));
+                    }
                 }
 
 
