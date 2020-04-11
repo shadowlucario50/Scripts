@@ -1735,6 +1735,19 @@ namespace Script
                             }
                         }
                         break;
+                    case "/baseentrance":
+                        {
+                            IMap map = client.Player.Map;
+                            if (map.MapType == Server.Enums.MapType.GuildBase && ((GuildBase)map).Owner == client.Player.GuildId)
+                            {
+                                Messenger.AskQuestion(client, "BaseSpawn", "Will you set your base's entrance here?  It will cost 500 Poké.", -1);
+                            }
+                            else
+                            {
+                                Messenger.PlayerMsg(client, "You can't set your base entrance here!", Text.BrightRed);
+                            }
+                        }
+                        break;
                     case "/houseroof":
                         {
                             IMap map = client.Player.Map;

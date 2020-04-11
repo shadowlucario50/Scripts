@@ -3792,6 +3792,33 @@ namespace Script
                             }
                         }
                         break;
+                    case "BaseSpawn":
+                        {
+                            if (answer == "Yes")
+                            {
+                                if (client.Player.Map.MapType == Server.Enums.MapType.GuildBase &&
+                                    ((GuildBase)client.Player.Map).Owner == client.Player.GuildId)
+                                {
+                                    if (client.Player.HasItem(1) >= 500)
+                                    {
+                                        client.Player.TakeItem(1, 500, true);
+                                        ((GuildBase)client.Player.Map).StartX = client.Player.X;
+                                        ((GuildBase)client.Player.Map).StartY = client.Player.Y;
+                                        client.Player.Map.Save();
+                                        Messenger.PlayerMsg(client, "You have set your bases's entrance point!", Text.BrightGreen);
+                                    }
+                                    else
+                                    {
+                                        Messenger.PlayerMsg(client, "You don't have enough " + ItemManager.Items[1].Name + "!", Text.BrightRed);
+                                    }
+                                }
+                                else
+                                {
+                                    Messenger.PlayerMsg(client, "You can't set your base entrance here!", Text.BrightRed);
+                                }
+                            }
+                        }
+                        break;
                     case "HouseRoof":
                         {
                             if (answer == "Yes")
