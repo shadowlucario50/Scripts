@@ -447,6 +447,13 @@ namespace Script
                             }
                         }   
                         break;
+                    case "/testeventintro":
+                        {
+                            var story = Main.BuildEventIntroStory();
+
+                            StoryManager.PlayStory(client, story);
+                        }
+                        break;
                     case "/warneventstart":
                         {
                             if (Ranks.IsAllowed(client, Enums.Rank.Scripter))

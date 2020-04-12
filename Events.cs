@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DataManager.Players;
 using Script.Events;
 using Script.Models;
 using Server;
+using Server.Database;
 using Server.Discord;
 using Server.Events;
 using Server.Events.World;
@@ -166,23 +168,36 @@ namespace Script
 
         public static Story BuildEventIntroStory()
         {
+            return BuildEventIntroForSpring();
+        }
+
+        public static Story BuildEventIntroForSpring()
+        {
             Story story = new Story(Guid.NewGuid().ToString());
             StoryBuilderSegment segment = StoryBuilder.BuildStory();
-            StoryBuilder.AppendCreateFNPCAction(segment, "0", "s152", 15, 11, 169, name: "Eventful", direction: Enums.Direction.Down, isShiny: true);
+            StoryBuilder.AppendCreateFNPCAction(segment, "0", "s153", 24, 6, 169, name: "Eventful", direction: Enums.Direction.Down, isShiny: true);
             StoryBuilder.AppendSpeechBubbleSegment(segment, 0, "Greetings!");
-            StoryBuilder.AppendSpeechBubbleSegment(segment, 0, "Welcome to our event for the week!");
-            StoryBuilder.AppendSpeechBubbleSegment(segment, 0, "Today, we have a special surprise for you.");
-            StoryBuilder.AppendSpeechBubbleSegment(segment, 0, "\"We\", you wonder?");
-            StoryBuilder.AppendSpeechBubbleSegment(segment, 0, "Well, allow me to introduce our guest...");
-            StoryBuilder.AppendMoveFNPCAction(segment, "0", 14, 11, Enums.Speed.Walking, true);
-            StoryBuilder.AppendChangeFNPCDirAction(segment, "0", Enums.Direction.Right);
-            StoryBuilder.AppendCreateFNPCAction(segment, "1", "s152", 15, 11, 571, name: "Zoro", direction: Enums.Direction.Down);
-            StoryBuilder.AppendSpeechBubbleSegment(segment, 0, "Zoro!");
-            StoryBuilder.AppendSpeechBubbleSegment(segment, 0, "Thanks for coming, Zoro.");
-            StoryBuilder.AppendSpeechBubbleSegment(segment, 1, "Owooooo!!!!");
-            StoryBuilder.AppendSpeechBubbleSegment(segment, 0, "Yes, well, that's worrying.");
-            StoryBuilder.AppendChangeFNPCDirAction(segment, "0", Enums.Direction.Down);
-            StoryBuilder.AppendSpeechBubbleSegment(segment, 0, "Lets start the first portion of our event...");
+            StoryBuilder.AppendSpeechBubbleSegment(segment, 0, "Welcome to our Weekly Gala!");
+            StoryBuilder.AppendSpeechBubbleSegment(segment, 0, "The Gala has three parts.");
+            StoryBuilder.AppendSpeechBubbleSegment(segment, 0, "For the first part, I will be handing out Arcade Tokens for the leaderboard.");
+            StoryBuilder.AppendSpeechBubbleSegment(segment, 0, "Then, I will be giving out Arcade Tokens for the top outlaws!");
+            StoryBuilder.AppendSpeechBubbleSegment(segment, 0, "Finally, we will be having our weekly event!");
+            StoryBuilder.AppendSpeechBubbleSegment(segment, 0, $"The event this week will be {ActiveEvent.Name}.");
+
+            AppendLeaderboardEventIntro(segment);
+            AppendOutlawEventIntro(segment);
+
+            StoryBuilder.AppendSpeechBubbleSegment(segment, 0, $"Time for the event!");
+            StoryBuilder.AppendSpeechBubbleSegment(segment, 0, $"Enjoy {ActiveEvent.Name}!");
+
+            segment.AppendToStory(story);
+
+            return story;
+        }
+
+        public static void AppendLeaderboardEventIntro(StoryBuilderSegment segment)
+        {
+            StoryBuilder.AppendSpeechBubbleSegment(segment, 0, "Lets start the first portion of the Gala...");
             StoryBuilder.AppendSpeechBubbleSegment(segment, 0, "We'll be checking the leaderboards and handing out prizes.");
             StoryBuilder.AppendSpeechBubbleSegment(segment, 0, "First place in each category will receive 3 Arcade Tokens.");
             StoryBuilder.AppendSpeechBubbleSegment(segment, 0, "Second will receive 2 Arcade Tokens.");
@@ -190,7 +205,7 @@ namespace Script
 
             foreach (var leaderboard in LeaderBoardManager.ListLeaderboards()) 
             {
-                var leaderboardItems = LeaderBoardManager.LoadLeaderboard(leaderboard.Counter).OrderByDescending(x => x.Value).ToList();
+                var leaderboardItems = leaderboard.Load().OrderByDescending(x => x.Value).ToList();
 
                 StoryBuilder.AppendSpeechBubbleSegment(segment, 0, $"In the {leaderboard.Name} category...");
 
@@ -209,12 +224,32 @@ namespace Script
             }
 
             StoryBuilder.AppendSpeechBubbleSegment(segment, 0, "That's every category!");
-            StoryBuilder.AppendSpeechBubbleSegment(segment, 1, "Owooooo!!!!");
-            StoryBuilder.AppendSpeechBubbleSegment(segment, 0, $"Enjoy {ActiveEvent.Name}!");
+        }
 
-            segment.AppendToStory(story);
+        public static void AppendOutlawEventIntro(StoryBuilderSegment segment)
+        {
+            StoryBuilder.AppendSpeechBubbleSegment(segment, 0, "Next, lets see who the top outlaws are this week!");
+            StoryBuilder.AppendSpeechBubbleSegment(segment, 0, "The top outlaw will receive 10 Arcade tokens.");
+            StoryBuilder.AppendSpeechBubbleSegment(segment, 0, "Second place will receive 5 Arcade Tokens.");
+            StoryBuilder.AppendSpeechBubbleSegment(segment, 0, "Third will receive 3 Arcade Tokens.");
 
-            return story;
+            using (var databaseConnection = new DatabaseConnection(DatabaseID.Players))
+            {
+                var topOutlaws = PlayerDataManager.GetTopOutlaws(databaseConnection.Database).OrderByDescending(x => x.Points).Take(3).ToList();
+
+                if (topOutlaws.Count > 0)
+                {
+                    StoryBuilder.AppendSpeechBubbleSegment(segment, 0, $"The top outlaw this week is {topOutlaws[0].CharacterName} with {topOutlaws[0].Points} OP!");
+                }
+                if (topOutlaws.Count > 1)
+                {
+                    StoryBuilder.AppendSpeechBubbleSegment(segment, 0, $"In second place is {topOutlaws[1].CharacterName} with {topOutlaws[1].Points} OP!");
+                }
+                if (topOutlaws.Count > 2)
+                {
+                    StoryBuilder.AppendSpeechBubbleSegment(segment, 0, $"Lastly, in third place is {topOutlaws[2].CharacterName} with {topOutlaws[2].Points} OP!");
+                }
+            }
         }
 
         public static void RunEventIntro() 
@@ -254,6 +289,36 @@ namespace Script
                         if (client != null)
                         {
                             client.Player.GiveItem(133, 2);
+                        }
+                    }
+                }
+
+                using (var databaseConnection = new DatabaseConnection(DatabaseID.Players))
+                {
+                    var topOutlaws = PlayerDataManager.GetTopOutlaws(databaseConnection.Database).OrderByDescending(x => x.Points).Take(3).ToList();
+
+                    if (topOutlaws.Count > 0)
+                    {
+                        var client = ClientManager.FindClient(topOutlaws[0].CharacterName);
+                        if (client != null)
+                        {
+                            client.Player.GiveItem(133, 10);
+                        }
+                    }
+                    if (topOutlaws.Count > 1)
+                    {
+                        var client = ClientManager.FindClient(topOutlaws[1].CharacterName);
+                        if (client != null)
+                        {
+                            client.Player.GiveItem(133, 5);
+                        }
+                    }
+                    if (topOutlaws.Count > 2)
+                    {
+                        var client = ClientManager.FindClient(topOutlaws[2].CharacterName);
+                        if (client != null)
+                        {
+                            client.Player.GiveItem(133, 3);
                         }
                     }
                 }
