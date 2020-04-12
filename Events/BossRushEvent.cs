@@ -160,8 +160,8 @@ namespace Script.Events
                 npc.SpawnX = minionXs[i];
                 npc.SpawnY = 6;
                 npc.NpcNum = minion;
-                npc.MaxLevel = 35;
-                npc.MinLevel = 35;
+                npc.MaxLevel = 30;
+                npc.MinLevel = 30;
 
                 map.SpawnNpc(npc);
             }
@@ -173,15 +173,15 @@ namespace Script.Events
             bossNpc.SpawnX = 12;
             bossNpc.SpawnY = 6;
             bossNpc.NpcNum = boss;
-            bossNpc.MinLevel = 40;
-            bossNpc.MaxLevel = 40;
+            bossNpc.MinLevel = 35;
+            bossNpc.MaxLevel = 35;
 
             map.SpawnNpc(bossNpc);
         }
 
         public override void OnNpcSpawn(IMap map, MapNpcPreset npc, MapNpc spawnedNpc, PacketHitList hitlist)
         {
-            spawnedNpc.MaxHPBonus = 50;
+            spawnedNpc.MaxHPBonus = 100;
             spawnedNpc.SpAtkBuff = 1;
             spawnedNpc.HP = spawnedNpc.MaxHP;
 
