@@ -5528,7 +5528,7 @@ namespace Script
                         {
                             if (Ranks.IsAllowed(client, Enums.Rank.Scripter))
                             {
-                                for (int i = 2002; i <= 3000; i++)
+                                for (int i = 4000; i <= 6000; i++)
                                 {
                                     NpcManager.SaveNpc(i);
                                     Messenger.PlayerMsg(client, "NPC " + i + " added.", Text.BrightGreen);
