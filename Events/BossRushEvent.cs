@@ -120,7 +120,7 @@ namespace Script.Events
             }
         }
 
-        protected override void OnboardNewPlayer(Client client) 
+        public override void OnboardNewPlayer(Client client) 
         {
             var playerData = Data.ExtendPlayer(client);
 

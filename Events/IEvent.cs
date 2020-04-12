@@ -19,6 +19,9 @@ namespace Script.Events
         string RewardMessage { get; }
         TimeSpan? Duration { get; }
 
+        bool IsStarted { get; }
+
+        void OnboardNewPlayer(Client client);
         void ConfigurePlayer(Client client);
         void DeconfigurePlayer(Client client);
 

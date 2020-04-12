@@ -447,6 +447,14 @@ namespace Script
                             }
                         }   
                         break;
+                    case "/retryevent":
+                        {
+                            if (ActiveEvent != null && ActiveEvent.IsStarted)
+                            {
+                                ActiveEvent.OnboardNewPlayer(client);
+                            }
+                        }
+                        break;
                     case "/testeventintro":
                         {
                             var story = Main.BuildEventIntroStory();

@@ -30,6 +30,8 @@ namespace Script.Events
         public virtual string RewardMessage { get; }
         public abstract TimeSpan? Duration { get; }
 
+        public bool IsStarted => Data.Started;
+
         public TData Data { get; private set; }
 
         public AbstractEvent()
@@ -193,7 +195,7 @@ namespace Script.Events
         {
         }
 
-        protected virtual void OnboardNewPlayer(Client client)
+        public virtual void OnboardNewPlayer(Client client)
         {
         }
 
