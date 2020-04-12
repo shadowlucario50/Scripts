@@ -160,8 +160,8 @@ namespace Script.Events
                 npc.SpawnX = minionXs[i];
                 npc.SpawnY = 6;
                 npc.NpcNum = minion;
-                npc.MaxLevel = 45;
-                npc.MinLevel = 45;
+                npc.MaxLevel = 35;
+                npc.MinLevel = 35;
 
                 map.SpawnNpc(npc);
             }
@@ -173,8 +173,8 @@ namespace Script.Events
             bossNpc.SpawnX = 12;
             bossNpc.SpawnY = 6;
             bossNpc.NpcNum = boss;
-            bossNpc.MinLevel = 45;
-            bossNpc.MaxLevel = 45;
+            bossNpc.MinLevel = 40;
+            bossNpc.MaxLevel = 40;
 
             map.SpawnNpc(bossNpc);
         }
