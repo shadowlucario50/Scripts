@@ -1287,6 +1287,14 @@ namespace Script {
                     }
                     break;
                 case "Immobilize": {
+                        if (character.Type1 == Enums.PokemonType.Ghost || character.Type2 == Enums.PokemonType.Ghost) {
+                            if (msg) {
+                                hitlist.AddPacketToMap(map, PacketBuilder.CreateBattleMsg(character.Name + "'s type doesn't get immobilized!", Text.BrightRed), character.X, character.Y, 1$
+                            }
+                            PacketHitList.MethodEnded(ref hitlist);
+                            return true;
+                        }
+
                         if (character.VolatileStatus.GetStatus("Immobilize") != null) {
                             if (msg) {
                                 hitlist.AddPacketToMap(map, PacketBuilder.CreateBattleMsg(character.Name + " is already Immobilized!", Text.WhiteSmoke), character.X, character.Y, 10);
@@ -1477,6 +1485,14 @@ namespace Script {
                             return true;
                         }
 
+                        if (character.Type1 == Enums.PokemonType.Ghost || character.Type2 == Enums.PokemonType.Ghost) {
+                            if (msg) {
+                                hitlist.AddPacketToMap(map, PacketBuilder.CreateBattleMsg(character.Name + "'s type doesn't get trapped!", Text.BrightRed), character.X, character.Y, 1$
+                            }
+                            PacketHitList.MethodEnded(ref hitlist);
+                            return true;
+                        }
+
                         if (character.HasActiveItem(40) && statusParam[1] == "0") {
                             if (msg) {
                                 hitlist.AddPacketToMap(map, PacketBuilder.CreateBattleMsg(character.Name + "'s Shed Shell protected it from being trapped!", Text.WhiteSmoke), character.X, character.Y, 10);
@@ -1497,6 +1513,14 @@ namespace Script {
                 case "Clamp": {
                         if (character.VolatileStatus.GetStatus("Clamp:0") != null && statusParam[1] == "0" ||
                             character.VolatileStatus.GetStatus("Clamp:1") != null && statusParam[1] == "1") {
+                            PacketHitList.MethodEnded(ref hitlist);
+                            return true;
+                        }
+
+                        if (character.Type1 == Enums.PokemonType.Ghost || character.Type2 == Enums.PokemonType.Ghost) {
+                            if (msg) {
+                                hitlist.AddPacketToMap(map, PacketBuilder.CreateBattleMsg(character.Name + "'s type doesn't get trapped!", Text.BrightRed), character.X, character.Y, 1$
+                            }
                             PacketHitList.MethodEnded(ref hitlist);
                             return true;
                         }
@@ -1525,6 +1549,14 @@ namespace Script {
                             return true;
                         }
 
+                        if (character.Type1 == Enums.PokemonType.Ghost || character.Type2 == Enums.PokemonType.Ghost) {
+                            if (msg) {
+                                hitlist.AddPacketToMap(map, PacketBuilder.CreateBattleMsg(character.Name + "'s type doesn't get trapped!", Text.BrightRed), character.X, character.Y, 1$
+                            }
+                            PacketHitList.MethodEnded(ref hitlist);
+                            return true;
+                        }
+
                         if (character.HasActiveItem(40) && statusParam[1] == "0") {
                             if (msg) {
                                 hitlist.AddPacketToMap(map, PacketBuilder.CreateBattleMsg(character.Name + "'s Shed Shell protected it from being trapped!", Text.WhiteSmoke), character.X, character.Y, 10);
@@ -1546,6 +1578,14 @@ namespace Script {
                         if (character.VolatileStatus.GetStatus("FireSpin") != null) {
                             if (msg) {
                                 hitlist.AddPacketToMap(map, PacketBuilder.CreateBattleMsg(character.Name + " is already trapped by Fire Spin!", Text.WhiteSmoke), character.X, character.Y, 10);
+                            }
+                            PacketHitList.MethodEnded(ref hitlist);
+                            return true;
+                        }
+
+                        if (character.Type1 == Enums.PokemonType.Ghost || character.Type2 == Enums.PokemonType.Ghost) {
+                            if (msg) {
+                                hitlist.AddPacketToMap(map, PacketBuilder.CreateBattleMsg(character.Name + "'s type doesn't get trapped!", Text.BrightRed), character.X, character.Y, 1$
                             }
                             PacketHitList.MethodEnded(ref hitlist);
                             return true;
@@ -1577,6 +1617,14 @@ namespace Script {
                             return true;
                         }
 
+                        if (character.Type1 == Enums.PokemonType.Ghost || character.Type2 == Enums.PokemonType.Ghost) {
+                            if (msg) {
+                                hitlist.AddPacketToMap(map, PacketBuilder.CreateBattleMsg(character.Name + "'s type doesn't get trapped!", Text.BrightRed), character.X, character.Y, 1$
+                            }
+                            PacketHitList.MethodEnded(ref hitlist);
+                            return true;
+                        }
+
                         if (character.HasActiveItem(40)) {
                             if (msg) {
                                 hitlist.AddPacketToMap(map, PacketBuilder.CreateBattleMsg(character.Name + "'s Shed Shell protected it from being trapped!", Text.WhiteSmoke), character.X, character.Y, 10);
@@ -1598,6 +1646,14 @@ namespace Script {
                         if (character.VolatileStatus.GetStatus("Infesation") != null) {
                             if (msg) {
                                 hitlist.AddPacketToMap(map, PacketBuilder.CreateBattleMsg(character.Name + " is already trapped by an Infestation!", Text.WhiteSmoke), character.X, character.Y, 10);
+                            }
+                            PacketHitList.MethodEnded(ref hitlist);
+                            return true;
+                        }
+
+                        if (character.Type1 == Enums.PokemonType.Ghost || character.Type2 == Enums.PokemonType.Ghost) {
+                            if (msg) {
+                                hitlist.AddPacketToMap(map, PacketBuilder.CreateBattleMsg(character.Name + "'s type doesn't get trapped!", Text.BrightRed), character.X, character.Y, 1$
                             }
                             PacketHitList.MethodEnded(ref hitlist);
                             return true;
@@ -1629,6 +1685,14 @@ namespace Script {
                             return true;
                         }
 
+                        if (character.Type1 == Enums.PokemonType.Ghost || character.Type2 == Enums.PokemonType.Ghost) {
+                            if (msg) {
+                                hitlist.AddPacketToMap(map, PacketBuilder.CreateBattleMsg(character.Name + "'s type doesn't get trapped!", Text.BrightRed), character.X, character.Y, 1$
+                            }
+                            PacketHitList.MethodEnded(ref hitlist);
+                            return true;
+                        }
+
                         if (character.HasActiveItem(40)) {
                             if (msg) {
                                 hitlist.AddPacketToMap(map, PacketBuilder.CreateBattleMsg(character.Name + "'s Shed Shell protected it from being trapped!", Text.WhiteSmoke), character.X, character.Y, 10);
@@ -1650,6 +1714,14 @@ namespace Script {
                         if (character.VolatileStatus.GetStatus("MagmaStorm") != null) {
                             if (msg) {
                                 hitlist.AddPacketToMap(map, PacketBuilder.CreateBattleMsg(character.Name + " is already trapped by Magma Storm!", Text.WhiteSmoke), character.X, character.Y, 10);
+                            }
+                            PacketHitList.MethodEnded(ref hitlist);
+                            return true;
+                        }
+
+                        if (character.Type1 == Enums.PokemonType.Ghost || character.Type2 == Enums.PokemonType.Ghost) {
+                            if (msg) {
+                                hitlist.AddPacketToMap(map, PacketBuilder.CreateBattleMsg(character.Name + "'s type doesn't get trapped!", Text.BrightRed), character.X, character.Y, 1$
                             }
                             PacketHitList.MethodEnded(ref hitlist);
                             return true;
