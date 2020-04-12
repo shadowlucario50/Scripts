@@ -16,7 +16,7 @@ namespace Script.Events
 {
     public class BossRushEvent : AbstractEvent<BossRushEvent.BossRushData, BossRushEvent.PlayerData>
     {
-        private readonly int MaxRoomCount = 200;
+        private readonly int MaxRoomCount = 999;
 
         private readonly int CheckpointInterval = 5;
 
@@ -32,10 +32,12 @@ namespace Script.Events
         public override string IntroductionMessage => "Bosses have appeared in an endless labyrinth! Defeat the most bosses to win!";
         public override string[] Rules => new string[] 
         {
-            $"Your team will be fully healed every {CheckpointInterval} rooms that are completed."
+            $"Your team will be fully healed every {CheckpointInterval} rooms that are completed.",
+            "If you are defeated, you may use the /retryevent command to restart.",
+            "WARNING: Restarting the event will cause all your current progress to be reset!"
         };
 
-        public override TimeSpan? Duration => new TimeSpan(0, 10, 0);
+        public override TimeSpan? Duration => new TimeSpan(0, 15, 0);
 
         private readonly List<int> bossNpcs = new List<int>();
         private readonly List<int> minionNpcs = new List<int>();
@@ -181,7 +183,7 @@ namespace Script.Events
 
         public override void OnNpcSpawn(IMap map, MapNpcPreset npc, MapNpc spawnedNpc, PacketHitList hitlist)
         {
-            spawnedNpc.MaxHPBonus = 100;
+            spawnedNpc.MaxHPBonus = 300;
             spawnedNpc.SpAtkBuff = 1;
             spawnedNpc.HP = spawnedNpc.MaxHP;
 
