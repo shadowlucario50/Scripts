@@ -9,6 +9,8 @@ using Server.Events;
 using Server.Maps;
 using Server.Network;
 using Server.Players;
+using Server.Npcs;
+using Server.Pokedex;
 
 namespace Script.Events
 {
@@ -35,15 +37,8 @@ namespace Script.Events
 
         public override TimeSpan? Duration => new TimeSpan(0, 10, 0);
 
-        private readonly List<int> bossNpcs = new List<int>()
-        {
-            3941
-        };
-
-        private readonly List<int> minionNpcs = new List<int>() 
-        {
-            3941
-        };
+        private readonly List<int> bossNpcs = new List<int>();
+        private readonly List<int> minionNpcs = new List<int>();
 
         private readonly Dictionary<Enums.PokemonType, int> typeMappings = new Dictionary<Enums.PokemonType, int>() 
         {
@@ -76,6 +71,15 @@ namespace Script.Events
 
             public int CurrentRoom { get; set; }
             public int RoomsCleared { get; set; }
+        }
+
+        public BossRushEvent()
+        {
+            for (var i = 3941; i < 4050; i++)
+            {
+                this.bossNpcs.Add(i);
+                this.minionNpcs.Add(i);
+            }
         }
 
         protected override void PrepareData()
@@ -129,13 +133,25 @@ namespace Script.Events
 
         public override void OnActivateMap(IMap map)
         {
+            var minionXs = new int[] {
+                11,
+                13
+            };
+
+            var mapType = this.typeMappings.Where(x => x.Value == ((InstancedMap)map).MapBase).First().Key;
+            var availableMinions = minionNpcs.Where(x => Pokedex.GetPokemon(NpcManager.Npcs[x].Species).Forms[0].Type1 == mapType || Pokedex.GetPokemon(NpcManager.Npcs[x].Species).Forms[0].Type2 == mapType).ToList();
+            if (availableMinions.Count == 0)
+            {
+                availableMinions = minionNpcs;
+            }
+
             for (var i = 0; i < MinionCount; i++)
             {
-                var minionSlot = Server.Math.Rand(0, minionNpcs.Count);
-                var minion = minionNpcs[minionSlot];
+                var minionSlot = Server.Math.Rand(0, availableMinions.Count);
+                var minion = availableMinions[minionSlot];
 
                 var npc = new MapNpcPreset();
-                npc.SpawnX = 12;
+                npc.SpawnX = minionXs[i];
                 npc.SpawnY = 6;
                 npc.NpcNum = minion;
                 npc.MaxLevel = 1;
@@ -147,6 +163,8 @@ namespace Script.Events
 
         public override void OnNpcDeath(PacketHitList hitlist, ICharacter attacker, MapNpc npc)
         {
+
+            
             SetCompletionTile(MapManager.RetrieveActiveMap(attacker.MapID));
         }
 
