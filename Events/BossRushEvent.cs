@@ -183,7 +183,7 @@ namespace Script.Events
         {
             var map = MapManager.RetrieveActiveMap(attacker.MapID);
 
-            if (!map.ActiveNpc.Enumerate().Where(x => x.Num > 0).Any())
+            if (!map.ActiveNpc.Enumerate().Where(x => x.Num > 0).Where(x => x != npc).Any())
             {
                 SetCompletionTile(MapManager.RetrieveActiveMap(attacker.MapID));
             }
