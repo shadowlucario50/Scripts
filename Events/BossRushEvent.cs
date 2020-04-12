@@ -181,11 +181,8 @@ namespace Script.Events
 
         public override void OnNpcSpawn(IMap map, MapNpcPreset npc, MapNpc spawnedNpc, PacketHitList hitlist)
         {
-            spawnedNpc.MaxHPBonus = 100;
-            spawnedNpc.SpeedBuff = 1;
+            spawnedNpc.MaxHPBonus = 50;
             spawnedNpc.SpAtkBuff = 1;
-            spawnedNpc.DefenseBuff = 1;
-            spawnedNpc.SpDefBuff = 1;
             spawnedNpc.HP = spawnedNpc.MaxHP;
 
             Main.RefreshCharacterTraits(spawnedNpc, map, hitlist);
