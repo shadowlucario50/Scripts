@@ -4896,8 +4896,8 @@ namespace Script {
                 character.TimeMultiplier *= 2;
             }
             if (HasAbility(character, "Unburden") && character.HeldItem == null) {
-                character.TimeMultiplier *= 3;
-                character.TimeMultiplier /= 4;
+                character.TimeMultiplier *= 5;
+                character.TimeMultiplier /= 10;
             }
 
             if (HasAbility(character, "Chlorophyll") && GetCharacterWeather(character) == Enums.Weather.Sunny) {
