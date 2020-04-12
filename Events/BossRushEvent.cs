@@ -133,8 +133,6 @@ namespace Script.Events
 
         public override void OnActivateMap(IMap map)
         {
-            var client = map.GetClients().First();
-
             var minionXs = new int[] {
                 11,
                 13
@@ -162,8 +160,8 @@ namespace Script.Events
                 npc.SpawnX = minionXs[i];
                 npc.SpawnY = 6;
                 npc.NpcNum = minion;
-                npc.MaxLevel = 1;
-                npc.MinLevel = 1;
+                npc.MaxLevel = 45;
+                npc.MinLevel = 45;
 
                 map.SpawnNpc(npc);
             }
@@ -175,10 +173,22 @@ namespace Script.Events
             bossNpc.SpawnX = 12;
             bossNpc.SpawnY = 6;
             bossNpc.NpcNum = boss;
-            bossNpc.MinLevel = 1;
-            bossNpc.MaxLevel = 1;
+            bossNpc.MinLevel = 45;
+            bossNpc.MaxLevel = 45;
 
             map.SpawnNpc(bossNpc);
+        }
+
+        public override void OnNpcSpawn(IMap map, MapNpcPreset npc, MapNpc spawnedNpc, PacketHitList hitlist)
+        {
+            spawnedNpc.MaxHPBonus = 350;
+            spawnedNpc.SpeedBuff = 5;
+            spawnedNpc.SpAtkBuff = 3;
+            spawnedNpc.DefenseBuff = 2;
+            spawnedNpc.SpDefBuff = 2;
+            spawnedNpc.HP = spawnedNpc.MaxHP;
+
+            Main.RefreshCharacterTraits(spawnedNpc, map, hitlist);
         }
 
         public override void OnNpcDeath(PacketHitList hitlist, ICharacter attacker, MapNpc npc)
