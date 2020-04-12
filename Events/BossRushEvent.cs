@@ -20,7 +20,7 @@ namespace Script.Events
 
         private readonly int CheckpointInterval = 5;
 
-        private readonly int MinionCount = 1;
+        private readonly int MinionCount = 2;
 
         private readonly int StartTileX = 12;
         private readonly int StartTileY = 15;
@@ -145,6 +145,12 @@ namespace Script.Events
                 availableMinions = minionNpcs;
             }
 
+            var availableBosses = bossNpcs.Where(x => Pokedex.GetPokemon(NpcManager.Npcs[x].Species).Forms[0].Type1 == mapType || Pokedex.GetPokemon(NpcManager.Npcs[x].Species).Forms[0].Type2 == mapType).ToList();
+            if (availableBosses.Count == 0)
+            {
+                availableBosses = bossNpcs;
+            }
+
             for (var i = 0; i < MinionCount; i++)
             {
                 var minionSlot = Server.Math.Rand(0, availableMinions.Count);
@@ -159,13 +165,28 @@ namespace Script.Events
 
                 map.SpawnNpc(npc);
             }
+
+            var bossSlot = Server.Math.Rand(0, availableBosses.Count);
+            var boss = availableMinions[bossSlot];
+
+            var bossNpc = new MapNpcPreset();
+            bossNpc.SpawnX = 12;
+            bossNpc.SpawnY = 6;
+            bossNpc.NpcNum = boss;
+            bossNpc.MinLevel = 1;
+            bossNpc.MaxLevel = 1;
+
+            map.SpawnNpc(bossNpc);
         }
 
         public override void OnNpcDeath(PacketHitList hitlist, ICharacter attacker, MapNpc npc)
         {
+            var map = MapManager.RetrieveActiveMap(attacker.MapID);
 
-            
-            SetCompletionTile(MapManager.RetrieveActiveMap(attacker.MapID));
+            if (!map.ActiveNpc.Enumerate().Where(x => x.Num > 0).Any())
+            {
+                SetCompletionTile(MapManager.RetrieveActiveMap(attacker.MapID));
+            }
         }
 
         private void SetCompletionTile(IMap map)
