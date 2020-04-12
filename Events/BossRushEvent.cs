@@ -133,6 +133,8 @@ namespace Script.Events
 
         public override void OnActivateMap(IMap map)
         {
+            var client = map.GetClients().First();
+
             var minionXs = new int[] {
                 11,
                 13
