@@ -185,6 +185,7 @@ namespace Script.Events
         {
             spawnedNpc.MaxHPBonus = 300;
             spawnedNpc.SpAtkBuff = 1;
+            spawnedNpc.SpDefBuff = 1;
             spawnedNpc.HP = spawnedNpc.MaxHP;
 
             Main.RefreshCharacterTraits(spawnedNpc, map, hitlist);
