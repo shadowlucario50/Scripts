@@ -1289,7 +1289,7 @@ namespace Script {
                 case "Immobilize": {
                         if (character.Type1 == Enums.PokemonType.Ghost || character.Type2 == Enums.PokemonType.Ghost) {
                             if (msg) {
-                                hitlist.AddPacketToMap(map, PacketBuilder.CreateBattleMsg(character.Name + "'s type doesn't get immobilized!", Text.BrightRed), character.X, character.Y, 1$
+                                hitlist.AddPacketToMap(map, PacketBuilder.CreateBattleMsg(character.Name + "'s type doesn't get immobilized!", Text.BrightRed), character.X, character.Y, 10);
                             }
                             PacketHitList.MethodEnded(ref hitlist);
                             return true;
@@ -1487,7 +1487,7 @@ namespace Script {
 
                         if (character.Type1 == Enums.PokemonType.Ghost || character.Type2 == Enums.PokemonType.Ghost) {
                             if (msg) {
-                                hitlist.AddPacketToMap(map, PacketBuilder.CreateBattleMsg(character.Name + "'s type doesn't get trapped!", Text.BrightRed), character.X, character.Y, 1$
+                                hitlist.AddPacketToMap(map, PacketBuilder.CreateBattleMsg(character.Name + "'s type doesn't get trapped!", Text.BrightRed), character.X, character.Y, 10);
                             }
                             PacketHitList.MethodEnded(ref hitlist);
                             return true;
@@ -1519,7 +1519,7 @@ namespace Script {
 
                         if (character.Type1 == Enums.PokemonType.Ghost || character.Type2 == Enums.PokemonType.Ghost) {
                             if (msg) {
-                                hitlist.AddPacketToMap(map, PacketBuilder.CreateBattleMsg(character.Name + "'s type doesn't get trapped!", Text.BrightRed), character.X, character.Y, 1$
+                                hitlist.AddPacketToMap(map, PacketBuilder.CreateBattleMsg(character.Name + "'s type doesn't get trapped!", Text.BrightRed), character.X, character.Y, 10);
                             }
                             PacketHitList.MethodEnded(ref hitlist);
                             return true;
@@ -1551,7 +1551,7 @@ namespace Script {
 
                         if (character.Type1 == Enums.PokemonType.Ghost || character.Type2 == Enums.PokemonType.Ghost) {
                             if (msg) {
-                                hitlist.AddPacketToMap(map, PacketBuilder.CreateBattleMsg(character.Name + "'s type doesn't get trapped!", Text.BrightRed), character.X, character.Y, 1$
+                                hitlist.AddPacketToMap(map, PacketBuilder.CreateBattleMsg(character.Name + "'s type doesn't get trapped!", Text.BrightRed), character.X, character.Y, 10);
                             }
                             PacketHitList.MethodEnded(ref hitlist);
                             return true;
@@ -1585,7 +1585,7 @@ namespace Script {
 
                         if (character.Type1 == Enums.PokemonType.Ghost || character.Type2 == Enums.PokemonType.Ghost) {
                             if (msg) {
-                                hitlist.AddPacketToMap(map, PacketBuilder.CreateBattleMsg(character.Name + "'s type doesn't get trapped!", Text.BrightRed), character.X, character.Y, 1$
+                                hitlist.AddPacketToMap(map, PacketBuilder.CreateBattleMsg(character.Name + "'s type doesn't get trapped!", Text.BrightRed), character.X, character.Y, 10);
                             }
                             PacketHitList.MethodEnded(ref hitlist);
                             return true;
@@ -1619,7 +1619,7 @@ namespace Script {
 
                         if (character.Type1 == Enums.PokemonType.Ghost || character.Type2 == Enums.PokemonType.Ghost) {
                             if (msg) {
-                                hitlist.AddPacketToMap(map, PacketBuilder.CreateBattleMsg(character.Name + "'s type doesn't get trapped!", Text.BrightRed), character.X, character.Y, 1$
+                                hitlist.AddPacketToMap(map, PacketBuilder.CreateBattleMsg(character.Name + "'s type doesn't get trapped!", Text.BrightRed), character.X, character.Y, 10);
                             }
                             PacketHitList.MethodEnded(ref hitlist);
                             return true;
@@ -1653,7 +1653,7 @@ namespace Script {
 
                         if (character.Type1 == Enums.PokemonType.Ghost || character.Type2 == Enums.PokemonType.Ghost) {
                             if (msg) {
-                                hitlist.AddPacketToMap(map, PacketBuilder.CreateBattleMsg(character.Name + "'s type doesn't get trapped!", Text.BrightRed), character.X, character.Y, 1$
+                                hitlist.AddPacketToMap(map, PacketBuilder.CreateBattleMsg(character.Name + "'s type doesn't get trapped!", Text.BrightRed), character.X, character.Y, 10);
                             }
                             PacketHitList.MethodEnded(ref hitlist);
                             return true;
@@ -1687,7 +1687,7 @@ namespace Script {
 
                         if (character.Type1 == Enums.PokemonType.Ghost || character.Type2 == Enums.PokemonType.Ghost) {
                             if (msg) {
-                                hitlist.AddPacketToMap(map, PacketBuilder.CreateBattleMsg(character.Name + "'s type doesn't get trapped!", Text.BrightRed), character.X, character.Y, 1$
+                                hitlist.AddPacketToMap(map, PacketBuilder.CreateBattleMsg(character.Name + "'s type doesn't get trapped!", Text.BrightRed), character.X, character.Y, 10);
                             }
                             PacketHitList.MethodEnded(ref hitlist);
                             return true;
@@ -1721,7 +1721,7 @@ namespace Script {
 
                         if (character.Type1 == Enums.PokemonType.Ghost || character.Type2 == Enums.PokemonType.Ghost) {
                             if (msg) {
-                                hitlist.AddPacketToMap(map, PacketBuilder.CreateBattleMsg(character.Name + "'s type doesn't get trapped!", Text.BrightRed), character.X, character.Y, 1$
+                                hitlist.AddPacketToMap(map, PacketBuilder.CreateBattleMsg(character.Name + "'s type doesn't get trapped!", Text.BrightRed), character.X, character.Y, 10);
                             }
                             PacketHitList.MethodEnded(ref hitlist);
                             return true;
