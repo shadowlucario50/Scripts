@@ -3785,7 +3785,7 @@ namespace Script
             RandomWarp(character, warpMap, msg, hitlist, 0, warpMap.MaxX, 0, warpMap.MaxY);
         }
 
-        public static void RandomWarp(ICharacter character, IMap warpMap, bool msg, PacketHitList hitlist, int startX, int endX, int startY, int endY)
+        public static void RandomWarp(ICharacter character, IMap warpMap, bool msg, PacketHitList hitlist, int startX, int endX, int startY, int endY, bool onlyWalkable = true)
         {
             if (HasAbility(character, "Suction Cups"))
             {
@@ -3816,7 +3816,7 @@ namespace Script
 
                 int x, y;
 
-                FindFreeTile(warpMap, startX, startY, endX, endY, out x, out y);
+                FindFreeTile(warpMap, startX, startY, endX, endY, onlyWalkable, out x, out y);
 
                 if (x == -1)
                 {
@@ -3833,7 +3833,14 @@ namespace Script
             }
         }
 
-        public static void FindFreeTile(IMap map, int startX, int startY, int endX, int endY, out int freeX, out int freeY)
+        public static bool IsTileTypeFree(Enums.TileType type, bool onlyWalkable)
+        {
+            if(type == Enums.TileType.Walkable || type == Enums.TileType.Arena) return true;
+            if(!onlyWalkable && (type == Enums.TileType.Hallway)) return true;
+            return false;
+        }
+
+        public static void FindFreeTile(IMap map, int startX, int startY, int endX, int endY, bool onlyWalkable, out int freeX, out int freeY)
         {
             freeX = -1;
             freeY = -1;
@@ -3842,10 +3849,9 @@ namespace Script
                 int X = Server.Math.Rand(startX, endX + 1);
                 int Y = Server.Math.Rand(startY, endY + 1);
 
-                // Check if the tile is walkable or arena
                 if (X >= 0 && X <= map.MaxX && Y >= 0 && Y <= map.MaxY)
                 {
-                    if (map.Tile[X, Y].Type == Enums.TileType.Walkable || map.Tile[X, Y].Type == Enums.TileType.Arena)
+                    if (IsTileTypeFree(map.Tile[X, Y].Type, onlyWalkable))
                     {
                         freeX = X;
                         freeY = Y;
@@ -3860,7 +3866,7 @@ namespace Script
                 {
                     for (int Y = 0; Y < map.MaxY; Y++)
                     {
-                        if (map.Tile[X, Y].Type == Enums.TileType.Walkable || map.Tile[X, Y].Type == Enums.TileType.Arena)
+                        if (IsTileTypeFree(map.Tile[X, Y].Type, onlyWalkable))
                         {
                             freeX = X;
                             freeY = Y;
