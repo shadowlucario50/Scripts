@@ -4886,7 +4886,7 @@ namespace Script
                                 if (GetBattleTagArg(setup.BattleTags, "Rollcall", 1) != null)
                                 {
                                     //setup.PacketStack.AddPacketToMap(setup.DefenderMap, PacketBuilder.CreateBattleMsg(setup.Defender.Name + " warped!", Text.WhiteSmoke), setup.Defender.X, setup.Defender.Y, 10);
-                                    RandomWarp(setup.Defender, setup.DefenderMap, true, setup.PacketStack, GetBattleTagArg(setup.BattleTags, "Rollcall", 1).ToInt() - 1, GetBattleTagArg(setup.BattleTags, "Rollcall", 1).ToInt() + 1, GetBattleTagArg(setup.BattleTags, "Rollcall", 2).ToInt() - 1, GetBattleTagArg(setup.BattleTags, "Rollcall", 2).ToInt() + 1);
+                                    RandomWarp(setup.Defender, setup.DefenderMap, true, setup.PacketStack, GetBattleTagArg(setup.BattleTags, "Rollcall", 1).ToInt() - 1, GetBattleTagArg(setup.BattleTags, "Rollcall", 1).ToInt() + 1, GetBattleTagArg(setup.BattleTags, "Rollcall", 2).ToInt() - 1, GetBattleTagArg(setup.BattleTags, "Rollcall", 2).ToInt() + 1, false);
                                 }
                                 else
                                 {
