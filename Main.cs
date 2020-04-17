@@ -9601,7 +9601,7 @@ namespace Script
         {
             int x, y;
 
-            FindFreeTile(map, 0, 0, map.MaxX, map.MaxY, false, out x, out y);
+            FindFreeTile(map, 0, 0, map.MaxX, map.MaxY, true, out x, out y);
 
             if (x != -1)
             {
