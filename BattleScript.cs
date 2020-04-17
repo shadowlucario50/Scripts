@@ -9998,20 +9998,17 @@ namespace Script
         {
             try
             {
+                if (character.HasActiveItem(303)) return Enums.Weather.None;
+                if (character.HasActiveItem(302)) return Enums.Weather.Sunny;
+                if (character.HasActiveItem(301)) return Enums.Weather.Raining;
+                if (character.HasActiveItem(300)) return Enums.Weather.Sandstorm;
+                if (character.HasActiveItem(299)) return Enums.Weather.Hail;
+                if (character.HasActiveItem(785)) return Enums.Weather.Cloudy;
+                if (character.HasActiveItem(786)) return Enums.Weather.Fog;
+
                 IMap map = MapManager.RetrieveActiveMap(character.MapID);
                 if (map != null)
                 {
-                    if (map.Weather == Enums.Weather.Ambiguous || map.Weather == Enums.Weather.None || character.HasActiveItem(303))
-                    {
-                        if (character.HasActiveItem(302)) return Enums.Weather.Sunny;
-                        if (character.HasActiveItem(301)) return Enums.Weather.Raining;
-                        if (character.HasActiveItem(300)) return Enums.Weather.Sandstorm;
-                        if (character.HasActiveItem(299)) return Enums.Weather.Hail;
-                        if (character.HasActiveItem(785)) return Enums.Weather.Cloudy;
-                        if (character.HasActiveItem(786)) return Enums.Weather.Fog;
-                        if (character.HasActiveItem(303)) return Enums.Weather.None;
-                    }
-
                     return map.Weather;
                 }
             }
