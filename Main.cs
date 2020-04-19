@@ -2898,25 +2898,22 @@ namespace Script
                         }
                         break;
 				
-						case 8:
-		     				{//rockruff
-								if (client.Player.GetActiveRecruit().Level >= 25)
-								{
-								if (data1 == 0 && Enums.Time.Day)
-								{
-									return true;
-								}
-								else if (data1 == 1 && Enums.Time.Night)
-								{
-									return true;
-								}
-								else if (data1 == 2 && Enums.Time.Dawn || data == 2 && Enums.Time.Dusk)
-								{
-									return true;
-								}
-							}
-						}
-						break;
+			case 8:
+		     		{//rockruff
+					if (client.Player.GetActiveRecruit().Level >= 25)
+					{
+						if(data1 == 0 && Server.Globals.ServerTime == Enums.Time.Day)
+						return true;
+									
+						else if(data1 == 1 && Server.Globals.ServerTime == Enums.Time.Night)
+						return true;
+									
+						else if(data1 == 2 && (Server.Globals.ServerTime == Enums.Time.Dawn || Server.Globals.ServerTime == Enums.Time.Dusk))
+						return true;
+					}
+				}
+			}
+			break;
                 }
 		
 		    
