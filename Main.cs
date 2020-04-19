@@ -2905,10 +2905,10 @@ namespace Script
 						if(data1 == 0 && Server.Globals.ServerTime == Enums.Time.Day)
 						return true;
 									
-						else if(data1 == 1 && Server.Globals.ServerTime == Enums.Time.Night)
+						if(data1 == 1 && Server.Globals.ServerTime == Enums.Time.Night)
 						return true;
 									
-						else if(data1 == 2 && (Server.Globals.ServerTime == Enums.Time.Dawn || Server.Globals.ServerTime == Enums.Time.Dusk))
+						if(data1 == 2 && (Server.Globals.ServerTime == Enums.Time.Dawn || Server.Globals.ServerTime == Enums.Time.Dusk))
 						return true;
 					}
 				}
